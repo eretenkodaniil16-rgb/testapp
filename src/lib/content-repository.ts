@@ -209,12 +209,13 @@ export async function primeOfflineContent(): Promise<{
   };
 }
 
-export async function refreshContentFromRemote(): Promise<{
+export async function refreshContentFromRemote(forceFullVerification = false): Promise<{
   previousVersion: number;
   contentVersion: number;
   packageCount: number;
   questionCount: number;
   updated: boolean;
+  fullyVerified: boolean;
 }> {
   const currentManifest = await getContentManifest();
   const previousVersion = currentManifest.contentVersion;
@@ -228,11 +229,14 @@ export async function refreshContentFromRemote(): Promise<{
   for (const entry of manifest.packages) {
     const cacheKey = `${entry.id}@${entry.version}`;
     let contentPackage: ContentPackage | null = null;
-    try {
-      const cached = await readRecord<ContentPackage>(PACKAGE_STORE, cacheKey);
-      if (cached) contentPackage = validatePackage(cached, entry);
-    } catch {
-      contentPackage = null;
+
+    if (!forceFullVerification) {
+      try {
+        const cached = await readRecord<ContentPackage>(PACKAGE_STORE, cacheKey);
+        if (cached) contentPackage = validatePackage(cached, entry);
+      } catch {
+        contentPackage = null;
+      }
     }
 
     if (!contentPackage) {
@@ -251,6 +255,7 @@ export async function refreshContentFromRemote(): Promise<{
     packageCount: manifest.packages.length,
     questionCount: manifest.packages.reduce((sum, entry) => sum + entry.questionCount, 0),
     updated: manifest.contentVersion > previousVersion,
+    fullyVerified: forceFullVerification,
   };
 }
 
