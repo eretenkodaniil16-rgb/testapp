@@ -42,6 +42,6 @@ export interface StoredAnswer {
 }
 
 export interface ProgressStore {
-  schemaVersion: 1;
+  schemaVersion: 2;
   answers: StoredAnswer[];
 }
