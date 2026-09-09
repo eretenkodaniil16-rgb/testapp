@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "contentVersion": 10,
-  "publishedAt": "2026-09-09T19:56:00Z",
+  "contentVersion": 11,
+  "publishedAt": "2026-09-09T20:26:25Z",
   "packages": [
     { "id": "pathology-core", "subjectId": "pathology", "title": "Патологическая анатомия", "version": 2, "path": "/content/packages/pathology-core.v2.json", "questionCount": 2 },
     { "id": "physiology-core", "subjectId": "physiology", "title": "Физиология", "version": 2, "path": "/content/packages/physiology-core.v2.json", "questionCount": 1 },
@@ -36,6 +36,11 @@
     { "id": "pharmacology-opioid-analgesics", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-opioid-analgesics.v1.json", "questionCount": 25 },
     { "id": "pharmacology-parkinsonism-epilepsy-a", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-parkinsonism-epilepsy-a.v1.json", "questionCount": 16 },
     { "id": "pharmacology-parkinsonism-mechanisms", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-parkinsonism-mechanisms.v1.json", "questionCount": 13 },
-    { "id": "pharmacology-antiepileptics-hypnotics-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-antiepileptics-hypnotics-b.v1.json", "questionCount": 19 }
+    { "id": "pharmacology-antiepileptics-hypnotics-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-antiepileptics-hypnotics-b.v1.json", "questionCount": 19 },
+    { "id": "pharmacology-psychotropics-classification-a", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-psychotropics-classification-a.v1.json", "questionCount": 11 },
+    { "id": "pharmacology-psychotropics-classification-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-psychotropics-classification-b.v1.json", "questionCount": 11 },
+    { "id": "pharmacology-psychotropics-classification-c", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-psychotropics-classification-c.v1.json", "questionCount": 10 },
+    { "id": "pharmacology-psychotropics-mechanisms-a", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-psychotropics-mechanisms-a.v1.json", "questionCount": 11 },
+    { "id": "pharmacology-psychotropics-mechanisms-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-psychotropics-mechanisms-b.v1.json", "questionCount": 11 }
   ]
 }
