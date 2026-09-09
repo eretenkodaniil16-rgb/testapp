@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./learning-features.css";
+import "./theme.css";
 import { BottomNav } from "@/components/bottom-nav";
 import { PwaRegister } from "@/components/pwa-register";
 
@@ -13,12 +14,28 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0f172a",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
+    { media: "(prefers-color-scheme: dark)", color: "#020617" },
+  ],
 };
+
+const themeBootstrapScript = `
+(function () {
+  try {
+    var theme = localStorage.getItem("testapp-theme");
+    if (theme === "light" || theme === "dark") {
+      document.documentElement.dataset.theme = theme;
+    }
+  } catch (_) {}
+})();`;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ru">
+    <html lang="ru" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeBootstrapScript }} />
+      </head>
       <body>
         <PwaRegister />
         <main className="app-shell">{children}</main>

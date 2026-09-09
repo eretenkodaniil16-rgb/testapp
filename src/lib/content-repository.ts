@@ -14,6 +14,8 @@ const MANIFEST_STORE = "manifest";
 const PACKAGE_STORE = "packages";
 const MANIFEST_KEY = "current";
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const REMOTE_CONTENT_BASE = (process.env.NEXT_PUBLIC_CONTENT_BASE_URL ?? "https://raw.githubusercontent.com/eretenkodaniil16-rgb/testapp/content-live/public").replace(/\/$/, "");
+const REMOTE_MANIFEST_URL = `${REMOTE_CONTENT_BASE}/content/manifest.json`;
 
 const FALLBACK_MANIFEST: ContentManifest = {
   schemaVersion: 1,
@@ -30,6 +32,12 @@ function withBasePath(path: string): string {
   if (!path || /^https?:\/\//i.test(path)) return path;
   const normalized = path.startsWith("/") ? path : `/${path}`;
   return `${BASE_PATH}${normalized}`;
+}
+
+function remotePath(path: string): string {
+  if (!path || /^https?:\/\//i.test(path)) return path;
+  const normalized = path.startsWith("/") ? path : `/${path}`;
+  return `${REMOTE_CONTENT_BASE}${normalized}`;
 }
 
 function openDatabase(): Promise<IDBDatabase> {
@@ -69,8 +77,12 @@ async function writeRecord(storeName: string, key: IDBValidKey, value: unknown):
   db.close();
 }
 
-async function fetchJson<T>(path: string): Promise<T> {
-  const response = await fetch(withBasePath(path), { cache: "no-store" });
+async function fetchJson<T>(path: string, cacheBust = false): Promise<T> {
+  const baseUrl = withBasePath(path);
+  const url = cacheBust
+    ? `${baseUrl}${baseUrl.includes("?") ? "&" : "?"}testapp_refresh=${Date.now()}`
+    : baseUrl;
+  const response = await fetch(url, { cache: "no-store" });
   if (!response.ok) throw new Error(`Content request failed: ${response.status}`);
   return response.json() as Promise<T>;
 }
@@ -80,6 +92,24 @@ function validateManifest(value: ContentManifest): ContentManifest {
     throw new Error("Unsupported TestApp content manifest");
   }
   return value;
+}
+
+function normalizeRemoteManifest(value: ContentManifest): ContentManifest {
+  return {
+    ...value,
+    packages: value.packages.map((entry) => ({
+      ...entry,
+      path: remotePath(entry.path),
+    })),
+  };
+}
+
+async function fetchRemoteManifest(cacheBust = false): Promise<ContentManifest> {
+  return normalizeRemoteManifest(validateManifest(await fetchJson<ContentManifest>(REMOTE_MANIFEST_URL, cacheBust)));
+}
+
+async function fetchBundledManifest(): Promise<ContentManifest> {
+  return validateManifest(await fetchJson<ContentManifest>("/content/manifest.json"));
 }
 
 function validatePackage(value: ContentPackage, entry: ContentManifestPackage): ContentPackage {
@@ -117,12 +147,21 @@ function fallbackPackage(entry: ContentManifestPackage): ContentPackage {
 
 export async function getContentManifest(): Promise<ContentManifest> {
   try {
-    const manifest = validateManifest(await fetchJson<ContentManifest>("/content/manifest.json"));
+    const manifest = await fetchRemoteManifest();
     await writeRecord(MANIFEST_STORE, MANIFEST_KEY, manifest);
     return manifest;
   } catch {
     try {
-      return (await readRecord<ContentManifest>(MANIFEST_STORE, MANIFEST_KEY)) ?? FALLBACK_MANIFEST;
+      const cached = await readRecord<ContentManifest>(MANIFEST_STORE, MANIFEST_KEY);
+      if (cached) return cached;
+    } catch {
+      // Continue to the bundled manifest.
+    }
+
+    try {
+      const bundled = await fetchBundledManifest();
+      await writeRecord(MANIFEST_STORE, MANIFEST_KEY, bundled);
+      return bundled;
     } catch {
       return FALLBACK_MANIFEST;
     }
@@ -154,6 +193,37 @@ export async function getContentPackage(entry: ContentManifestPackage): Promise<
 async function getAllContentPackages(): Promise<ContentPackage[]> {
   const manifest = await getContentManifest();
   return Promise.all(manifest.packages.map((entry) => getContentPackage(entry)));
+}
+
+export async function refreshContentFromRemote(): Promise<{
+  previousVersion: number;
+  contentVersion: number;
+  packageCount: number;
+  questionCount: number;
+  updated: boolean;
+}> {
+  let previousVersion = 0;
+  try {
+    previousVersion = (await readRecord<ContentManifest>(MANIFEST_STORE, MANIFEST_KEY))?.contentVersion ?? 0;
+  } catch {
+    previousVersion = 0;
+  }
+
+  const manifest = await fetchRemoteManifest(true);
+  await writeRecord(MANIFEST_STORE, MANIFEST_KEY, manifest);
+  await Promise.all(manifest.packages.map((entry) => getContentPackage(entry)));
+
+  return {
+    previousVersion,
+    contentVersion: manifest.contentVersion,
+    packageCount: manifest.packages.length,
+    questionCount: manifest.packages.reduce((sum, entry) => sum + entry.questionCount, 0),
+    updated: manifest.contentVersion > previousVersion,
+  };
+}
+
+export function getRemoteContentSource(): string {
+  return REMOTE_MANIFEST_URL;
 }
 
 export async function getAllQuestions(): Promise<PracticeQuestion[]> {

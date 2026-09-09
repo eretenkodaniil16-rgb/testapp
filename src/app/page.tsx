@@ -28,17 +28,17 @@ export default function HomePage() {
         <Link href="/practice/setup?mode=exam"><strong>Экзамен</strong><span>Без подсказок до окончания</span></Link>
         <Link href="/review"><strong>По расписанию</strong><span>Интервальное повторение</span></Link>
         <Link href="/weak-topics"><strong>Слабые темы</strong><span>Автоматически по статистике</span></Link>
-        <Link href="/questions"><strong>Банк ответов</strong><span>Вопросы и правильные ответы</span></Link>
+        <Link href="/questions"><strong>Банк ответов</strong><span>Вопросы, ответы и разбор вариантов</span></Link>
       </section>
 
       <section>
-        <div className="section-title"><h2>Дисциплины</h2><span>статические пакеты</span></div>
+        <div className="section-title"><h2>Дисциплины</h2><span>обновляются из GitHub</span></div>
         <ContentCatalog />
       </section>
 
       <section className="info-card">
         <h2>Как хранятся данные</h2>
-        <p>Общая база вопросов публикуется как версионированные файлы вместе с приложением. Ответы, ошибки, интервалы повторения и статистика остаются только в IndexedDB текущего устройства.</p>
+        <p>Общая база тестов загружается как версионированные JSON-пакеты напрямую из отдельной ветки GitHub и сохраняется локально. Ответы, ошибки, интервалы повторения и статистика остаются только в IndexedDB текущего устройства.</p>
       </section>
     </div>
   );

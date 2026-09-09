@@ -36,6 +36,29 @@ function modeTitle(mode: StudyMode): string {
   return "ТРЕНИРОВКА";
 }
 
+function OptionFeedbackList({ question, selectedIds }: { question: PracticeQuestion; selectedIds?: Set<string> }) {
+  return (
+    <div className="option-feedback-list">
+      <h4>Разбор всех вариантов</h4>
+      {question.options.map((option) => {
+        const selected = selectedIds?.has(option.id) ?? false;
+        const fallback = option.correct
+          ? "Это правильный вариант. Для него пока не добавлено отдельное пояснение."
+          : "Этот вариант неправильный. Для него пока не добавлено отдельное пояснение.";
+        return (
+          <div className={`option-feedback-row ${option.correct ? "correct" : "incorrect"} ${selected ? "selected" : ""}`} key={option.id}>
+            <div className="option-feedback-head">
+              <strong>{option.label}. {option.text}</strong>
+              <span className="option-feedback-badge">{option.correct ? "Правильный" : "Неправильный"}{selected ? " · выбран" : ""}</span>
+            </div>
+            <p>{option.feedback || fallback}</p>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function PracticePage() {
   const [questions, setQuestions] = useState<PracticeQuestion[]>([]);
   const [index, setIndex] = useState(0);
@@ -212,6 +235,7 @@ export default function PracticePage() {
                   <p className="exam-selected"><strong>Ваш ответ:</strong> {item.options.filter((option) => selectedIds.has(option.id)).map((option) => `${option.label}. ${option.text}`).join("; ")}</p>
                   <div className="correct-answer-block"><strong>{correct.length > 1 ? "Правильные ответы" : "Правильный ответ"}</strong>{correct.map((option) => <p key={option.id}><b>{option.label}.</b> {option.text}</p>)}</div>
                   {item.explanation && <p className="answer-explanation">{item.explanation}</p>}
+                  <OptionFeedbackList question={item} selectedIds={selectedIds} />
                 </article>
               );
             })}
@@ -229,7 +253,7 @@ export default function PracticePage() {
       </header>
       <div className="progress-track"><span style={{ width: `${((index + 1) / questions.length) * 100}%` }} /></div>
 
-      {mode === "exam" && <div className="exam-notice">Правильный ответ и объяснение будут показаны только после завершения экзамена.</div>}
+      {mode === "exam" && <div className="exam-notice">Правильный ответ и объяснение каждого варианта будут показаны только после завершения экзамена.</div>}
 
       <section className="question-card">
         <p className="question-type">{question.type === "multiple_choice" ? "Несколько правильных ответов" : "Один правильный ответ"}</p>
@@ -249,7 +273,13 @@ export default function PracticePage() {
         </div>
       </section>
 
-      {mode !== "exam" && checked && <section className={`feedback ${wasCorrect ? "feedback-correct" : "feedback-wrong"}`}><h3>{wasCorrect ? "Правильно" : "Неправильно"}</h3><p>{question.explanation || "Объяснение для этого вопроса пока не добавлено."}</p></section>}
+      {mode !== "exam" && checked && (
+        <section className={`feedback ${wasCorrect ? "feedback-correct" : "feedback-wrong"}`}>
+          <h3>{wasCorrect ? "Правильно" : "Неправильно"}</h3>
+          <p>{question.explanation || "Общее объяснение для этого вопроса пока не добавлено."}</p>
+          <OptionFeedbackList question={question} selectedIds={new Set(selected)} />
+        </section>
+      )}
 
       <div className="sticky-actions">
         {mode === "exam"
