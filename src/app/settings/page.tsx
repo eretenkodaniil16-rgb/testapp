@@ -151,9 +151,15 @@ export default function SettingsPage() {
 
   async function checkContentUpdates() {
     setContentBusy(true);
-    setContentStatus("Проверяю GitHub…");
+    setContentStatus("Выполняю полную проверку: приложение, manifest и каждый пакет тестов…");
     try {
-      const result = await refreshContentFromRemote();
+      if ("serviceWorker" in navigator) {
+        const registration = await navigator.serviceWorker.getRegistration();
+        await registration?.update();
+      }
+
+      // Manual verification intentionally bypasses the local package cache so every published package is fetched and validated again.
+      const result = await refreshContentFromRemote(true);
       setContentSummary({
         contentVersion: result.contentVersion,
         packageCount: result.packageCount,
@@ -161,11 +167,11 @@ export default function SettingsPage() {
       });
       setContentStatus(
         result.updated
-          ? `База обновлена: v${result.previousVersion} → v${result.contentVersion}. Все пакеты проверены и сохранены на устройстве.`
-          : `Установлена актуальная база v${result.contentVersion}.`,
+          ? `Полная проверка завершена. База обновлена: v${result.previousVersion} → v${result.contentVersion}. Проверены manifest, ${result.packageCount} пакетов и обновление приложения.`
+          : `Полная проверка завершена. База v${result.contentVersion} актуальна: заново проверены manifest, все ${result.packageCount} пакетов и обновление приложения.`,
       );
     } catch {
-      setContentStatus("GitHub сейчас недоступен или обновление не прошло проверку. Приложение продолжит использовать последнюю целую сохранённую базу.");
+      setContentStatus("Полная проверка не завершилась: GitHub или один из пакетов сейчас недоступен либо пакет не прошёл проверку. Старая целая база остаётся активной.");
     } finally {
       setContentBusy(false);
     }
@@ -254,10 +260,10 @@ export default function SettingsPage() {
 
       <section className="info-card">
         <h2>Обновления тестов из GitHub</h2>
-        <p>Новая база сначала полностью скачивается и проверяется. Только после успешной проверки она заменяет установленную версию, поэтому незавершённое обновление не ломает офлайн-базу.</p>
+        <p>Ручная проверка теперь проходит полностью: приложение проверяет manifest, заново обращается ко всем опубликованным пакетам тестов, валидирует их и одновременно проверяет обновление самого TestApp.</p>
         <label className="toggle-row">
           <input type="checkbox" checked={autoUpdates} onChange={(event) => applyAutoUpdates(event.target.checked)} />
-          <span><strong>Автоматически проверять новые тесты</strong><small>По умолчанию не чаще одного раза в 6 часов при наличии интернета</small></span>
+          <span><strong>Автоматически проверять новые тесты</strong><small>Фоновая проверка остаётся экономной — не чаще одного раза в 6 часов; полная проверка запускается кнопкой ниже</small></span>
         </label>
         <div className="content-source">
           <strong>{contentSummary ? `База v${contentSummary.contentVersion} · ${contentSummary.questionCount} вопросов · ${contentSummary.packageCount} пакетов` : "Читаю версию базы…"}</strong>
@@ -265,7 +271,7 @@ export default function SettingsPage() {
           <a href="https://github.com/eretenkodaniil16-rgb/testapp/tree/content-live/public/content" target="_blank" rel="noreferrer">Открыть ветку тестов в GitHub</a>
         </div>
         <button className="button full-width" onClick={() => void checkContentUpdates()} disabled={contentBusy}>
-          {contentBusy ? "Проверяю…" : "Проверить новые тесты сейчас"}
+          {contentBusy ? "Проверяю всё…" : "Проверить все тесты и обновления"}
         </button>
         {contentStatus && <p>{contentStatus}</p>}
       </section>
