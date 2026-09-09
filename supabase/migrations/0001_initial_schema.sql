@@ -1,14 +1,6 @@
 create extension if not exists pgcrypto;
 
 create type public.question_type as enum ('single_choice','multiple_choice','true_false','text','number','matching','ordering','case');
-create type public.study_mode as enum ('learning','exam','mistakes','weak_topics');
-create type public.attempt_status as enum ('in_progress','completed','abandoned');
-
-create table public.profiles (
-  id uuid primary key references auth.users(id) on delete cascade,
-  display_name text,
-  created_at timestamptz not null default now()
-);
 
 create table public.subjects (
   id uuid primary key default gen_random_uuid(),
@@ -120,58 +112,8 @@ create table public.test_questions (
   primary key(test_definition_id, question_id)
 );
 
-create table public.attempts (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references public.profiles(id) on delete cascade,
-  test_definition_id uuid references public.test_definitions(id),
-  mode public.study_mode not null,
-  status public.attempt_status not null default 'in_progress',
-  started_at timestamptz not null default now(),
-  completed_at timestamptz,
-  correct_count integer,
-  question_count integer,
-  score numeric(6,3)
-);
-
-create table public.attempt_answers (
-  id uuid primary key default gen_random_uuid(),
-  attempt_id uuid not null references public.attempts(id) on delete cascade,
-  question_id uuid not null references public.questions(id),
-  question_revision_id uuid not null references public.question_revisions(id),
-  selected_option_ids uuid[] not null default '{}',
-  text_answer text,
-  numeric_answer numeric,
-  is_correct boolean,
-  response_time_ms integer check (response_time_ms is null or response_time_ms >= 0),
-  answered_at timestamptz not null default now(),
-  unique(attempt_id, question_id)
-);
-
-create table public.review_items (
-  user_id uuid not null references public.profiles(id) on delete cascade,
-  question_id uuid not null references public.questions(id) on delete cascade,
-  stage integer not null default 0,
-  consecutive_correct integer not null default 0,
-  due_at timestamptz not null default now(),
-  last_result boolean,
-  updated_at timestamptz not null default now(),
-  primary key(user_id, question_id)
-);
-
-create table public.review_history (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references public.profiles(id) on delete cascade,
-  question_id uuid not null references public.questions(id) on delete cascade,
-  attempt_answer_id uuid references public.attempt_answers(id) on delete set null,
-  result boolean not null,
-  stage_before integer not null,
-  stage_after integer not null,
-  reviewed_at timestamptz not null default now()
-);
-
 create table public.import_jobs (
   id uuid primary key default gen_random_uuid(),
-  created_by uuid references public.profiles(id) on delete set null,
   file_name text not null,
   format text not null check (format in ('xlsx','csv','docx')),
   status text not null check (status in ('uploaded','validating','needs_review','ready','importing','completed','failed')),
@@ -191,13 +133,14 @@ create table public.import_errors (
   created_at timestamptz not null default now()
 );
 
+create index idx_sections_subject on public.sections(subject_id, sort_order);
+create index idx_topics_section on public.topics(section_id, sort_order);
+create index idx_subtopics_topic on public.subtopics(topic_id, sort_order);
+create index idx_questions_subject on public.questions(subject_id) where is_active;
 create index idx_questions_topic on public.questions(topic_id) where is_active;
 create index idx_question_revisions_question on public.question_revisions(question_id, revision_no desc);
-create index idx_attempts_user_started on public.attempts(user_id, started_at desc);
-create index idx_attempt_answers_attempt on public.attempt_answers(attempt_id);
-create index idx_review_items_due on public.review_items(user_id, due_at);
+create index idx_answer_options_revision on public.answer_options(question_revision_id, sort_order);
 
-alter table public.profiles enable row level security;
 alter table public.subjects enable row level security;
 alter table public.sections enable row level security;
 alter table public.topics enable row level security;
@@ -210,10 +153,8 @@ alter table public.tags enable row level security;
 alter table public.question_tags enable row level security;
 alter table public.test_definitions enable row level security;
 alter table public.test_questions enable row level security;
-alter table public.attempts enable row level security;
-alter table public.attempt_answers enable row level security;
-alter table public.review_items enable row level security;
-alter table public.review_history enable row level security;
+alter table public.import_jobs enable row level security;
+alter table public.import_errors enable row level security;
 
 create policy "public curriculum read" on public.subjects for select using (is_active);
 create policy "public section read" on public.sections for select using (true);
@@ -226,20 +167,11 @@ create policy "public option read" on public.answer_options for select using (tr
 create policy "public tag read" on public.tags for select using (true);
 create policy "public question tag read" on public.question_tags for select using (true);
 create policy "published tests read" on public.test_definitions for select using (is_published);
-create policy "published test questions read" on public.test_questions for select using (exists (select 1 from public.test_definitions td where td.id = test_definition_id and td.is_published));
+create policy "published test questions read" on public.test_questions for select using (
+  exists (
+    select 1 from public.test_definitions td
+    where td.id = test_definition_id and td.is_published
+  )
+);
 
-create policy "own profile read" on public.profiles for select using (auth.uid() = id);
-create policy "own profile update" on public.profiles for update using (auth.uid() = id);
-create policy "own attempts all" on public.attempts for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
-create policy "own attempt answers all" on public.attempt_answers for all using (exists (select 1 from public.attempts a where a.id = attempt_id and a.user_id = auth.uid())) with check (exists (select 1 from public.attempts a where a.id = attempt_id and a.user_id = auth.uid()));
-create policy "own review items all" on public.review_items for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
-create policy "own review history all" on public.review_history for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
-
-create or replace function public.handle_new_user() returns trigger language plpgsql security definer set search_path = '' as $$
-begin
-  insert into public.profiles(id, display_name) values (new.id, coalesce(new.raw_user_meta_data ->> 'display_name', split_part(new.email, '@', 1)));
-  return new;
-end;
-$$;
-
-create trigger on_auth_user_created after insert on auth.users for each row execute procedure public.handle_new_user();
+comment on schema public is 'Shared TestApp content only. Learner progress is stored locally in IndexedDB by default.';
