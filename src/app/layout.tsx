@@ -1,12 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./learning-features.css";
+import "./scientific-features.css";
 import { BottomNav } from "@/components/bottom-nav";
 import { PwaRegister } from "@/components/pwa-register";
 
 export const metadata: Metadata = {
   title: "TestApp",
-  description: "Тренажёр тестовых заданий с экзаменами, анализом слабых тем и интервальным повторением",
+  description: "Тренажёр тестовых заданий с экзаменами, научным разбором, анализом слабых тем и интервальным повторением",
   applicationName: "TestApp",
 };
 
