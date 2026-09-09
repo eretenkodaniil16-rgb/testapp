@@ -88,7 +88,7 @@ async function fetchJson<T>(path: string, cacheBust = false): Promise<T> {
 }
 
 function validateManifest(value: ContentManifest): ContentManifest {
-  if (value.schemaVersion !== 1 || !Array.isArray(value.packages)) {
+  if (value.schemaVersion !== 1 || !Number.isInteger(value.contentVersion) || !Array.isArray(value.packages)) {
     throw new Error("Unsupported TestApp content manifest");
   }
   return value;
@@ -147,21 +147,21 @@ function fallbackPackage(entry: ContentManifestPackage): ContentPackage {
 
 export async function getContentManifest(): Promise<ContentManifest> {
   try {
-    const manifest = await fetchRemoteManifest();
-    await writeRecord(MANIFEST_STORE, MANIFEST_KEY, manifest);
-    return manifest;
+    const cached = await readRecord<ContentManifest>(MANIFEST_STORE, MANIFEST_KEY);
+    if (cached) return validateManifest(cached);
+  } catch {
+    // Continue to the bundled manifest.
+  }
+
+  try {
+    const bundled = await fetchBundledManifest();
+    await writeRecord(MANIFEST_STORE, MANIFEST_KEY, bundled);
+    return bundled;
   } catch {
     try {
-      const cached = await readRecord<ContentManifest>(MANIFEST_STORE, MANIFEST_KEY);
-      if (cached) return cached;
-    } catch {
-      // Continue to the bundled manifest.
-    }
-
-    try {
-      const bundled = await fetchBundledManifest();
-      await writeRecord(MANIFEST_STORE, MANIFEST_KEY, bundled);
-      return bundled;
+      const remote = await fetchRemoteManifest();
+      await writeRecord(MANIFEST_STORE, MANIFEST_KEY, remote);
+      return remote;
     } catch {
       return FALLBACK_MANIFEST;
     }
@@ -172,9 +172,9 @@ export async function getContentPackage(entry: ContentManifestPackage): Promise<
   const cacheKey = `${entry.id}@${entry.version}`;
   try {
     const cached = await readRecord<ContentPackage>(PACKAGE_STORE, cacheKey);
-    if (cached) return cached;
+    if (cached) return validatePackage(cached, entry);
   } catch {
-    // A failed local cache read must not prevent a network load.
+    // A failed local cache read must not prevent loading bundled or remote content.
   }
 
   if (entry.path) {
@@ -183,7 +183,7 @@ export async function getContentPackage(entry: ContentManifestPackage): Promise<
       await writeRecord(PACKAGE_STORE, cacheKey, contentPackage);
       return contentPackage;
     } catch {
-      // The embedded starter questions keep the MVP usable before the first successful content download.
+      // Embedded starter questions keep the app usable if both cache and package source are unavailable.
     }
   }
 
@@ -195,6 +195,20 @@ async function getAllContentPackages(): Promise<ContentPackage[]> {
   return Promise.all(manifest.packages.map((entry) => getContentPackage(entry)));
 }
 
+export async function primeOfflineContent(): Promise<{
+  contentVersion: number;
+  packageCount: number;
+  questionCount: number;
+}> {
+  const manifest = await getContentManifest();
+  const packages = await Promise.all(manifest.packages.map((entry) => getContentPackage(entry)));
+  return {
+    contentVersion: manifest.contentVersion,
+    packageCount: packages.length,
+    questionCount: packages.reduce((sum, item) => sum + item.questions.length, 0),
+  };
+}
+
 export async function refreshContentFromRemote(): Promise<{
   previousVersion: number;
   contentVersion: number;
@@ -202,16 +216,34 @@ export async function refreshContentFromRemote(): Promise<{
   questionCount: number;
   updated: boolean;
 }> {
-  let previousVersion = 0;
-  try {
-    previousVersion = (await readRecord<ContentManifest>(MANIFEST_STORE, MANIFEST_KEY))?.contentVersion ?? 0;
-  } catch {
-    previousVersion = 0;
+  const currentManifest = await getContentManifest();
+  const previousVersion = currentManifest.contentVersion;
+  const manifest = await fetchRemoteManifest(true);
+
+  if (manifest.contentVersion < previousVersion) {
+    throw new Error(`Remote content v${manifest.contentVersion} is older than installed v${previousVersion}`);
   }
 
-  const manifest = await fetchRemoteManifest(true);
+  const downloaded: Array<{ key: string; value: ContentPackage }> = [];
+  for (const entry of manifest.packages) {
+    const cacheKey = `${entry.id}@${entry.version}`;
+    let contentPackage: ContentPackage | null = null;
+    try {
+      const cached = await readRecord<ContentPackage>(PACKAGE_STORE, cacheKey);
+      if (cached) contentPackage = validatePackage(cached, entry);
+    } catch {
+      contentPackage = null;
+    }
+
+    if (!contentPackage) {
+      contentPackage = validatePackage(await fetchJson<ContentPackage>(entry.path, true), entry);
+    }
+    downloaded.push({ key: cacheKey, value: contentPackage });
+  }
+
+  // Commit only after every package has been validated. A partial download never replaces the installed manifest.
+  for (const item of downloaded) await writeRecord(PACKAGE_STORE, item.key, item.value);
   await writeRecord(MANIFEST_STORE, MANIFEST_KEY, manifest);
-  await Promise.all(manifest.packages.map((entry) => getContentPackage(entry)));
 
   return {
     previousVersion,
