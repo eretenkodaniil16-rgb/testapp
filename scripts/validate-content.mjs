@@ -4,6 +4,9 @@ import path from "node:path";
 
 const root = process.cwd();
 const manifestPath = path.join(root, "public", "content", "manifest.json");
+const choiceTypes = new Set(["single_choice", "multiple_choice", "true_false"]);
+const supportedTypes = new Set(["single_choice", "multiple_choice", "true_false", "text", "number", "matching", "ordering", "case"]);
+const scientificStatuses = new Set(["verified", "legacy", "ambiguous", "needs_revision"]);
 
 function fail(message) {
   throw new Error(`[content] ${message}`);
@@ -47,7 +50,9 @@ for (const entry of manifest.packages) {
     questionIds.add(question.id);
     if (question.subjectId !== entry.subjectId) fail(`${question.id}: subjectId does not match package`);
     if (!question.prompt || !question.topicId || !question.topic) fail(`${question.id}: missing prompt/topic metadata`);
-    if (!Array.isArray(question.options) || question.options.length < 2) fail(`${question.id}: at least two options are required`);
+    if (!supportedTypes.has(question.type)) fail(`${question.id}: unsupported question type ${question.type}`);
+    if (!Array.isArray(question.options)) fail(`${question.id}: options must be an array (empty for non-choice questions)`);
+    if (question.scientificStatus && !scientificStatuses.has(question.scientificStatus)) fail(`${question.id}: invalid scientificStatus`);
 
     const optionIds = new Set();
     let correctCount = 0;
@@ -58,9 +63,26 @@ for (const entry of manifest.packages) {
       if (option.correct === true) correctCount += 1;
     }
 
-    if (correctCount < 1) fail(`${question.id}: no correct answer`);
-    if (question.type === "single_choice" && correctCount !== 1) fail(`${question.id}: single_choice must have exactly one correct answer`);
-    if (question.type === "multiple_choice" && correctCount < 1) fail(`${question.id}: multiple_choice must have at least one correct answer`);
+    if (choiceTypes.has(question.type)) {
+      if (question.options.length < 2) fail(`${question.id}: choice question requires at least two options`);
+      if (correctCount < 1) fail(`${question.id}: no correct answer`);
+      if ((question.type === "single_choice" || question.type === "true_false") && correctCount !== 1) fail(`${question.id}: ${question.type} must have exactly one correct answer`);
+    } else if (question.type === "text" || question.type === "number") {
+      if (!Array.isArray(question.acceptedAnswers) || question.acceptedAnswers.length < 1) fail(`${question.id}: text/number question requires acceptedAnswers`);
+    } else if (question.type === "matching") {
+      if (!Array.isArray(question.matchingPairs) || question.matchingPairs.length < 2) fail(`${question.id}: matching question requires at least two pairs`);
+      const pairIds = new Set();
+      for (const pair of question.matchingPairs) {
+        if (!pair.id || !pair.left || !pair.right) fail(`${question.id}: invalid matching pair`);
+        if (pairIds.has(pair.id)) fail(`${question.id}: duplicate matching pair id ${pair.id}`);
+        pairIds.add(pair.id);
+      }
+    } else if (question.type === "case") {
+      if (!Array.isArray(question.caseQuestions) || question.caseQuestions.length < 1) fail(`${question.id}: case question requires caseQuestions`);
+      for (const item of question.caseQuestions) {
+        if (!item.id || !item.prompt || !item.answerLabel || !Array.isArray(item.acceptedAnswers) || item.acceptedAnswers.length < 1) fail(`${question.id}: invalid case subquestion`);
+      }
+    }
   }
 }
 
