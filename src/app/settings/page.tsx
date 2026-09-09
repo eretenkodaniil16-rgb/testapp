@@ -14,6 +14,24 @@ const THEME_KEY = "testapp-theme";
 const AUTO_UPDATE_KEY = "testapp-auto-content-updates";
 type ThemeMode = "light" | "dark";
 
+type InstallPromptEvent = Event & {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+};
+
+type InstallWindow = Window & {
+  __testAppInstallPrompt?: InstallPromptEvent;
+};
+
+type StandaloneNavigator = Navigator & {
+  standalone?: boolean;
+};
+
+function isApplicationInstalled(): boolean {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(display-mode: standalone)").matches || (navigator as StandaloneNavigator).standalone === true;
+}
+
 export default function SettingsPage() {
   const [status, setStatus] = useState<string>("");
   const [theme, setTheme] = useState<ThemeMode>("light");
@@ -23,6 +41,9 @@ export default function SettingsPage() {
   const [offlineStatus, setOfflineStatus] = useState<string>("");
   const [offlineBusy, setOfflineBusy] = useState(false);
   const [storagePersistent, setStoragePersistent] = useState<boolean | null>(null);
+  const [installAvailable, setInstallAvailable] = useState(false);
+  const [appInstalled, setAppInstalled] = useState(false);
+  const [installStatus, setInstallStatus] = useState<string>("");
   const [contentSummary, setContentSummary] = useState<{ contentVersion: number; packageCount: number; questionCount: number } | null>(null);
 
   useEffect(() => {
@@ -39,6 +60,26 @@ export default function SettingsPage() {
     if (navigator.storage?.persisted) {
       navigator.storage.persisted().then(setStoragePersistent).catch(() => setStoragePersistent(null));
     }
+
+    const syncInstallState = () => {
+      const installed = isApplicationInstalled();
+      setAppInstalled(installed);
+      setInstallAvailable(!installed && Boolean((window as InstallWindow).__testAppInstallPrompt));
+    };
+    const handleInstalled = () => {
+      setAppInstalled(true);
+      setInstallAvailable(false);
+      setInstallStatus("TestApp установлен. Теперь его можно запускать с экрана приложений как отдельную программу.");
+    };
+
+    syncInstallState();
+    window.addEventListener("testapp-install-available", syncInstallState);
+    window.addEventListener("testapp-installed", handleInstalled);
+
+    return () => {
+      window.removeEventListener("testapp-install-available", syncInstallState);
+      window.removeEventListener("testapp-installed", handleInstalled);
+    };
   }, []);
 
   function applyTheme(next: ThemeMode) {
@@ -50,6 +91,41 @@ export default function SettingsPage() {
   function applyAutoUpdates(enabled: boolean) {
     window.localStorage.setItem(AUTO_UPDATE_KEY, enabled ? "1" : "0");
     setAutoUpdates(enabled);
+  }
+
+  async function installApplication() {
+    if (isApplicationInstalled()) {
+      setAppInstalled(true);
+      setInstallStatus("TestApp уже установлен на этом устройстве.");
+      return;
+    }
+
+    const installWindow = window as InstallWindow;
+    const prompt = installWindow.__testAppInstallPrompt;
+    if (prompt) {
+      try {
+        await prompt.prompt();
+        const choice = await prompt.userChoice;
+        delete installWindow.__testAppInstallPrompt;
+        setInstallAvailable(false);
+        if (choice.outcome === "accepted") {
+          setAppInstalled(true);
+          setInstallStatus("Установка подтверждена. TestApp появится среди приложений устройства.");
+        } else {
+          setInstallStatus("Установка отменена. Кнопку можно использовать повторно, когда браузер снова предложит установку.");
+        }
+      } catch {
+        setInstallStatus("Браузер не смог запустить установку. Используй пункт «Установить приложение» или «Добавить на главный экран» в меню браузера.");
+      }
+      return;
+    }
+
+    const userAgent = navigator.userAgent.toLowerCase();
+    if (/iphone|ipad|ipod/.test(userAgent)) {
+      setInstallStatus("На iPhone/iPad: открой меню «Поделиться» в Safari → «На экран Домой» → «Добавить». После этого TestApp будет запускаться как отдельное приложение.");
+    } else {
+      setInstallStatus("Браузер пока не передал системное окно установки. Открой меню браузера и выбери «Установить приложение» или «Добавить на главный экран», затем вернись сюда.");
+    }
   }
 
   async function prepareOfflineMode() {
@@ -148,6 +224,19 @@ export default function SettingsPage() {
             <span>Тёмный фон для вечерней работы</span>
           </button>
         </div>
+      </section>
+
+      <section className="info-card">
+        <h2>Установить приложение</h2>
+        <p>Скачай TestApp на устройство как PWA. После установки он появится среди приложений, откроется в отдельном окне и сможет работать автономно.</p>
+        <div className="content-source">
+          <strong>{appInstalled ? "TestApp уже установлен" : installAvailable ? "Приложение готово к установке" : "Установка зависит от возможностей браузера"}</strong>
+          <span>Переустанавливать TestApp при добавлении новых тестов не потребуется — база обновляется отдельно.</span>
+        </div>
+        <button className="button full-width" type="button" onClick={() => void installApplication()} disabled={appInstalled}>
+          {appInstalled ? "Приложение установлено" : "Скачать / установить TestApp"}
+        </button>
+        {installStatus && <p>{installStatus}</p>}
       </section>
 
       <section className="info-card">
