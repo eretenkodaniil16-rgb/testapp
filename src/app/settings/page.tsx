@@ -1,16 +1,11 @@
 "use client";
 
-import { ChangeEvent, useEffect, useState } from "react";
-import { getContentSummary } from "@/lib/content-repository";
+import Link from "next/link";
+import { type ChangeEvent, useState } from "react";
 import { exportProgressBackup, importProgressBackup } from "@/lib/local-progress";
 
 export default function SettingsPage() {
   const [status, setStatus] = useState<string>("");
-  const [contentInfo, setContentInfo] = useState({ contentVersion: 0, packageCount: 0, questionCount: 0 });
-
-  useEffect(() => {
-    void getContentSummary().then(setContentInfo);
-  }, []);
 
   async function downloadBackup() {
     try {
@@ -49,14 +44,8 @@ export default function SettingsPage() {
       <header className="hero compact">
         <p className="eyebrow">ЛОКАЛЬНЫЕ ДАННЫЕ</p>
         <h1>Настройки</h1>
-        <p>Ответы, ошибки и статистика хранятся только в IndexedDB этого устройства. Общая база вопросов публикуется как статические версионированные пакеты.</p>
+        <p>Ответы, ошибки и статистика хранятся только в IndexedDB этого устройства. Общая база вопросов поставляется как статические versioned-пакеты вместе с сайтом.</p>
       </header>
-
-      <section className="info-card">
-        <h2>База вопросов</h2>
-        <p>Версия контента: {contentInfo.contentVersion}. Пакетов: {contentInfo.packageCount}. Опубликовано вопросов: {contentInfo.questionCount}.</p>
-        <p>При появлении новой версии приложение получает новый manifest и скачивает только обновлённые пакеты.</p>
-      </section>
 
       <section className="info-card">
         <h2>Резервная копия прогресса</h2>
@@ -70,8 +59,14 @@ export default function SettingsPage() {
       </section>
 
       <section className="info-card">
+        <h2>Импорт тестов</h2>
+        <p>Административный импортёр читает XLSX локально, проверяет строки и формирует готовый JSON-пакет. Исходный Excel-файл не отправляется на сервер.</p>
+        <Link className="button full-width" href="/admin/import">Открыть XLSX-импорт</Link>
+      </section>
+
+      <section className="info-card">
         <h2>Приватность</h2>
-        <p>Пользовательский прогресс не отправляется в GitHub или какой-либо сервер. Если удалить данные сайта в браузере без резервной копии, локальный прогресс будет потерян.</p>
+        <p>Пользовательский прогресс не отправляется в GitHub или другой централизованный сервис. Если удалить данные сайта в браузере без резервной копии, локальный прогресс будет потерян.</p>
       </section>
     </div>
   );
