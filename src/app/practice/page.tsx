@@ -14,13 +14,21 @@ export default function PracticePage() {
   const [wasCorrect, setWasCorrect] = useState(false);
   const [sessionCorrect, setSessionCorrect] = useState(0);
   const [finished, setFinished] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("mode") === "mistakes") {
-      const mistakeIds = new Set(getUnresolvedMistakeIds(readProgress()));
-      setQuestions(demoQuestions.filter((question) => mistakeIds.has(question.id)));
+    let cancelled = false;
+    async function initialize() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("mode") === "mistakes") {
+        const progress = await readProgress();
+        const mistakeIds = new Set(getUnresolvedMistakeIds(progress));
+        if (!cancelled) setQuestions(demoQuestions.filter((question) => mistakeIds.has(question.id)));
+      }
+      if (!cancelled) setLoading(false);
     }
+    void initialize();
+    return () => { cancelled = true; };
   }, []);
 
   const question = questions[index];
@@ -32,10 +40,10 @@ export default function PracticePage() {
     else setSelected((current) => current.includes(optionId) ? current.filter((id) => id !== optionId) : [...current, optionId]);
   }
 
-  function checkAnswer() {
+  async function checkAnswer() {
     if (!question || selected.length === 0 || checked) return;
     const correct = isAnswerCorrect(correctIds, selected);
-    appendAnswer({
+    await appendAnswer({
       questionId: question.id,
       revisionId: question.revisionId,
       subjectId: question.subjectId,
@@ -60,12 +68,16 @@ export default function PracticePage() {
     setWasCorrect(false);
   }
 
+  if (loading) {
+    return <div className="page"><div className="empty-state"><h1>Загрузка…</h1><p>Читаю локальный прогресс с устройства.</p></div></div>;
+  }
+
   if (questions.length === 0) {
     return <div className="page"><div className="empty-state"><h1>Очередь ошибок пуста</h1><p>Сначала реши несколько вопросов. Ошибочные ответы автоматически попадут сюда.</p><Link className="button" href="/practice">Обычная тренировка</Link></div></div>;
   }
 
   if (finished) {
-    return <div className="page"><div className="empty-state"><p className="eyebrow">ТРЕНИРОВКА ЗАВЕРШЕНА</p><h1>{sessionCorrect} / {questions.length}</h1><p>Результат сохранён локально на этом устройстве. После подключения Supabase история будет синхронизироваться с аккаунтом.</p><Link className="button" href="/statistics">Открыть статистику</Link></div></div>;
+    return <div className="page"><div className="empty-state"><p className="eyebrow">ТРЕНИРОВКА ЗАВЕРШЕНА</p><h1>{sessionCorrect} / {questions.length}</h1><p>Результат сохранён локально в IndexedDB этого устройства и не отправляется в облако.</p><Link className="button" href="/statistics">Открыть статистику</Link></div></div>;
   }
 
   return (
@@ -95,7 +107,7 @@ export default function PracticePage() {
       {checked && <section className={`feedback ${wasCorrect ? "feedback-correct" : "feedback-wrong"}`}><h3>{wasCorrect ? "Правильно" : "Неправильно"}</h3><p>{question.explanation}</p></section>}
 
       <div className="sticky-actions">
-        {!checked ? <button className="button" onClick={checkAnswer} disabled={selected.length === 0}>Проверить ответ</button> : <button className="button" onClick={nextQuestion}>Следующий вопрос</button>}
+        {!checked ? <button className="button" onClick={() => void checkAnswer()} disabled={selected.length === 0}>Проверить ответ</button> : <button className="button" onClick={nextQuestion}>Следующий вопрос</button>}
       </div>
     </div>
   );
