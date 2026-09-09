@@ -254,7 +254,7 @@ export function buildContentPackageFromRows(
       return;
     }
 
-    const optionLabels = new Set(answerOptions.map((item) => item.label));
+    const optionLabels = new Set<string>(answerOptions.map((item) => item.label));
     const missingCorrect = parsedCorrect.labels.filter((label) => !optionLabels.has(label));
     if (missingCorrect.length > 0) {
       issues.push({ severity: "error", row: rowNumber, field: "correct", message: `Ключ ссылается на пустой вариант: ${missingCorrect.join(", ")}.` });
