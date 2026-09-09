@@ -14,7 +14,9 @@ Mobile-first PWA for educational test practice with local progress, mistake revi
 - basic topic statistics;
 - local JSON backup/restore;
 - versioned static content manifest + package loader;
-- per-subject practice links;
+- navigation `discipline → section → topic`;
+- training constructor with topic selection, question count and optional shuffling;
+- read-only question bank showing correct answers without recording an attempt;
 - browser-local XLSX import with validation, preview and JSON-package export;
 - PWA manifest + service worker;
 - CI content validation, typecheck and production build.
@@ -53,10 +55,17 @@ See:
 - `docs/content-format.md`;
 - `docs/xlsx-import.md`.
 
-## XLSX import
+## Main routes
 
-Open `/admin/import` in the running app. The workbook is parsed only on the device; it is not uploaded. The importer supports English and Russian column aliases, validates rows, previews questions and exports a versioned package plus a manifest-entry snippet.
+- `/` — dashboard and discipline catalog;
+- `/subjects/[subjectId]` — sections and topics;
+- `/practice/setup` — training constructor;
+- `/practice` — active training session;
+- `/questions` — questions with correct answers, no attempt recording;
+- `/mistakes` — unresolved local mistakes;
+- `/statistics` — local statistics;
+- `/admin/import` — local XLSX import and validation.
 
 ## Next milestone
 
-Expand navigation to `discipline → section → topic`, add generated training configuration and then build exam mode / weak-topic practice.
+Add exam mode, weak-topic practice and a real spaced-repetition scheduler, then expand supported question types beyond choice questions.

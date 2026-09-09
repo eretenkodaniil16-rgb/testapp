@@ -84,3 +84,21 @@ export interface ContentPackage {
   sections: ContentSection[];
   questions: PracticeQuestion[];
 }
+
+export interface ContentCatalogTopic extends ContentTopic {
+  questionCount: number;
+}
+
+export interface ContentCatalogSection {
+  id: string;
+  title: string;
+  questionCount: number;
+  topics: ContentCatalogTopic[];
+}
+
+export interface ContentCatalogSubject {
+  id: string;
+  title: string;
+  questionCount: number;
+  sections: ContentCatalogSection[];
+}

@@ -1,5 +1,7 @@
 import { demoQuestions } from "@/lib/demo-data";
 import type {
+  ContentCatalogSection,
+  ContentCatalogSubject,
   ContentManifest,
   ContentManifestPackage,
   ContentPackage,
@@ -142,9 +144,13 @@ export async function getContentPackage(entry: ContentManifestPackage): Promise<
   return fallbackPackage(entry);
 }
 
-export async function getAllQuestions(): Promise<PracticeQuestion[]> {
+async function getAllContentPackages(): Promise<ContentPackage[]> {
   const manifest = await getContentManifest();
-  const packages = await Promise.all(manifest.packages.map((entry) => getContentPackage(entry)));
+  return Promise.all(manifest.packages.map((entry) => getContentPackage(entry)));
+}
+
+export async function getAllQuestions(): Promise<PracticeQuestion[]> {
+  const packages = await getAllContentPackages();
   return packages.flatMap((contentPackage) => contentPackage.questions);
 }
 
@@ -157,6 +163,68 @@ export async function getContentSubjects(): Promise<Array<{ id: string; title: s
     subjects.set(entry.subjectId, current);
   }
   return [...subjects.values()];
+}
+
+export async function getContentCatalogTree(): Promise<ContentCatalogSubject[]> {
+  const packages = await getAllContentPackages();
+  const subjects = new Map<string, {
+    id: string;
+    title: string;
+    sections: Map<string, {
+      id: string;
+      title: string;
+      topics: Map<string, { id: string; title: string }>;
+    }>;
+    questions: PracticeQuestion[];
+  }>();
+
+  for (const contentPackage of packages) {
+    const current = subjects.get(contentPackage.subject.id) ?? {
+      id: contentPackage.subject.id,
+      title: contentPackage.subject.title,
+      sections: new Map(),
+      questions: [],
+    };
+    current.questions.push(...contentPackage.questions);
+
+    for (const section of contentPackage.sections) {
+      const sectionEntry = current.sections.get(section.id) ?? {
+        id: section.id,
+        title: section.title,
+        topics: new Map(),
+      };
+      for (const topic of section.topics) sectionEntry.topics.set(topic.id, topic);
+      current.sections.set(section.id, sectionEntry);
+    }
+    subjects.set(contentPackage.subject.id, current);
+  }
+
+  return [...subjects.values()].map((subject): ContentCatalogSubject => {
+    const topicCounts = new Map<string, number>();
+    for (const question of subject.questions) {
+      topicCounts.set(question.topicId, (topicCounts.get(question.topicId) ?? 0) + 1);
+    }
+
+    const sections: ContentCatalogSection[] = [...subject.sections.values()].map((section) => {
+      const topics = [...section.topics.values()].map((topic) => ({
+        ...topic,
+        questionCount: topicCounts.get(topic.id) ?? 0,
+      }));
+      return {
+        id: section.id,
+        title: section.title,
+        questionCount: topics.reduce((sum, topic) => sum + topic.questionCount, 0),
+        topics,
+      };
+    });
+
+    return {
+      id: subject.id,
+      title: subject.title,
+      questionCount: subject.questions.length,
+      sections,
+    };
+  });
 }
 
 export async function getContentSummary(): Promise<{ contentVersion: number; packageCount: number; questionCount: number }> {

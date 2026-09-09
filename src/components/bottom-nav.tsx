@@ -4,7 +4,8 @@ export function BottomNav() {
   return (
     <nav className="bottom-nav" aria-label="Основная навигация">
       <Link href="/">Главная</Link>
-      <Link href="/practice">Тренировка</Link>
+      <Link href="/practice/setup">Тренировка</Link>
+      <Link href="/questions">Вопросы</Link>
       <Link href="/mistakes">Ошибки</Link>
       <Link href="/statistics">Статистика</Link>
       <Link href="/settings">Настройки</Link>

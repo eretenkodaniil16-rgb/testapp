@@ -6,6 +6,15 @@ import { getAllQuestions } from "@/lib/content-repository";
 import { appendAnswer, getUnresolvedMistakeIds, isAnswerCorrect, readProgress } from "@/lib/local-progress";
 import type { PracticeQuestion } from "@/types/domain";
 
+function shuffled<T>(items: T[]): T[] {
+  const next = [...items];
+  for (let i = next.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [next[i], next[j]] = [next[j], next[i]];
+  }
+  return next;
+}
+
 export default function PracticePage() {
   const [questions, setQuestions] = useState<PracticeQuestion[]>([]);
   const [index, setIndex] = useState(0);
@@ -23,14 +32,23 @@ export default function PracticePage() {
       const params = new URLSearchParams(window.location.search);
       const mode = params.get("mode");
       const subject = params.get("subject");
+      const topics = new Set((params.get("topics") ?? "").split(",").filter(Boolean));
+      const countRaw = Number(params.get("count"));
+      const limit = Number.isInteger(countRaw) && countRaw > 0 ? countRaw : null;
+      const shouldShuffle = params.get("shuffle") !== "0";
+
       const allQuestions = await getAllQuestions();
       let nextQuestions = subject ? allQuestions.filter((question) => question.subjectId === subject) : allQuestions;
+      if (topics.size > 0) nextQuestions = nextQuestions.filter((question) => topics.has(question.topicId));
 
       if (mode === "mistakes") {
         const progress = await readProgress();
         const mistakeIds = new Set(getUnresolvedMistakeIds(progress));
         nextQuestions = nextQuestions.filter((question) => mistakeIds.has(question.id));
       }
+
+      if (shouldShuffle) nextQuestions = shuffled(nextQuestions);
+      if (limit) nextQuestions = nextQuestions.slice(0, limit);
 
       if (!cancelled) {
         setMistakesMode(mode === "mistakes");
@@ -80,21 +98,32 @@ export default function PracticePage() {
   }
 
   if (loading) {
-    return <div className="page"><div className="empty-state"><h1>Загрузка…</h1><p>Читаю опубликованные пакеты вопросов и локальный прогресс.</p></div></div>;
+    return <div className="page"><div className="empty-state"><h1>Загрузка…</h1><p>Подготавливаю выбранный набор вопросов.</p></div></div>;
   }
 
   if (questions.length === 0) {
     return (
       <div className="page"><div className="empty-state">
         <h1>{mistakesMode ? "Очередь ошибок пуста" : "Вопросов пока нет"}</h1>
-        <p>{mistakesMode ? "Сначала реши несколько вопросов. Ошибочные ответы автоматически попадут сюда." : "Для выбранного раздела ещё не опубликован пакет вопросов."}</p>
-        <Link className="button" href="/practice">Обычная тренировка</Link>
+        <p>{mistakesMode ? "Сначала реши несколько вопросов. Ошибочные ответы автоматически попадут сюда." : "Для выбранных тем пока нет опубликованных вопросов."}</p>
+        <Link className="button" href="/practice/setup">Настроить другую тренировку</Link>
       </div></div>
     );
   }
 
   if (finished) {
-    return <div className="page"><div className="empty-state"><p className="eyebrow">ТРЕНИРОВКА ЗАВЕРШЕНА</p><h1>{sessionCorrect} / {questions.length}</h1><p>Результат сохранён локально в IndexedDB этого устройства и никуда не отправляется.</p><Link className="button" href="/statistics">Открыть статистику</Link></div></div>;
+    const percent = Math.round((sessionCorrect / questions.length) * 100);
+    return (
+      <div className="page"><div className="empty-state">
+        <p className="eyebrow">ТРЕНИРОВКА ЗАВЕРШЕНА</p>
+        <h1>{sessionCorrect} / {questions.length}</h1>
+        <p>Точность: {percent}%. Результат сохранён локально в IndexedDB этого устройства и никуда не отправляется.</p>
+        <div className="finish-actions">
+          <Link className="button" href="/statistics">Открыть статистику</Link>
+          <Link className="button button-secondary" href="/practice/setup">Новая тренировка</Link>
+        </div>
+      </div></div>
+    );
   }
 
   return (
@@ -121,7 +150,7 @@ export default function PracticePage() {
         </div>
       </section>
 
-      {checked && <section className={`feedback ${wasCorrect ? "feedback-correct" : "feedback-wrong"}`}><h3>{wasCorrect ? "Правильно" : "Неправильно"}</h3><p>{question.explanation}</p></section>}
+      {checked && <section className={`feedback ${wasCorrect ? "feedback-correct" : "feedback-wrong"}`}><h3>{wasCorrect ? "Правильно" : "Неправильно"}</h3><p>{question.explanation || "Объяснение для этого вопроса пока не добавлено."}</p></section>}
 
       <div className="sticky-actions">
         {!checked ? <button className="button" onClick={() => void checkAnswer()} disabled={selected.length === 0}>Проверить ответ</button> : <button className="button" onClick={nextQuestion}>Следующий вопрос</button>}

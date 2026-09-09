@@ -22,10 +22,17 @@ The app checks the manifest when online. Packages are cached by `package id + ve
 
 The learner history is stored separately from content, so updating or replacing question packages cannot erase progress.
 
+## Navigation and study flows
+
+The learner can navigate `discipline → section → topic` before starting a session. The training constructor can select one or more topics, limit the number of questions and optionally shuffle them.
+
+The `/questions` route is intentionally read-only: it shows question text, correct answer(s) and explanation without creating an attempt or changing statistics. This is a separate learning mode from active testing.
+
 ## Current study modes
 
 - `learning`: immediate feedback and explanation;
 - `mistakes`: unresolved local review queue;
+- read-only answer bank: question list with correct answers, no progress write;
 - `exam`: planned;
 - `weak_topics`: planned from local statistics.
 
@@ -33,22 +40,20 @@ A mistake stays unresolved until two correct answers occur after the most recent
 
 ## Import strategy
 
-XLSX is now the canonical bulk-import source. `/admin/import` parses the workbook entirely in the browser, validates rows, previews the result and generates an immutable JSON package plus a manifest-entry snippet. The selected spreadsheet is not uploaded anywhere.
-
-The importer deliberately does not write directly to GitHub because a public PWA must never contain a repository write token. Publication remains a reviewed repository operation. CSV can reuse the same normalized row pipeline later; DOCX remains a future staged/review-required parser.
+XLSX/CSV is the canonical bulk-import source. Import does not write directly into a live database. Instead it validates rows and generates deterministic JSON content packages plus an updated manifest. DOCX import may be added later as a staged, review-required parser.
 
 ## Deployment model
 
-GitHub stores source code, content packages and version history. CI validates the static content schema, TypeScript and production build. A static/Next-compatible host serves the PWA and files from `public/content`.
+GitHub stores source code, content packages and version history. CI validates content schemas, TypeScript and the production build. A static/Next-compatible host serves the PWA and files from `public/content`.
 
 ## Roadmap
 
 1. Mobile-first PWA and local progress — implemented.
 2. IndexedDB progress + backup/restore — implemented.
 3. Static content manifest and versioned package loader — implemented.
-4. Browser-local XLSX validation/preview/package export — implemented.
-5. Full `subject → section → topic` navigation and generated training configuration.
-6. Exam mode, weak-topic analytics and spaced repetition.
-7. Case, matching, ordering, text and numeric questions.
-8. Stronger offline package management and install UX.
-9. Optional staged DOCX/CSV import and richer authoring tools.
+4. Discipline/section/topic navigation and generated training sets — implemented.
+5. XLSX import with schema validation and preview — implemented.
+6. Read-only question bank with correct answers — implemented.
+7. Exam mode, weak-topic analytics and spaced repetition.
+8. Case, matching, ordering, text and numeric questions.
+9. Stronger offline package management and install UX.

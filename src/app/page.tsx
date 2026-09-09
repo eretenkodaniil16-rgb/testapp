@@ -14,9 +14,13 @@ export default function HomePage() {
       <DashboardSummary />
 
       <section className="action-grid" aria-label="Быстрые действия">
-        <Link className="primary-card" href="/practice">
-          <span>Начать тренировку</span>
-          <small>Все опубликованные вопросы</small>
+        <Link className="primary-card" href="/practice/setup">
+          <span>Настроить тренировку</span>
+          <small>Выбрать дисциплину, темы и количество вопросов</small>
+        </Link>
+        <Link className="secondary-card" href="/questions">
+          <span>Список вопросов</span>
+          <small>Просмотр вопросов сразу с правильными ответами</small>
         </Link>
         <Link className="secondary-card" href="/practice?mode=mistakes">
           <span>Повторить ошибки</span>
@@ -25,7 +29,7 @@ export default function HomePage() {
       </section>
 
       <section>
-        <div className="section-title"><h2>Дисциплины</h2><span>статические пакеты</span></div>
+        <div className="section-title"><h2>Дисциплины</h2><span>разделы и темы</span></div>
         <ContentCatalog />
       </section>
 

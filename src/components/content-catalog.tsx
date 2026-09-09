@@ -26,7 +26,7 @@ export function ContentCatalog() {
   return (
     <div className="subject-list">
       {subjects.map((subject) => (
-        <Link className="subject-card subject-card-link" href={`/practice?subject=${encodeURIComponent(subject.id)}`} key={subject.id}>
+        <Link className="subject-card subject-card-link" href={`/subjects/${encodeURIComponent(subject.id)}`} key={subject.id}>
           <div>
             <h3>{subject.title}</h3>
             <p>{subject.questionCount} {subject.questionCount === 1 ? "вопрос" : "вопросов"} в опубликованном пакете</p>

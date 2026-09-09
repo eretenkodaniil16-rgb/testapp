@@ -1,5 +1,5 @@
-const CACHE = "testapp-shell-v2";
-const SHELL = ["/", "/practice", "/mistakes", "/statistics", "/settings", "/content/manifest.json"];
+const CACHE = "testapp-shell-v3";
+const SHELL = ["/", "/practice/setup", "/questions", "/mistakes", "/statistics", "/settings"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)));
