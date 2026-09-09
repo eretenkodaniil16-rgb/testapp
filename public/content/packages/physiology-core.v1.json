@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "physiology-core",
+  "version": 1,
+  "subject": {
+    "id": "physiology",
+    "title": "Физиология"
+  },
+  "sections": [
+    {
+      "id": "excitable-tissues",
+      "title": "Возбудимые ткани",
+      "topics": [
+        { "id": "membrane-potential", "title": "Потенциал действия" }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "physiology.membrane-potential.action-potential.000001",
+      "revisionId": "physiology.membrane-potential.action-potential.000001-r1",
+      "subjectId": "physiology",
+      "topicId": "membrane-potential",
+      "subject": "Физиология",
+      "topic": "Потенциал действия",
+      "type": "multiple_choice",
+      "prompt": "Какие процессы непосредственно участвуют в формировании типичного потенциала действия возбудимой клетки? Выберите все подходящие ответы.",
+      "explanation": "Потенциал действия формируется за счёт последовательных изменений проницаемости мембраны для ионов, прежде всего через потенциал-зависимые каналы.",
+      "options": [
+        { "id": "a", "label": "A", "text": "Изменение мембранной проницаемости для Na⁺", "correct": true },
+        { "id": "b", "label": "B", "text": "Изменение мембранной проницаемости для K⁺", "correct": true },
+        { "id": "c", "label": "C", "text": "Необратимое разрушение мембраны", "correct": false },
+        { "id": "d", "label": "D", "text": "Работа потенциал-зависимых ионных каналов", "correct": true }
+      ]
+    }
+  ]
+}

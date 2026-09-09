@@ -1,10 +1,16 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import { getContentSummary } from "@/lib/content-repository";
 import { exportProgressBackup, importProgressBackup } from "@/lib/local-progress";
 
 export default function SettingsPage() {
   const [status, setStatus] = useState<string>("");
+  const [contentInfo, setContentInfo] = useState({ contentVersion: 0, packageCount: 0, questionCount: 0 });
+
+  useEffect(() => {
+    void getContentSummary().then(setContentInfo);
+  }, []);
 
   async function downloadBackup() {
     try {
@@ -43,8 +49,14 @@ export default function SettingsPage() {
       <header className="hero compact">
         <p className="eyebrow">ЛОКАЛЬНЫЕ ДАННЫЕ</p>
         <h1>Настройки</h1>
-        <p>Ответы, ошибки и статистика хранятся только в IndexedDB этого устройства. Supabase получает только общую библиотеку тестов.</p>
+        <p>Ответы, ошибки и статистика хранятся только в IndexedDB этого устройства. Общая база вопросов публикуется как статические версионированные пакеты.</p>
       </header>
+
+      <section className="info-card">
+        <h2>База вопросов</h2>
+        <p>Версия контента: {contentInfo.contentVersion}. Пакетов: {contentInfo.packageCount}. Опубликовано вопросов: {contentInfo.questionCount}.</p>
+        <p>При появлении новой версии приложение получает новый manifest и скачивает только обновлённые пакеты.</p>
+      </section>
 
       <section className="info-card">
         <h2>Резервная копия прогресса</h2>
@@ -59,7 +71,7 @@ export default function SettingsPage() {
 
       <section className="info-card">
         <h2>Приватность</h2>
-        <p>Пользовательский прогресс не отправляется в GitHub или Supabase. Если удалить данные сайта в браузере без резервной копии, локальный прогресс будет потерян.</p>
+        <p>Пользовательский прогресс не отправляется в GitHub или какой-либо сервер. Если удалить данные сайта в браузере без резервной копии, локальный прогресс будет потерян.</p>
       </section>
     </div>
   );

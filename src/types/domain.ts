@@ -45,3 +45,42 @@ export interface ProgressStore {
   schemaVersion: 2;
   answers: StoredAnswer[];
 }
+
+export interface ContentManifestPackage {
+  id: string;
+  subjectId: string;
+  title: string;
+  version: number;
+  path: string;
+  questionCount: number;
+}
+
+export interface ContentManifest {
+  schemaVersion: 1;
+  contentVersion: number;
+  publishedAt: string;
+  packages: ContentManifestPackage[];
+}
+
+export interface ContentTopic {
+  id: string;
+  title: string;
+}
+
+export interface ContentSection {
+  id: string;
+  title: string;
+  topics: ContentTopic[];
+}
+
+export interface ContentPackage {
+  schemaVersion: 1;
+  id: string;
+  version: number;
+  subject: {
+    id: string;
+    title: string;
+  };
+  sections: ContentSection[];
+  questions: PracticeQuestion[];
+}

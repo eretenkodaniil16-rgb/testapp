@@ -2,52 +2,50 @@
 
 ## Principle
 
-TestApp is a question-bank engine, not a collection of independent test files. A stable question may appear in many generated or fixed tests without duplication.
+TestApp is a local-first PWA backed by versioned static content packages. It does not require Supabase or another database service for the current product scope.
 
-## Content hierarchy
+## Shared content
 
-`subject → section → topic → subtopic`
+The repository contains a small `public/content/manifest.json` plus one or more immutable package files. The manifest is the update index; a package is replaced by publishing a new package version and then updating the manifest.
 
-Questions can additionally have tags, sources, source variants and stable codes. The hierarchy controls navigation; tags enable cross-cutting selections.
+Curriculum keeps the logical hierarchy `subject → section → topic → subtopic`. Questions use stable IDs and separate revision IDs. A wording/key correction therefore creates a new revision without changing the stable question identity.
 
-## Question versioning
+## Learner data
 
-A question has a stable `questions.id`. Editable content lives in `question_revisions`. Published content is revisioned so an updated key or wording never silently replaces the historical source version.
+Answers, mistakes, statistics, review state and unfinished work remain on the learner's device in IndexedDB. They are never written to GitHub or a central server by default.
 
-## Study modes
+The app supports JSON backup/restore for moving progress between devices or protecting it before browser-data cleanup. Future cloud sync, if ever added, must remain optional.
+
+## Content caching and offline behavior
+
+The app checks the manifest when online. Packages are cached by `package id + version` in a dedicated `testapp-content` IndexedDB database. A new manifest version can point to new package versions while old cached packages remain harmless. The service worker also caches fetched GET resources as an additional offline layer.
+
+The learner history is stored separately from content, so updating or replacing question packages cannot erase progress.
+
+## Current study modes
 
 - `learning`: immediate feedback and explanation;
-- `exam`: feedback after completion;
 - `mistakes`: unresolved local review queue;
-- `weak_topics`: generated from local topic-level performance.
+- `exam`: planned;
+- `weak_topics`: planned from local statistics.
 
-The MVP implements learning mode and a local mistake queue. A mistake remains unresolved until two correct answers occur after the most recent wrong answer.
-
-## Data boundary
-
-TestApp is local-first for learner data.
-
-Supabase stores shared content only: curriculum, questions, revisions, answer options, tags, sources and published test definitions. Learner answers, mistakes, statistics, review state and unfinished attempts are not uploaded to Supabase by default.
-
-The browser stores learner progress in IndexedDB. The first IndexedDB read automatically migrates the original MVP `localStorage` record when present. This prevents server storage from growing with the number of students and keeps personal learning history private to the device.
-
-Users can export their local progress to a TestApp JSON backup and restore it on another device. A future cloud-sync feature, if added, must remain optional.
-
-## Offline strategy
-
-The PWA may cache downloaded content packages and the application shell. Once a question set is cached, answering and progress tracking must continue without a network connection. Network access is needed only for content discovery/update and future optional services.
+A mistake stays unresolved until two correct answers occur after the most recent wrong answer.
 
 ## Import strategy
 
-XLSX/CSV is the canonical bulk-import route because its columns can map deterministically to the internal model. DOCX will be secondary and must stage parsed questions for validation rather than silently importing ambiguous structures.
+XLSX/CSV will be the canonical bulk-import source. Import does not write directly into a live database. Instead it validates rows and generates deterministic JSON content packages plus an updated manifest. DOCX import may be added later as a staged, review-required parser.
+
+## Deployment model
+
+GitHub stores source code, content packages and version history. CI validates TypeScript/builds and later will also validate content schemas. A static/Next-compatible host serves the PWA and files from `public/content`.
 
 ## Roadmap
 
-1. Bootstrap UI, domain types, IndexedDB learning history and local review queue.
-2. Backup/restore of learner progress.
-3. Connect Supabase as a shared content backend only.
-4. Subject/topic navigation and generated tests.
-5. XLSX import with validation and preview.
-6. Exam mode, advanced analytics and spaced repetition scheduler.
+1. Mobile-first PWA and local progress.
+2. IndexedDB progress + backup/restore.
+3. Static content manifest and versioned package loader.
+4. Subject/topic navigation and generated training sets.
+5. XLSX import with schema validation and preview.
+6. Exam mode, weak-topic analytics and spaced repetition.
 7. Case, matching, ordering, text and numeric questions.
-8. Offline content packages and richer PWA installation experience.
+8. Stronger offline package management and install UX.

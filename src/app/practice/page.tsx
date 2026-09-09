@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { demoQuestions } from "@/lib/demo-data";
+import { getAllQuestions } from "@/lib/content-repository";
 import { appendAnswer, getUnresolvedMistakeIds, isAnswerCorrect, readProgress } from "@/lib/local-progress";
 import type { PracticeQuestion } from "@/types/domain";
 
 export default function PracticePage() {
-  const [questions, setQuestions] = useState<PracticeQuestion[]>(demoQuestions);
+  const [questions, setQuestions] = useState<PracticeQuestion[]>([]);
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<string[]>([]);
   const [checked, setChecked] = useState(false);
@@ -15,17 +15,28 @@ export default function PracticePage() {
   const [sessionCorrect, setSessionCorrect] = useState(0);
   const [finished, setFinished] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [mistakesMode, setMistakesMode] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
     async function initialize() {
       const params = new URLSearchParams(window.location.search);
-      if (params.get("mode") === "mistakes") {
+      const mode = params.get("mode");
+      const subject = params.get("subject");
+      const allQuestions = await getAllQuestions();
+      let nextQuestions = subject ? allQuestions.filter((question) => question.subjectId === subject) : allQuestions;
+
+      if (mode === "mistakes") {
         const progress = await readProgress();
         const mistakeIds = new Set(getUnresolvedMistakeIds(progress));
-        if (!cancelled) setQuestions(demoQuestions.filter((question) => mistakeIds.has(question.id)));
+        nextQuestions = nextQuestions.filter((question) => mistakeIds.has(question.id));
       }
-      if (!cancelled) setLoading(false);
+
+      if (!cancelled) {
+        setMistakesMode(mode === "mistakes");
+        setQuestions(nextQuestions);
+        setLoading(false);
+      }
     }
     void initialize();
     return () => { cancelled = true; };
@@ -69,15 +80,21 @@ export default function PracticePage() {
   }
 
   if (loading) {
-    return <div className="page"><div className="empty-state"><h1>Загрузка…</h1><p>Читаю локальный прогресс с устройства.</p></div></div>;
+    return <div className="page"><div className="empty-state"><h1>Загрузка…</h1><p>Читаю опубликованные пакеты вопросов и локальный прогресс.</p></div></div>;
   }
 
   if (questions.length === 0) {
-    return <div className="page"><div className="empty-state"><h1>Очередь ошибок пуста</h1><p>Сначала реши несколько вопросов. Ошибочные ответы автоматически попадут сюда.</p><Link className="button" href="/practice">Обычная тренировка</Link></div></div>;
+    return (
+      <div className="page"><div className="empty-state">
+        <h1>{mistakesMode ? "Очередь ошибок пуста" : "Вопросов пока нет"}</h1>
+        <p>{mistakesMode ? "Сначала реши несколько вопросов. Ошибочные ответы автоматически попадут сюда." : "Для выбранного раздела ещё не опубликован пакет вопросов."}</p>
+        <Link className="button" href="/practice">Обычная тренировка</Link>
+      </div></div>
+    );
   }
 
   if (finished) {
-    return <div className="page"><div className="empty-state"><p className="eyebrow">ТРЕНИРОВКА ЗАВЕРШЕНА</p><h1>{sessionCorrect} / {questions.length}</h1><p>Результат сохранён локально в IndexedDB этого устройства и не отправляется в облако.</p><Link className="button" href="/statistics">Открыть статистику</Link></div></div>;
+    return <div className="page"><div className="empty-state"><p className="eyebrow">ТРЕНИРОВКА ЗАВЕРШЕНА</p><h1>{sessionCorrect} / {questions.length}</h1><p>Результат сохранён локально в IndexedDB этого устройства и никуда не отправляется.</p><Link className="button" href="/statistics">Открыть статистику</Link></div></div>;
   }
 
   return (

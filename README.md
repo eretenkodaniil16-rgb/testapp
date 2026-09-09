@@ -1,22 +1,28 @@
 # TestApp
 
-Mobile-first PWA for solving educational test questions, preserving results and systematically repeating mistakes.
+Mobile-first PWA for educational test practice with local progress, mistake review and versioned static question packages.
 
 ## Current MVP
 
 - Next.js App Router + TypeScript;
 - responsive phone-first UI;
-- learning-mode question engine;
-- single-choice and multiple-choice questions;
+- learning-mode engine for single-choice and multiple-choice questions;
 - immediate feedback and explanations;
-- local answer history in IndexedDB;
+- learner history in IndexedDB;
 - automatic migration from the original localStorage MVP;
 - mistake queue: a question is cleared after two correct answers following the latest mistake;
 - basic topic statistics;
-- local progress backup/restore through a JSON file;
-- PWA manifest + service worker shell;
-- versioned PostgreSQL/Supabase content schema;
+- local JSON backup/restore;
+- versioned static content manifest + package loader;
+- per-subject practice links;
+- PWA manifest + service worker;
 - CI typecheck and production build.
+
+## No required backend database
+
+TestApp currently does not require Supabase or another database service. Shared questions are committed as static JSON packages under `public/content`. GitHub provides source/content version history, while learner answers remain on each user's device.
+
+This means adding more students does not create a growing central table of attempts or statistics.
 
 ## Run locally
 
@@ -29,12 +35,21 @@ Open `http://localhost:3000`.
 
 ## Architecture
 
-The application is a unified question bank, not a folder of independent tests. Curriculum uses `subject → section → topic → subtopic`; questions may also have tags and sources. Editable content is revisioned.
+Shared content and learner state are intentionally separate:
 
-Learner progress is local-first. Answers, mistakes, statistics, review state and unfinished attempts stay in IndexedDB on the user's device and are not written to Supabase by default. Supabase stores only shared curriculum and question content, so server storage does not grow proportionally to the number of students.
+- shared content: `public/content/manifest.json` + immutable versioned package files;
+- content cache: browser `testapp-content` IndexedDB;
+- learner progress: local IndexedDB only;
+- backup/transfer: exported TestApp JSON file.
 
-See `docs/architecture.md` and `docs/database.md`.
+Questions use stable IDs and explicit revision IDs so content corrections do not destroy learning history.
+
+See:
+
+- `docs/architecture.md`;
+- `docs/storage.md`;
+- `docs/content-format.md`.
 
 ## Next milestone
 
-Connect a free Supabase project as the shared content backend, apply `supabase/migrations/0001_initial_schema.sql`, build subject/topic browsing and then add validated XLSX import.
+Build the validated XLSX → preview → JSON-package import pipeline, then expand subject/topic navigation and generated training configuration.
