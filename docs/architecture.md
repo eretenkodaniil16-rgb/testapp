@@ -6,41 +6,62 @@ TestApp is a local-first PWA backed by versioned static content packages. It doe
 
 ## Shared content
 
-The repository contains a small `public/content/manifest.json` plus one or more immutable package files. The manifest is the update index; a package is replaced by publishing a new package version and then updating the manifest.
+The repository contains `public/content/manifest.json` plus immutable versioned package files. The manifest is the update index; a package is changed by publishing a new package version and updating the manifest.
 
-Curriculum keeps the logical hierarchy `subject → section → topic → subtopic`. Questions use stable IDs and separate revision IDs. A wording/key correction therefore creates a new revision without changing the stable question identity.
+Curriculum keeps the hierarchy `subject → section → topic → subtopic`. Questions use stable IDs and separate revision IDs so wording/key corrections do not change semantic question identity.
 
 ## Learner data
 
-Answers, mistakes, statistics, review state and unfinished work remain on the learner's device in IndexedDB. They are never written to GitHub or a central server by default.
+Answers, exam results, mistake state, topic performance and spaced-repetition scheduling remain in browser IndexedDB. They are never written to GitHub or a central server by default.
 
-The app supports JSON backup/restore for moving progress between devices or protecting it before browser-data cleanup. Future cloud sync, if ever added, must remain optional.
+The progress store automatically migrates the original localStorage MVP and older IndexedDB records. Backup/restore serializes the complete local learner state, including review scheduling.
+
+## Spaced repetition
+
+Every submitted answer updates a local review record keyed by stable question ID.
+
+- incorrect answer: interval resets to 1 day, lapse counter increases and ease factor decreases;
+- first correct answer: 2-day interval;
+- second consecutive correct answer: 5-day interval;
+- later correct answers: previous interval is multiplied by the current ease factor, with a minimum 7-day interval;
+- correct answers gradually increase ease up to 3.0; incorrect answers reduce it down to a floor of 1.3.
+
+The `/review` route shows due and upcoming reviews. `/practice?mode=review` loads only questions whose due date has arrived.
+
+## Weak topics
+
+Topic performance is derived from local answer history using `subjectId + topicId` as the key. A topic is classified as weak when it has at least two recorded answers and accuracy below 75%. `/weak-topics` ranks those topics from weakest upward, and `mode=weak_topics` builds an adaptive session from them.
+
+## Exam mode
+
+The training constructor can switch between learning and exam modes. Exam mode stores selections locally during the session, never reveals correctness between questions, then grades the whole set at completion. The final review shows the learner's selection, correct answer(s) and explanation. Only the completed exam batch is appended to persistent progress.
 
 ## Content caching and offline behavior
 
-The app checks the manifest when online. Packages are cached by `package id + version` in a dedicated `testapp-content` IndexedDB database. A new manifest version can point to new package versions while old cached packages remain harmless. The service worker also caches fetched GET resources as an additional offline layer.
+The app checks the manifest when online. Packages are cached by `package id + version` in a dedicated `testapp-content` IndexedDB database. The service worker caches the main routes, including the answer bank, review scheduler and weak-topic screen.
 
-The learner history is stored separately from content, so updating or replacing question packages cannot erase progress.
+Learner history is stored separately from content, so updating question packages cannot erase progress.
 
 ## Navigation and study flows
 
-The learner can navigate `discipline → section → topic` before starting a session. The training constructor can select one or more topics, limit the number of questions and optionally shuffle them.
+The learner can navigate `discipline → section → topic` before starting a session. The training constructor can select one or more topics, limit the number of questions, optionally shuffle them and choose learning or exam mode.
 
-The `/questions` route is intentionally read-only: it shows question text, correct answer(s) and explanation without creating an attempt or changing statistics. This is a separate learning mode from active testing.
+The `/questions` route is read-only: it shows question text, correct answer(s) and explanation without writing progress.
 
-## Current study modes
+## Study modes
 
 - `learning`: immediate feedback and explanation;
-- `mistakes`: unresolved local review queue;
-- read-only answer bank: question list with correct answers, no progress write;
-- `exam`: planned;
-- `weak_topics`: planned from local statistics.
+- `exam`: delayed grading until the end;
+- `mistakes`: unresolved incorrect questions;
+- `weak_topics`: adaptive practice from low-accuracy topics;
+- `review`: due spaced-repetition items;
+- read-only answer bank: no progress write.
 
-A mistake stays unresolved until two correct answers occur after the most recent wrong answer.
+A mistake remains unresolved until two correct answers occur after the most recent wrong answer. This mistake queue is intentionally separate from spaced repetition.
 
 ## Import strategy
 
-XLSX/CSV is the canonical bulk-import source. Import does not write directly into a live database. Instead it validates rows and generates deterministic JSON content packages plus an updated manifest. DOCX import may be added later as a staged, review-required parser.
+XLSX/CSV is the canonical bulk-import source. Import validates rows and generates deterministic JSON content packages rather than writing into a live database. DOCX import may be added later as a staged, review-required parser.
 
 ## Deployment model
 
@@ -54,6 +75,6 @@ GitHub stores source code, content packages and version history. CI validates co
 4. Discipline/section/topic navigation and generated training sets — implemented.
 5. XLSX import with schema validation and preview — implemented.
 6. Read-only question bank with correct answers — implemented.
-7. Exam mode, weak-topic analytics and spaced repetition.
+7. Exam mode, weak-topic analytics and spaced repetition — implemented.
 8. Case, matching, ordering, text and numeric questions.
 9. Stronger offline package management and install UX.

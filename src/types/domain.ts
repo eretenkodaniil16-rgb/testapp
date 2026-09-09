@@ -8,7 +8,7 @@ export type QuestionType =
   | "ordering"
   | "case";
 
-export type StudyMode = "learning" | "exam" | "mistakes" | "weak_topics";
+export type StudyMode = "learning" | "exam" | "mistakes" | "weak_topics" | "review";
 
 export interface AnswerOption {
   id: string;
@@ -39,11 +39,31 @@ export interface StoredAnswer {
   selectedOptionIds: string[];
   correct: boolean;
   answeredAt: string;
+  mode?: StudyMode;
+}
+
+export interface ReviewItem {
+  questionId: string;
+  dueAt: string;
+  intervalDays: number;
+  easeFactor: number;
+  repetitions: number;
+  lapses: number;
+  lastReviewedAt: string;
 }
 
 export interface ProgressStore {
-  schemaVersion: 2;
+  schemaVersion: 2 | 3;
   answers: StoredAnswer[];
+  reviews?: ReviewItem[];
+}
+
+export interface TopicPerformance {
+  subjectId: string;
+  topicId: string;
+  total: number;
+  correct: number;
+  accuracy: number;
 }
 
 export interface ContentManifestPackage {

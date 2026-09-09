@@ -12,6 +12,7 @@ export default function PracticeSetupPage() {
   const [selectedTopics, setSelectedTopics] = useState<Set<string>>(new Set());
   const [questionCount, setQuestionCount] = useState("20");
   const [shuffle, setShuffle] = useState(true);
+  const [studyMode, setStudyMode] = useState<"learning" | "exam">("learning");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,6 +25,7 @@ export default function PracticeSetupPage() {
       const requestedSubject = params.get("subject") ?? nextCatalog[0]?.id ?? "";
       const requestedSection = params.get("section") ?? "";
       const requestedTopic = params.get("topic") ?? "";
+      const requestedMode = params.get("mode") === "exam" ? "exam" : "learning";
       const selectedSubject = nextCatalog.find((item) => item.id === requestedSubject) ?? nextCatalog[0];
       const selectedSection = selectedSubject?.sections.find((item) => item.id === requestedSection);
       const initialTopics = requestedTopic
@@ -36,6 +38,7 @@ export default function PracticeSetupPage() {
       setSubjectId(selectedSubject?.id ?? "");
       setSectionId(selectedSection?.id ?? "");
       setSelectedTopics(new Set(initialTopics));
+      setStudyMode(requestedMode);
       setLoading(false);
     }
     void load();
@@ -83,8 +86,9 @@ export default function PracticeSetupPage() {
     if (selectedTopics.size > 0) params.set("topics", [...selectedTopics].join(","));
     if (questionCount !== "all") params.set("count", questionCount);
     params.set("shuffle", shuffle ? "1" : "0");
+    if (studyMode === "exam") params.set("mode", "exam");
     return `/practice?${params.toString()}`;
-  }, [questionCount, selectedTopics, shuffle, subjectId]);
+  }, [questionCount, selectedTopics, shuffle, studyMode, subjectId]);
 
   if (loading) {
     return <div className="page"><div className="empty-state"><h1>Загрузка…</h1><p>Подготавливаю структуру тем.</p></div></div>;
@@ -99,8 +103,19 @@ export default function PracticeSetupPage() {
       <header className="hero compact">
         <p className="eyebrow">КОНСТРУКТОР</p>
         <h1>Настройка тренировки</h1>
-        <p>Выбери дисциплину, разделы и темы. Вопросы берутся только из опубликованных пакетов и результат сохраняется локально.</p>
+        <p>Выбери дисциплину, темы и формат. В учебном режиме ответ проверяется сразу, в экзаменационном — только после завершения всего набора.</p>
       </header>
+
+      <section className="setup-card mode-selector">
+        <button type="button" className={studyMode === "learning" ? "mode-option active" : "mode-option"} onClick={() => setStudyMode("learning")}>
+          <strong>Учебный режим</strong>
+          <span>Сразу показывает правильность и объяснение</span>
+        </button>
+        <button type="button" className={studyMode === "exam" ? "mode-option active" : "mode-option"} onClick={() => setStudyMode("exam")}>
+          <strong>Экзамен</strong>
+          <span>Ответы и разбор открываются только в конце</span>
+        </button>
+      </section>
 
       <section className="setup-card">
         <label className="field-label">
@@ -155,12 +170,16 @@ export default function PracticeSetupPage() {
       </section>
 
       {selectedTopics.size === 0 ? (
-        <div className="info-card"><p>Выбери хотя бы одну тему, чтобы начать тренировку.</p></div>
+        <div className="info-card"><p>Выбери хотя бы одну тему, чтобы начать.</p></div>
       ) : (
-        <Link className="button full-width" href={startHref}>Начать тренировку</Link>
+        <Link className="button full-width" href={startHref}>{studyMode === "exam" ? "Начать экзамен" : "Начать тренировку"}</Link>
       )}
 
-      <Link className="text-link" href={`/questions?subject=${encodeURIComponent(subjectId)}`}>Сначала посмотреть вопросы с правильными ответами</Link>
+      <div className="study-shortcuts">
+        <Link className="text-link" href={`/questions?subject=${encodeURIComponent(subjectId)}`}>Посмотреть вопросы с правильными ответами</Link>
+        <Link className="text-link" href="/weak-topics">Тренировать слабые темы</Link>
+        <Link className="text-link" href="/review">Интервальное повторение</Link>
+      </div>
     </div>
   );
 }
