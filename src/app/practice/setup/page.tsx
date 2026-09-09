@@ -12,6 +12,7 @@ export default function PracticeSetupPage() {
   const [selectedTopics, setSelectedTopics] = useState<Set<string>>(new Set());
   const [questionCount, setQuestionCount] = useState("20");
   const [shuffle, setShuffle] = useState(true);
+  const [scienceOnly, setScienceOnly] = useState(false);
   const [studyMode, setStudyMode] = useState<"learning" | "exam">("learning");
   const [loading, setLoading] = useState(true);
 
@@ -39,6 +40,7 @@ export default function PracticeSetupPage() {
       setSectionId(selectedSection?.id ?? "");
       setSelectedTopics(new Set(initialTopics));
       setStudyMode(requestedMode);
+      setScienceOnly(params.get("science") === "1");
       setLoading(false);
     }
     void load();
@@ -47,9 +49,7 @@ export default function PracticeSetupPage() {
 
   const subject = catalog.find((item) => item.id === subjectId);
   const sections = subject?.sections ?? [];
-  const visibleTopics = sectionId
-    ? sections.find((item) => item.id === sectionId)?.topics ?? []
-    : sections.flatMap((section) => section.topics);
+  const visibleTopics = sectionId ? sections.find((item) => item.id === sectionId)?.topics ?? [] : sections.flatMap((section) => section.topics);
 
   const selectedQuestionCount = useMemo(() => {
     const counts = new Map(visibleTopics.map((topic) => [topic.id, topic.questionCount]));
@@ -65,9 +65,7 @@ export default function PracticeSetupPage() {
 
   function selectSection(nextSectionId: string) {
     setSectionId(nextSectionId);
-    const nextTopics = nextSectionId
-      ? sections.find((item) => item.id === nextSectionId)?.topics ?? []
-      : sections.flatMap((section) => section.topics);
+    const nextTopics = nextSectionId ? sections.find((item) => item.id === nextSectionId)?.topics ?? [] : sections.flatMap((section) => section.topics);
     setSelectedTopics(new Set(nextTopics.map((topic) => topic.id)));
   }
 
@@ -86,100 +84,46 @@ export default function PracticeSetupPage() {
     if (selectedTopics.size > 0) params.set("topics", [...selectedTopics].join(","));
     if (questionCount !== "all") params.set("count", questionCount);
     params.set("shuffle", shuffle ? "1" : "0");
+    if (scienceOnly) params.set("science", "1");
     if (studyMode === "exam") params.set("mode", "exam");
     return `/practice?${params.toString()}`;
-  }, [questionCount, selectedTopics, shuffle, studyMode, subjectId]);
+  }, [questionCount, scienceOnly, selectedTopics, shuffle, studyMode, subjectId]);
 
-  if (loading) {
-    return <div className="page"><div className="empty-state"><h1>Загрузка…</h1><p>Подготавливаю структуру тем.</p></div></div>;
-  }
-
-  if (!subject) {
-    return <div className="page"><div className="empty-state"><h1>Нет опубликованных дисциплин</h1><Link className="button" href="/">На главную</Link></div></div>;
-  }
+  if (loading) return <div className="page"><div className="empty-state"><h1>Загрузка…</h1><p>Подготавливаю структуру тем.</p></div></div>;
+  if (!subject) return <div className="page"><div className="empty-state"><h1>Нет опубликованных дисциплин</h1><Link className="button" href="/">На главную</Link></div></div>;
 
   return (
     <div className="page">
       <header className="hero compact">
         <p className="eyebrow">КОНСТРУКТОР</p>
         <h1>Настройка тренировки</h1>
-        <p>Выбери дисциплину, темы и формат. В учебном режиме ответ проверяется сразу, в экзаменационном — только после завершения всего набора.</p>
+        <p>Выбери дисциплину, темы и формат. Научный режим исключает вопросы, которые сохранены только ради исходного кафедрального ключа или требуют переработки.</p>
       </header>
 
       <section className="setup-card mode-selector">
-        <button type="button" className={studyMode === "learning" ? "mode-option active" : "mode-option"} onClick={() => setStudyMode("learning")}>
-          <strong>Учебный режим</strong>
-          <span>Сразу показывает правильность и объяснение</span>
-        </button>
-        <button type="button" className={studyMode === "exam" ? "mode-option active" : "mode-option"} onClick={() => setStudyMode("exam")}>
-          <strong>Экзамен</strong>
-          <span>Ответы и разбор открываются только в конце</span>
-        </button>
+        <button type="button" className={studyMode === "learning" ? "mode-option active" : "mode-option"} onClick={() => setStudyMode("learning")}><strong>Учебный режим</strong><span>Сразу показывает правильность и полный разбор</span></button>
+        <button type="button" className={studyMode === "exam" ? "mode-option active" : "mode-option"} onClick={() => setStudyMode("exam")}><strong>Экзамен</strong><span>Ответы и разбор открываются только в конце</span></button>
       </section>
 
       <section className="setup-card">
-        <label className="field-label">
-          <span>Дисциплина</span>
-          <select value={subjectId} onChange={(event) => selectSubject(event.target.value)}>
-            {catalog.map((item) => <option value={item.id} key={item.id}>{item.title}</option>)}
-          </select>
-        </label>
-
-        <label className="field-label">
-          <span>Раздел</span>
-          <select value={sectionId} onChange={(event) => selectSection(event.target.value)}>
-            <option value="">Все разделы</option>
-            {sections.map((item) => <option value={item.id} key={item.id}>{item.title} · {item.questionCount}</option>)}
-          </select>
-        </label>
+        <label className="field-label"><span>Дисциплина</span><select value={subjectId} onChange={(event) => selectSubject(event.target.value)}>{catalog.map((item) => <option value={item.id} key={item.id}>{item.title}</option>)}</select></label>
+        <label className="field-label"><span>Раздел</span><select value={sectionId} onChange={(event) => selectSection(event.target.value)}><option value="">Все разделы</option>{sections.map((item) => <option value={item.id} key={item.id}>{item.title} · {item.questionCount}</option>)}</select></label>
       </section>
 
       <section className="setup-card">
-        <div className="setup-card-head">
-          <div><h2>Темы</h2><p>{selectedTopics.size} выбрано · {selectedQuestionCount} вопросов доступно</p></div>
-          <div className="inline-links">
-            <button type="button" onClick={() => setSelectedTopics(new Set(visibleTopics.map((topic) => topic.id)))}>Все</button>
-            <button type="button" onClick={() => setSelectedTopics(new Set())}>Снять</button>
-          </div>
-        </div>
-        <div className="topic-check-list">
-          {visibleTopics.map((topic) => (
-            <label className="topic-check" key={topic.id}>
-              <input type="checkbox" checked={selectedTopics.has(topic.id)} onChange={() => toggleTopic(topic.id)} />
-              <span><strong>{topic.title}</strong><small>{topic.questionCount} вопросов</small></span>
-            </label>
-          ))}
-        </div>
+        <div className="setup-card-head"><div><h2>Темы</h2><p>{selectedTopics.size} выбрано · {selectedQuestionCount} вопросов доступно</p></div><div className="inline-links"><button type="button" onClick={() => setSelectedTopics(new Set(visibleTopics.map((topic) => topic.id)))}>Все</button><button type="button" onClick={() => setSelectedTopics(new Set())}>Снять</button></div></div>
+        <div className="topic-check-list">{visibleTopics.map((topic) => <label className="topic-check" key={topic.id}><input type="checkbox" checked={selectedTopics.has(topic.id)} onChange={() => toggleTopic(topic.id)} /><span><strong>{topic.title}</strong><small>{topic.questionCount} вопросов</small></span></label>)}</div>
       </section>
 
       <section className="setup-card setup-options-grid">
-        <label className="field-label">
-          <span>Количество вопросов</span>
-          <select value={questionCount} onChange={(event) => setQuestionCount(event.target.value)}>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-            <option value="all">Все доступные</option>
-          </select>
-        </label>
-        <label className="toggle-row">
-          <input type="checkbox" checked={shuffle} onChange={(event) => setShuffle(event.target.checked)} />
-          <span><strong>Перемешивать вопросы</strong><small>Если выключить — порядок будет как в пакете</small></span>
-        </label>
+        <label className="field-label"><span>Количество вопросов</span><select value={questionCount} onChange={(event) => setQuestionCount(event.target.value)}><option value="10">10</option><option value="20">20</option><option value="50">50</option><option value="100">100</option><option value="all">Все доступные</option></select></label>
+        <label className="toggle-row"><input type="checkbox" checked={shuffle} onChange={(event) => setShuffle(event.target.checked)} /><span><strong>Перемешивать вопросы</strong><small>Если выключить — порядок будет как в исходном пакете</small></span></label>
+        <label className="toggle-row science-toggle"><input type="checkbox" checked={scienceOnly} onChange={(event) => setScienceOnly(event.target.checked)} /><span><strong>Научная тренировка</strong><small>Оставить только проверенные и не отмеченные как устаревшие/неоднозначные задания</small></span></label>
       </section>
 
-      {selectedTopics.size === 0 ? (
-        <div className="info-card"><p>Выбери хотя бы одну тему, чтобы начать.</p></div>
-      ) : (
-        <Link className="button full-width" href={startHref}>{studyMode === "exam" ? "Начать экзамен" : "Начать тренировку"}</Link>
-      )}
+      {selectedTopics.size === 0 ? <div className="info-card"><p>Выбери хотя бы одну тему, чтобы начать.</p></div> : <Link className="button full-width" href={startHref}>{studyMode === "exam" ? "Начать экзамен" : "Начать тренировку"}</Link>}
 
-      <div className="study-shortcuts">
-        <Link className="text-link" href={`/questions?subject=${encodeURIComponent(subjectId)}`}>Посмотреть вопросы с правильными ответами</Link>
-        <Link className="text-link" href="/weak-topics">Тренировать слабые темы</Link>
-        <Link className="text-link" href="/review">Интервальное повторение</Link>
-      </div>
+      <div className="study-shortcuts"><Link className="text-link" href={`/questions?subject=${encodeURIComponent(subjectId)}${scienceOnly ? "&science=1" : ""}`}>Посмотреть вопросы с правильными ответами</Link><Link className="text-link" href="/weak-topics">Тренировать слабые темы</Link><Link className="text-link" href="/review">Интервальное повторение</Link></div>
     </div>
   );
 }
