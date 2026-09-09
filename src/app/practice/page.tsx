@@ -1,0 +1,102 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
+import { demoQuestions } from "@/lib/demo-data";
+import { appendAnswer, getUnresolvedMistakeIds, isAnswerCorrect, readProgress } from "@/lib/local-progress";
+import type { PracticeQuestion } from "@/types/domain";
+
+export default function PracticePage() {
+  const [questions, setQuestions] = useState<PracticeQuestion[]>(demoQuestions);
+  const [index, setIndex] = useState(0);
+  const [selected, setSelected] = useState<string[]>([]);
+  const [checked, setChecked] = useState(false);
+  const [wasCorrect, setWasCorrect] = useState(false);
+  const [sessionCorrect, setSessionCorrect] = useState(0);
+  const [finished, setFinished] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("mode") === "mistakes") {
+      const mistakeIds = new Set(getUnresolvedMistakeIds(readProgress()));
+      setQuestions(demoQuestions.filter((question) => mistakeIds.has(question.id)));
+    }
+  }, []);
+
+  const question = questions[index];
+  const correctIds = useMemo(() => question?.options.filter((option) => option.correct).map((option) => option.id) ?? [], [question]);
+
+  function selectOption(optionId: string) {
+    if (!question || checked) return;
+    if (question.type === "single_choice") setSelected([optionId]);
+    else setSelected((current) => current.includes(optionId) ? current.filter((id) => id !== optionId) : [...current, optionId]);
+  }
+
+  function checkAnswer() {
+    if (!question || selected.length === 0 || checked) return;
+    const correct = isAnswerCorrect(correctIds, selected);
+    appendAnswer({
+      questionId: question.id,
+      revisionId: question.revisionId,
+      subjectId: question.subjectId,
+      topicId: question.topicId,
+      selectedOptionIds: selected,
+      correct,
+      answeredAt: new Date().toISOString(),
+    });
+    setWasCorrect(correct);
+    if (correct) setSessionCorrect((value) => value + 1);
+    setChecked(true);
+  }
+
+  function nextQuestion() {
+    if (index + 1 >= questions.length) {
+      setFinished(true);
+      return;
+    }
+    setIndex((value) => value + 1);
+    setSelected([]);
+    setChecked(false);
+    setWasCorrect(false);
+  }
+
+  if (questions.length === 0) {
+    return <div className="page"><div className="empty-state"><h1>Очередь ошибок пуста</h1><p>Сначала реши несколько вопросов. Ошибочные ответы автоматически попадут сюда.</p><Link className="button" href="/practice">Обычная тренировка</Link></div></div>;
+  }
+
+  if (finished) {
+    return <div className="page"><div className="empty-state"><p className="eyebrow">ТРЕНИРОВКА ЗАВЕРШЕНА</p><h1>{sessionCorrect} / {questions.length}</h1><p>Результат сохранён локально на этом устройстве. После подключения Supabase история будет синхронизироваться с аккаунтом.</p><Link className="button" href="/statistics">Открыть статистику</Link></div></div>;
+  }
+
+  return (
+    <div className="page practice-page">
+      <header className="question-header">
+        <div><p className="eyebrow">{question.subject}</p><h1>{question.topic}</h1></div>
+        <span>{index + 1} / {questions.length}</span>
+      </header>
+      <div className="progress-track"><span style={{ width: `${((index + 1) / questions.length) * 100}%` }} /></div>
+
+      <section className="question-card">
+        <p className="question-type">{question.type === "multiple_choice" ? "Несколько правильных ответов" : "Один правильный ответ"}</p>
+        <h2>{question.prompt}</h2>
+        <div className="options">
+          {question.options.map((option) => {
+            const chosen = selected.includes(option.id);
+            const state = checked ? option.correct ? "correct" : chosen ? "wrong" : "" : chosen ? "selected" : "";
+            return (
+              <button className={`option ${state}`} key={option.id} onClick={() => selectOption(option.id)} disabled={checked}>
+                <strong>{option.label}</strong><span>{option.text}</span>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      {checked && <section className={`feedback ${wasCorrect ? "feedback-correct" : "feedback-wrong"}`}><h3>{wasCorrect ? "Правильно" : "Неправильно"}</h3><p>{question.explanation}</p></section>}
+
+      <div className="sticky-actions">
+        {!checked ? <button className="button" onClick={checkAnswer} disabled={selected.length === 0}>Проверить ответ</button> : <button className="button" onClick={nextQuestion}>Следующий вопрос</button>}
+      </div>
+    </div>
+  );
+}
