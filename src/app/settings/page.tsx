@@ -5,18 +5,24 @@ import { type ChangeEvent, useEffect, useState } from "react";
 import {
   getContentSummary,
   getRemoteContentSource,
+  primeOfflineContent,
   refreshContentFromRemote,
 } from "@/lib/content-repository";
 import { exportProgressBackup, importProgressBackup } from "@/lib/local-progress";
 
 const THEME_KEY = "testapp-theme";
+const AUTO_UPDATE_KEY = "testapp-auto-content-updates";
 type ThemeMode = "light" | "dark";
 
 export default function SettingsPage() {
   const [status, setStatus] = useState<string>("");
   const [theme, setTheme] = useState<ThemeMode>("light");
+  const [autoUpdates, setAutoUpdates] = useState(true);
   const [contentStatus, setContentStatus] = useState<string>("");
   const [contentBusy, setContentBusy] = useState(false);
+  const [offlineStatus, setOfflineStatus] = useState<string>("");
+  const [offlineBusy, setOfflineBusy] = useState(false);
+  const [storagePersistent, setStoragePersistent] = useState<boolean | null>(null);
   const [contentSummary, setContentSummary] = useState<{ contentVersion: number; packageCount: number; questionCount: number } | null>(null);
 
   useEffect(() => {
@@ -24,16 +30,47 @@ export default function SettingsPage() {
     const next: ThemeMode = saved === "dark" ? "dark" : "light";
     setTheme(next);
     document.documentElement.dataset.theme = next;
+    setAutoUpdates(window.localStorage.getItem(AUTO_UPDATE_KEY) !== "0");
 
     getContentSummary()
       .then(setContentSummary)
       .catch(() => setContentStatus("Не удалось прочитать сведения о базе тестов."));
+
+    if (navigator.storage?.persisted) {
+      navigator.storage.persisted().then(setStoragePersistent).catch(() => setStoragePersistent(null));
+    }
   }, []);
 
   function applyTheme(next: ThemeMode) {
     window.localStorage.setItem(THEME_KEY, next);
     document.documentElement.dataset.theme = next;
     setTheme(next);
+  }
+
+  function applyAutoUpdates(enabled: boolean) {
+    window.localStorage.setItem(AUTO_UPDATE_KEY, enabled ? "1" : "0");
+    setAutoUpdates(enabled);
+  }
+
+  async function prepareOfflineMode() {
+    setOfflineBusy(true);
+    setOfflineStatus("Сохраняю все опубликованные тесты на устройстве…");
+    try {
+      const result = await primeOfflineContent();
+      let persistenceText = "";
+      if (navigator.storage?.persist) {
+        const persistent = await navigator.storage.persist().catch(() => false);
+        setStoragePersistent(persistent);
+        persistenceText = persistent
+          ? " Браузер также разрешил постоянное локальное хранение."
+          : " База сохранена локально; браузер не гарантировал постоянное хранение.";
+      }
+      setOfflineStatus(`Автономная база готова: v${result.contentVersion}, ${result.questionCount} вопросов, ${result.packageCount} пакетов.${persistenceText}`);
+    } catch {
+      setOfflineStatus("Не удалось полностью подготовить автономную базу. Подключись к интернету и повтори попытку.");
+    } finally {
+      setOfflineBusy(false);
+    }
   }
 
   async function checkContentUpdates() {
@@ -48,11 +85,11 @@ export default function SettingsPage() {
       });
       setContentStatus(
         result.updated
-          ? `База обновлена: v${result.previousVersion} → v${result.contentVersion}. Новые пакеты сохранены на устройстве.`
+          ? `База обновлена: v${result.previousVersion} → v${result.contentVersion}. Все пакеты проверены и сохранены на устройстве.`
           : `Установлена актуальная база v${result.contentVersion}.`,
       );
     } catch {
-      setContentStatus("GitHub сейчас недоступен. Приложение продолжит использовать последнюю сохранённую базу.");
+      setContentStatus("GitHub сейчас недоступен или обновление не прошло проверку. Приложение продолжит использовать последнюю целую сохранённую базу.");
     } finally {
       setContentBusy(false);
     }
@@ -95,7 +132,7 @@ export default function SettingsPage() {
       <header className="hero compact">
         <p className="eyebrow">ЛОКАЛЬНЫЕ ДАННЫЕ</p>
         <h1>Настройки</h1>
-        <p>Прогресс остаётся на этом устройстве, а общая база тестов обновляется напрямую из GitHub и кэшируется для повторного использования.</p>
+        <p>Прогресс остаётся на этом устройстве. TestApp может полностью сохранить базу заданий для работы без сети и самостоятельно получать проверенные обновления из GitHub.</p>
       </header>
 
       <section className="info-card">
@@ -114,15 +151,32 @@ export default function SettingsPage() {
       </section>
 
       <section className="info-card">
+        <h2>Автономная работа</h2>
+        <p>Один раз сохрани всю текущую базу на устройство. После этого вопросы, ответы, статистика, ошибки и интервальные повторения доступны без подключения к интернету.</p>
+        <div className="content-source">
+          <strong>{storagePersistent === true ? "Постоянное локальное хранение разрешено" : storagePersistent === false ? "Используется обычное локальное хранилище браузера" : "Проверяю режим хранения…"}</strong>
+          <span>Пользовательский прогресс и расписание повторений не отправляются на сервер.</span>
+        </div>
+        <button className="button full-width" onClick={() => void prepareOfflineMode()} disabled={offlineBusy}>
+          {offlineBusy ? "Сохраняю базу…" : "Подготовить автономный режим"}
+        </button>
+        {offlineStatus && <p>{offlineStatus}</p>}
+      </section>
+
+      <section className="info-card">
         <h2>Обновления тестов из GitHub</h2>
-        <p>Приложение проверяет опубликованный manifest в GitHub. Если версия пакета изменилась, новый JSON скачивается автоматически без пересборки сайта.</p>
+        <p>Новая база сначала полностью скачивается и проверяется. Только после успешной проверки она заменяет установленную версию, поэтому незавершённое обновление не ломает офлайн-базу.</p>
+        <label className="toggle-row">
+          <input type="checkbox" checked={autoUpdates} onChange={(event) => applyAutoUpdates(event.target.checked)} />
+          <span><strong>Автоматически проверять новые тесты</strong><small>По умолчанию не чаще одного раза в 6 часов при наличии интернета</small></span>
+        </label>
         <div className="content-source">
           <strong>{contentSummary ? `База v${contentSummary.contentVersion} · ${contentSummary.questionCount} вопросов · ${contentSummary.packageCount} пакетов` : "Читаю версию базы…"}</strong>
           <span>{getRemoteContentSource()}</span>
           <a href="https://github.com/eretenkodaniil16-rgb/testapp/tree/content-live/public/content" target="_blank" rel="noreferrer">Открыть ветку тестов в GitHub</a>
         </div>
         <button className="button full-width" onClick={() => void checkContentUpdates()} disabled={contentBusy}>
-          {contentBusy ? "Проверяю…" : "Проверить новые тесты"}
+          {contentBusy ? "Проверяю…" : "Проверить новые тесты сейчас"}
         </button>
         {contentStatus && <p>{contentStatus}</p>}
       </section>
@@ -146,7 +200,7 @@ export default function SettingsPage() {
 
       <section className="info-card">
         <h2>Приватность</h2>
-        <p>Пользовательский прогресс не отправляется в GitHub или другой централизованный сервис. Из GitHub загружается только общая база тестовых заданий.</p>
+        <p>GitHub раздаёт только общую версионированную базу тестов и обновления самого приложения. Ответы пользователей, ошибки, статистика и интервальное расписание остаются только в IndexedDB устройства.</p>
       </section>
     </div>
   );
