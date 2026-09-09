@@ -15,10 +15,19 @@ export function DashboardSummary() {
   }, []);
 
   return (
-    <div className="metric-grid">
-      <div className="metric"><strong>{summary.total}</strong><span>ответов</span></div>
-      <div className="metric"><strong>{summary.accuracy}%</strong><span>точность</span></div>
-      <div className="metric"><strong>{summary.unresolvedMistakes}</strong><span>на повтор</span></div>
+    <div className="metric-grid" aria-label="Личная статистика">
+      <div className="metric metric-blue">
+        <span className="metric-icon" aria-hidden="true">✓</span>
+        <div><span className="metric-kicker">РЕШЕНО</span><strong>{summary.total}</strong><span>ответов</span></div>
+      </div>
+      <div className="metric metric-teal">
+        <span className="metric-icon" aria-hidden="true">%</span>
+        <div><span className="metric-kicker">ТОЧНОСТЬ</span><strong>{summary.accuracy}%</strong><span>за всё время</span></div>
+      </div>
+      <div className="metric metric-rose">
+        <span className="metric-icon" aria-hidden="true">↺</span>
+        <div><span className="metric-kicker">ПОВТОРИТЬ</span><strong>{summary.unresolvedMistakes}</strong><span>ошибок</span></div>
+      </div>
     </div>
   );
 }
