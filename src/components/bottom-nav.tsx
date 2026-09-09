@@ -7,6 +7,7 @@ export function BottomNav() {
       <Link href="/practice">Тренировка</Link>
       <Link href="/mistakes">Ошибки</Link>
       <Link href="/statistics">Статистика</Link>
+      <Link href="/settings">Настройки</Link>
     </nav>
   );
 }
