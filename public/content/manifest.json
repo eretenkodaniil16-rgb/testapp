@@ -1,119 +1,21 @@
 {
   "schemaVersion": 1,
-  "contentVersion": 3,
-  "publishedAt": "2026-09-09T17:38:00Z",
+  "contentVersion": 4,
+  "publishedAt": "2026-09-09T17:52:00Z",
   "packages": [
-    {
-      "id": "pathology-core",
-      "subjectId": "pathology",
-      "title": "Патологическая анатомия",
-      "version": 2,
-      "path": "/content/packages/pathology-core.v2.json",
-      "questionCount": 2
-    },
-    {
-      "id": "physiology-core",
-      "subjectId": "physiology",
-      "title": "Физиология",
-      "version": 2,
-      "path": "/content/packages/physiology-core.v2.json",
-      "questionCount": 1
-    },
-    {
-      "id": "histology-core",
-      "subjectId": "histology",
-      "title": "Гистология",
-      "version": 2,
-      "path": "/content/packages/histology-core.v2.json",
-      "questionCount": 1
-    },
-    {
-      "id": "hygiene-work-physiology-a",
-      "subjectId": "hygiene",
-      "title": "Гигиена",
-      "version": 1,
-      "path": "/content/packages/hygiene-work-physiology-a.v1.json",
-      "questionCount": 12
-    },
-    {
-      "id": "hygiene-work-physiology-b",
-      "subjectId": "hygiene",
-      "title": "Гигиена",
-      "version": 1,
-      "path": "/content/packages/hygiene-work-physiology-b.v1.json",
-      "questionCount": 11
-    },
-    {
-      "id": "hygiene-prevention",
-      "subjectId": "hygiene",
-      "title": "Гигиена",
-      "version": 1,
-      "path": "/content/packages/hygiene-prevention.v1.json",
-      "questionCount": 3
-    },
-    {
-      "id": "hygiene-noise",
-      "subjectId": "hygiene",
-      "title": "Гигиена",
-      "version": 1,
-      "path": "/content/packages/hygiene-noise.v1.json",
-      "questionCount": 8
-    },
-    {
-      "id": "hygiene-vibration",
-      "subjectId": "hygiene",
-      "title": "Гигиена",
-      "version": 1,
-      "path": "/content/packages/hygiene-vibration.v1.json",
-      "questionCount": 8
-    },
-    {
-      "id": "hygiene-ultrasound-infrasound",
-      "subjectId": "hygiene",
-      "title": "Гигиена",
-      "version": 1,
-      "path": "/content/packages/hygiene-ultrasound-infrasound.v1.json",
-      "questionCount": 9
-    },
-    {
-      "id": "hygiene-microclimate",
-      "subjectId": "hygiene",
-      "title": "Гигиена",
-      "version": 1,
-      "path": "/content/packages/hygiene-microclimate.v1.json",
-      "questionCount": 9
-    },
-    {
-      "id": "hygiene-emf",
-      "subjectId": "hygiene",
-      "title": "Гигиена",
-      "version": 1,
-      "path": "/content/packages/hygiene-emf.v1.json",
-      "questionCount": 11
-    },
-    {
-      "id": "hygiene-optical",
-      "subjectId": "hygiene",
-      "title": "Гигиена",
-      "version": 1,
-      "path": "/content/packages/hygiene-optical.v1.json",
-      "questionCount": 11
-    },
-    {
-      "id": "hygiene-pressure",
-      "subjectId": "hygiene",
-      "title": "Гигиена",
-      "version": 1,
-      "path": "/content/packages/hygiene-pressure.v1.json",
-      "questionCount": 6
-    },
-    {
-      "id": "hygiene-dust-profpath",
-      "subjectId": "hygiene",
-      "title": "Гигиена",
-      "version": 1,
-      "path": "/content/packages/hygiene-dust-profpath.v1.json",
-      "questionCount": 2
-    }
+    { "id": "pathology-core", "subjectId": "pathology", "title": "Патологическая анатомия", "version": 2, "path": "/content/packages/pathology-core.v2.json", "questionCount": 2 },
+    { "id": "physiology-core", "subjectId": "physiology", "title": "Физиология", "version": 2, "path": "/content/packages/physiology-core.v2.json", "questionCount": 1 },
+    { "id": "histology-core", "subjectId": "histology", "title": "Гистология", "version": 2, "path": "/content/packages/histology-core.v2.json", "questionCount": 1 },
+    { "id": "hygiene-work-physiology-a", "subjectId": "hygiene", "title": "Гигиена", "version": 1, "path": "/content/packages/hygiene-work-physiology-a.v1.json", "questionCount": 12 },
+    { "id": "hygiene-work-physiology-b", "subjectId": "hygiene", "title": "Гигиена", "version": 1, "path": "/content/packages/hygiene-work-physiology-b.v1.json", "questionCount": 11 },
+    { "id": "hygiene-prevention", "subjectId": "hygiene", "title": "Гигиена", "version": 2, "path": "/content/packages/hygiene-prevention.v2.json", "questionCount": 3 },
+    { "id": "hygiene-noise", "subjectId": "hygiene", "title": "Гигиена", "version": 1, "path": "/content/packages/hygiene-noise.v1.json", "questionCount": 8 },
+    { "id": "hygiene-vibration", "subjectId": "hygiene", "title": "Гигиена", "version": 1, "path": "/content/packages/hygiene-vibration.v1.json", "questionCount": 8 },
+    { "id": "hygiene-ultrasound-infrasound", "subjectId": "hygiene", "title": "Гигиена", "version": 1, "path": "/content/packages/hygiene-ultrasound-infrasound.v1.json", "questionCount": 9 },
+    { "id": "hygiene-microclimate", "subjectId": "hygiene", "title": "Гигиена", "version": 1, "path": "/content/packages/hygiene-microclimate.v1.json", "questionCount": 9 },
+    { "id": "hygiene-emf", "subjectId": "hygiene", "title": "Гигиена", "version": 1, "path": "/content/packages/hygiene-emf.v1.json", "questionCount": 11 },
+    { "id": "hygiene-optical", "subjectId": "hygiene", "title": "Гигиена", "version": 1, "path": "/content/packages/hygiene-optical.v1.json", "questionCount": 11 },
+    { "id": "hygiene-pressure", "subjectId": "hygiene", "title": "Гигиена", "version": 1, "path": "/content/packages/hygiene-pressure.v1.json", "questionCount": 6 },
+    { "id": "hygiene-dust-profpath", "subjectId": "hygiene", "title": "Гигиена", "version": 1, "path": "/content/packages/hygiene-dust-profpath.v1.json", "questionCount": 2 }
   ]
 }
