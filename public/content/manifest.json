@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "contentVersion": 5,
-  "publishedAt": "2026-09-09T18:31:00Z",
+  "contentVersion": 6,
+  "publishedAt": "2026-09-09T19:18:00Z",
   "packages": [
     { "id": "pathology-core", "subjectId": "pathology", "title": "Патологическая анатомия", "version": 2, "path": "/content/packages/pathology-core.v2.json", "questionCount": 2 },
     { "id": "physiology-core", "subjectId": "physiology", "title": "Физиология", "version": 2, "path": "/content/packages/physiology-core.v2.json", "questionCount": 1 },
@@ -17,6 +17,13 @@
     { "id": "hygiene-optical", "subjectId": "hygiene", "title": "Гигиена", "version": 1, "path": "/content/packages/hygiene-optical.v1.json", "questionCount": 11 },
     { "id": "hygiene-pressure", "subjectId": "hygiene", "title": "Гигиена", "version": 1, "path": "/content/packages/hygiene-pressure.v1.json", "questionCount": 6 },
     { "id": "hygiene-dust-profpath", "subjectId": "hygiene", "title": "Гигиена", "version": 1, "path": "/content/packages/hygiene-dust-profpath.v1.json", "questionCount": 2 },
-    { "id": "pharmacology-general", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-general.v1.json", "questionCount": 37 }
+    { "id": "pharmacology-general", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-general.v1.json", "questionCount": 37 },
+    { "id": "pharmacology-cholinergic-classification-a", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-cholinergic-classification-a.v1.json", "questionCount": 8 },
+    { "id": "pharmacology-cholinergic-classification-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-cholinergic-classification-b.v1.json", "questionCount": 8 },
+    { "id": "pharmacology-cholinergic-mechanisms-a", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-cholinergic-mechanisms-a.v1.json", "questionCount": 8 },
+    { "id": "pharmacology-cholinergic-mechanisms-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-cholinergic-mechanisms-b.v1.json", "questionCount": 8 },
+    { "id": "pharmacology-cholinergic-effects-a", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-cholinergic-effects-a.v1.json", "questionCount": 9 },
+    { "id": "pharmacology-cholinergic-effects-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-cholinergic-effects-b.v1.json", "questionCount": 9 },
+    { "id": "pharmacology-cholinergic-clinical", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-cholinergic-clinical.v1.json", "questionCount": 8 }
   ]
 }
