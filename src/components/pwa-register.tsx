@@ -13,6 +13,10 @@ type InstallPromptEvent = Event & {
   userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 };
 
+type InstallWindow = Window & {
+  __testAppInstallPrompt?: InstallPromptEvent;
+};
+
 export function PwaRegister() {
   const [online, setOnline] = useState(true);
   const [installPrompt, setInstallPrompt] = useState<InstallPromptEvent | null>(null);
@@ -30,8 +34,14 @@ export function PwaRegister() {
       const promptEvent = event as InstallPromptEvent;
       promptEvent.preventDefault();
       setInstallPrompt(promptEvent);
+      (window as InstallWindow).__testAppInstallPrompt = promptEvent;
+      window.dispatchEvent(new Event("testapp-install-available"));
     };
-    const handleInstalled = () => setInstallPrompt(null);
+    const handleInstalled = () => {
+      setInstallPrompt(null);
+      delete (window as InstallWindow).__testAppInstallPrompt;
+      window.dispatchEvent(new Event("testapp-installed"));
+    };
 
     window.addEventListener("online", handleOnline);
     window.addEventListener("offline", handleOffline);
@@ -132,7 +142,9 @@ export function PwaRegister() {
     if (!installPrompt) return;
     await installPrompt.prompt();
     const choice = await installPrompt.userChoice;
-    if (choice.outcome === "accepted") setInstallPrompt(null);
+    delete (window as InstallWindow).__testAppInstallPrompt;
+    setInstallPrompt(null);
+    if (choice.outcome === "accepted") window.dispatchEvent(new Event("testapp-installed"));
   }
 
   function applyAppUpdate() {
