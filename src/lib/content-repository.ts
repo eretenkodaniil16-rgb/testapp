@@ -182,8 +182,8 @@ export async function getContentCatalogTree(): Promise<ContentCatalogSubject[]> 
     const current = subjects.get(contentPackage.subject.id) ?? {
       id: contentPackage.subject.id,
       title: contentPackage.subject.title,
-      sections: new Map(),
-      questions: [],
+      sections: new Map<string, { id: string; title: string; topics: Map<string, { id: string; title: string }> }>(),
+      questions: [] as PracticeQuestion[],
     };
     current.questions.push(...contentPackage.questions);
 
@@ -191,7 +191,7 @@ export async function getContentCatalogTree(): Promise<ContentCatalogSubject[]> 
       const sectionEntry = current.sections.get(section.id) ?? {
         id: section.id,
         title: section.title,
-        topics: new Map(),
+        topics: new Map<string, { id: string; title: string }>(),
       };
       for (const topic of section.topics) sectionEntry.topics.set(topic.id, topic);
       current.sections.set(section.id, sectionEntry);
