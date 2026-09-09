@@ -9,6 +9,14 @@ export type QuestionType =
   | "case";
 
 export type StudyMode = "learning" | "exam" | "mistakes" | "weak_topics" | "review";
+export type ScientificStatus = "verified" | "legacy" | "ambiguous" | "needs_revision";
+
+export interface ContentSource {
+  id: string;
+  title: string;
+  url?: string;
+  note?: string;
+}
 
 export interface AnswerOption {
   id: string;
@@ -18,6 +26,21 @@ export interface AnswerOption {
   feedback?: string;
 }
 
+export interface MatchingPair {
+  id: string;
+  left: string;
+  right: string;
+  explanation?: string;
+}
+
+export interface CaseSubquestion {
+  id: string;
+  prompt: string;
+  acceptedAnswers: string[];
+  answerLabel: string;
+  explanation?: string;
+}
+
 export interface PracticeQuestion {
   id: string;
   revisionId: string;
@@ -25,10 +48,22 @@ export interface PracticeQuestion {
   topicId: string;
   subject: string;
   topic: string;
-  type: "single_choice" | "multiple_choice";
+  type: QuestionType;
   prompt: string;
   explanation: string;
   options: AnswerOption[];
+  acceptedAnswers?: string[];
+  answerLabel?: string;
+  matchingPairs?: MatchingPair[];
+  caseStem?: string;
+  caseQuestions?: CaseSubquestion[];
+  sourceQuestionNumber?: number;
+  sourceKey?: string[];
+  scientificStatus?: ScientificStatus;
+  scientificAnswer?: string;
+  scientificNote?: string;
+  sources?: ContentSource[];
+  verifiedAt?: string;
 }
 
 export interface StoredAnswer {
@@ -37,6 +72,9 @@ export interface StoredAnswer {
   subjectId: string;
   topicId: string;
   selectedOptionIds: string[];
+  textAnswer?: string;
+  matchingAnswer?: Record<string, string>;
+  caseAnswers?: Record<string, string>;
   correct: boolean;
   answeredAt: string;
   mode?: StudyMode;
