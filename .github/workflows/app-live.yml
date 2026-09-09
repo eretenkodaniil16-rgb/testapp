@@ -1,0 +1,90 @@
+name: Publish autonomous TestApp
+
+on:
+  push:
+    branches:
+      - feature/bootstrap-v1
+      - content-live
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: testapp-app-live
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout application source
+        uses: actions/checkout@v4
+        with:
+          ref: feature/bootstrap-v1
+
+      - name: Checkout live test content
+        uses: actions/checkout@v4
+        with:
+          ref: content-live
+          path: .content-live
+
+      - name: Bundle latest published test database
+        run: |
+          rm -rf public/content
+          cp -R .content-live/public/content public/content
+          rm -rf .content-live
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Validate bundled content
+        run: npm run validate:content
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build installable static application
+        env:
+          TESTAPP_STATIC_EXPORT: "1"
+          NEXT_PUBLIC_BASE_PATH: "/eretenkodaniil16-rgb/testapp/app-live"
+        run: npm run build
+
+      - name: Generate complete offline cache
+        env:
+          NEXT_PUBLIC_BASE_PATH: "/eretenkodaniil16-rgb/testapp/app-live"
+        run: node scripts/finalize-pwa.mjs out
+
+      - name: Verify autonomous build
+        run: |
+          test -f out/index.html
+          test -f out/sw.js
+          test -f out/app-version.json
+          test -f out/content/manifest.json
+
+      - name: Upload distributable web app
+        uses: actions/upload-artifact@v4
+        with:
+          name: testapp-autonomous-web
+          path: out
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Publish stable app-live branch
+        run: |
+          cp -R out /tmp/testapp-app-live
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan app-live
+          git rm -rf . || true
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -R /tmp/testapp-app-live/. .
+          touch .nojekyll
+          git add -A
+          git commit -m "app-live: ${GITHUB_SHA::7}"
+          git push --force origin app-live
