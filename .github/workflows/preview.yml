@@ -1,0 +1,65 @@
+name: Build TestApp browser preview
+
+on:
+  push:
+    branches:
+      - feature/bootstrap-v1
+
+permissions:
+  contents: write
+
+concurrency:
+  group: testapp-browser-preview
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Validate content
+        run: npm run validate:content
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build static preview
+        env:
+          TESTAPP_STATIC_EXPORT: "1"
+          NEXT_PUBLIC_BASE_PATH: "/eretenkodaniil16-rgb/testapp/preview-static"
+        run: npm run build
+
+      - name: Verify export
+        run: test -f out/index.html
+
+      - name: Upload downloadable preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: testapp-browser-preview
+          path: out
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Publish preview-static branch
+        run: |
+          cp -R out /tmp/testapp-preview
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan preview-static
+          git rm -rf . || true
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -R /tmp/testapp-preview/. .
+          touch .nojekyll
+          git add -A
+          git commit -m "preview: ${GITHUB_SHA::7}"
+          git push --force origin preview-static

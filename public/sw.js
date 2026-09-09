@@ -1,5 +1,7 @@
-const CACHE = "testapp-shell-v4";
-const SHELL = ["/", "/practice/setup", "/questions", "/mistakes", "/statistics", "/weak-topics", "/review", "/settings"];
+const CACHE = "testapp-shell-v5";
+const scopePath = new URL(self.registration.scope).pathname.replace(/\/$/, "");
+const withScope = (path) => `${scopePath}${path === "/" ? "/" : path}`;
+const SHELL = ["/", "/practice/setup/", "/questions/", "/mistakes/", "/statistics/", "/review/", "/weak-topics/", "/settings/"].map(withScope);
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)));
@@ -17,5 +19,5 @@ self.addEventListener("fetch", (event) => {
     const copy = response.clone();
     caches.open(CACHE).then((cache) => cache.put(event.request, copy));
     return response;
-  }).catch(() => caches.match(event.request).then((cached) => cached || caches.match("/"))));
+  }).catch(() => caches.match(event.request).then((cached) => cached || caches.match(withScope("/")))));
 });

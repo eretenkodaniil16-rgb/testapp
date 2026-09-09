@@ -13,6 +13,7 @@ const DB_VERSION = 1;
 const MANIFEST_STORE = "manifest";
 const PACKAGE_STORE = "packages";
 const MANIFEST_KEY = "current";
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 const FALLBACK_MANIFEST: ContentManifest = {
   schemaVersion: 1,
@@ -24,6 +25,12 @@ const FALLBACK_MANIFEST: ContentManifest = {
     { id: "histology-core", subjectId: "histology", title: "Гистология", version: 0, path: "", questionCount: 1 },
   ],
 };
+
+function withBasePath(path: string): string {
+  if (!path || /^https?:\/\//i.test(path)) return path;
+  const normalized = path.startsWith("/") ? path : `/${path}`;
+  return `${BASE_PATH}${normalized}`;
+}
 
 function openDatabase(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
@@ -63,7 +70,7 @@ async function writeRecord(storeName: string, key: IDBValidKey, value: unknown):
 }
 
 async function fetchJson<T>(path: string): Promise<T> {
-  const response = await fetch(path, { cache: "no-store" });
+  const response = await fetch(withBasePath(path), { cache: "no-store" });
   if (!response.ok) throw new Error(`Content request failed: ${response.status}`);
   return response.json() as Promise<T>;
 }
