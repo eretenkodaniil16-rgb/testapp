@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "contentVersion": 7,
-  "publishedAt": "2026-09-09T19:25:00Z",
+  "contentVersion": 8,
+  "publishedAt": "2026-09-09T19:31:00Z",
   "packages": [
     { "id": "pathology-core", "subjectId": "pathology", "title": "Патологическая анатомия", "version": 2, "path": "/content/packages/pathology-core.v2.json", "questionCount": 2 },
     { "id": "physiology-core", "subjectId": "physiology", "title": "Физиология", "version": 2, "path": "/content/packages/physiology-core.v2.json", "questionCount": 1 },
@@ -26,6 +26,13 @@
     { "id": "pharmacology-cholinergic-effects-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-cholinergic-effects-b.v1.json", "questionCount": 9 },
     { "id": "pharmacology-cholinergic-clinical", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-cholinergic-clinical.v1.json", "questionCount": 8 },
     { "id": "pharmacology-adrenergic-classification-a", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-adrenergic-classification-a.v1.json", "questionCount": 9 },
-    { "id": "pharmacology-adrenergic-classification-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-adrenergic-classification-b.v1.json", "questionCount": 9 }
+    { "id": "pharmacology-adrenergic-classification-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-adrenergic-classification-b.v1.json", "questionCount": 9 },
+    { "id": "pharmacology-adrenergic-mechanisms-a", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-adrenergic-mechanisms-a.v1.json", "questionCount": 9 },
+    { "id": "pharmacology-adrenergic-mechanisms-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-adrenergic-mechanisms-b.v1.json", "questionCount": 9 },
+    { "id": "pharmacology-adrenergic-effects-a", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-adrenergic-effects-a.v1.json", "questionCount": 9 },
+    { "id": "pharmacology-adrenergic-effects-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-adrenergic-effects-b.v1.json", "questionCount": 9 },
+    { "id": "pharmacology-adrenergic-clinical", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-adrenergic-clinical.v1.json", "questionCount": 8 },
+    { "id": "pharmacology-cns-anesthesia-ethanol", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-cns-anesthesia-ethanol.v1.json", "questionCount": 22 },
+    { "id": "pharmacology-opioid-analgesics", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-opioid-analgesics.v1.json", "questionCount": 25 }
   ]
 }
