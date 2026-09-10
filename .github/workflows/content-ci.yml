@@ -6,6 +6,7 @@ on:
     paths:
       - "public/content/**"
       - "scripts/validate-content.mjs"
+      - "scripts/audit-pharmacology-source.mjs"
       - ".github/workflows/content-ci.yml"
   workflow_dispatch:
 
@@ -18,3 +19,5 @@ jobs:
         with:
           node-version: 22
       - run: node scripts/validate-content.mjs
+      - name: Audit pharmacology source bank
+        run: node scripts/audit-pharmacology-source.mjs 1062
