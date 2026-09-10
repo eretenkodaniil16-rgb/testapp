@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "contentVersion": 12,
-  "publishedAt": "2026-09-10T05:28:00Z",
+  "contentVersion": 13,
+  "publishedAt": "2026-09-10T07:12:00Z",
   "packages": [
     { "id": "pathology-core", "subjectId": "pathology", "title": "Патологическая анатомия", "version": 2, "path": "/content/packages/pathology-core.v2.json", "questionCount": 2 },
     { "id": "physiology-core", "subjectId": "physiology", "title": "Физиология", "version": 2, "path": "/content/packages/physiology-core.v2.json", "questionCount": 1 },
@@ -50,6 +50,8 @@
     { "id": "pharmacology-gout-agents-a", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-gout-agents-a.v1.json", "questionCount": 4 },
     { "id": "pharmacology-gout-agents-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-gout-agents-b.v1.json", "questionCount": 4 },
     { "id": "pharmacology-lipid-lowering-a", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-lipid-lowering-a.v1.json", "questionCount": 4 },
-    { "id": "pharmacology-lipid-lowering-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-lipid-lowering-b.v1.json", "questionCount": 4 }
+    { "id": "pharmacology-lipid-lowering-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-lipid-lowering-b.v1.json", "questionCount": 4 },
+    { "id": "pharmacology-hormone-therapy-pituitary", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-hormone-therapy-pituitary.v1.json", "questionCount": 11 },
+    { "id": "pharmacology-prolactin-oxytocin", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-prolactin-oxytocin.v1.json", "questionCount": 9 }
   ]
 }
