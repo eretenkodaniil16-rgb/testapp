@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "contentVersion": 11,
-  "publishedAt": "2026-09-09T20:26:25Z",
+  "contentVersion": 12,
+  "publishedAt": "2026-09-10T05:28:00Z",
   "packages": [
     { "id": "pathology-core", "subjectId": "pathology", "title": "Патологическая анатомия", "version": 2, "path": "/content/packages/pathology-core.v2.json", "questionCount": 2 },
     { "id": "physiology-core", "subjectId": "physiology", "title": "Физиология", "version": 2, "path": "/content/packages/physiology-core.v2.json", "questionCount": 1 },
@@ -41,6 +41,15 @@
     { "id": "pharmacology-psychotropics-classification-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-psychotropics-classification-b.v1.json", "questionCount": 11 },
     { "id": "pharmacology-psychotropics-classification-c", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-psychotropics-classification-c.v1.json", "questionCount": 10 },
     { "id": "pharmacology-psychotropics-mechanisms-a", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-psychotropics-mechanisms-a.v1.json", "questionCount": 11 },
-    { "id": "pharmacology-psychotropics-mechanisms-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-psychotropics-mechanisms-b.v1.json", "questionCount": 11 }
+    { "id": "pharmacology-psychotropics-mechanisms-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-psychotropics-mechanisms-b.v1.json", "questionCount": 11 },
+    { "id": "pharmacology-psychotropics-effects-a", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-psychotropics-effects-a.v1.json", "questionCount": 10 },
+    { "id": "pharmacology-psychotropics-effects-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-psychotropics-effects-b.v1.json", "questionCount": 5 },
+    { "id": "pharmacology-psychotropics-clinical-a", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-psychotropics-clinical-a.v1.json", "questionCount": 7 },
+    { "id": "pharmacology-psychotropics-clinical-b1", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-psychotropics-clinical-b1.v1.json", "questionCount": 5 },
+    { "id": "pharmacology-psychotropics-clinical-b2", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-psychotropics-clinical-b2.v1.json", "questionCount": 5 },
+    { "id": "pharmacology-gout-agents-a", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-gout-agents-a.v1.json", "questionCount": 4 },
+    { "id": "pharmacology-gout-agents-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-gout-agents-b.v1.json", "questionCount": 4 },
+    { "id": "pharmacology-lipid-lowering-a", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-lipid-lowering-a.v1.json", "questionCount": 4 },
+    { "id": "pharmacology-lipid-lowering-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-lipid-lowering-b.v1.json", "questionCount": 4 }
   ]
 }
