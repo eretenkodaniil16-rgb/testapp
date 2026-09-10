@@ -33,19 +33,13 @@ for (const file of files) {
   const relative = path.relative(root, file).split(path.sep).join("/");
   if (relative === "sw.js") continue;
   precache.add(urlFor(relative));
-
-  if (relative === "index.html") {
-    precache.add(`${basePath}/` || "/");
-  } else if (relative.endsWith("/index.html")) {
-    const directory = relative.slice(0, -"index.html".length);
-    precache.add(urlFor(directory));
-  }
 }
 
+const offlineRoot = urlFor("index.html");
 const serviceWorker = `const CACHE = ${JSON.stringify(`testapp-shell-${buildId}`)};
 const CACHE_PREFIX = "testapp-shell-";
 const PRECACHE = ${JSON.stringify([...precache].sort(), null, 2)};
-const OFFLINE_ROOT = ${JSON.stringify(`${basePath}/` || "/")};
+const OFFLINE_ROOT = ${JSON.stringify(offlineRoot)};
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(PRECACHE)));
@@ -64,18 +58,35 @@ self.addEventListener("message", (event) => {
   if (event.data?.type === "SKIP_WAITING") self.skipWaiting();
 });
 
+async function navigationFallback(request) {
+  const cache = await caches.open(CACHE);
+  const cached = await cache.match(request, { ignoreSearch: true });
+  if (cached) return cached;
+
+  const url = new URL(request.url);
+  if (url.pathname.endsWith("/")) {
+    const indexUrl = new URL(request.url);
+    indexUrl.pathname += "index.html";
+    const indexCached = await cache.match(indexUrl.toString(), { ignoreSearch: true });
+    if (indexCached) return indexCached;
+  }
+
+  return (await cache.match(OFFLINE_ROOT)) || Response.error();
+}
+
 async function networkFirst(request) {
   const cache = await caches.open(CACHE);
   try {
     const response = await fetch(request);
-    if (response.ok) await cache.put(request, response.clone());
+    if (response.ok) {
+      await cache.put(request, response.clone());
+      return response;
+    }
+    const fallback = await navigationFallback(request);
+    if (fallback) return fallback;
     return response;
   } catch {
-    return (
-      (await cache.match(request, { ignoreSearch: true })) ||
-      (await cache.match(OFFLINE_ROOT)) ||
-      Response.error()
-    );
+    return navigationFallback(request);
   }
 }
 
@@ -100,4 +111,4 @@ self.addEventListener("fetch", (event) => {
 `;
 
 await writeFile(path.join(root, "sw.js"), serviceWorker, "utf8");
-console.log(`[pwa] Generated ${path.join(root, "sw.js")} with ${precache.size} precached URLs (${buildId}).`);
+console.log(`[pwa] Generated ${path.join(root, "sw.js")} with ${precache.size} precached exact file URLs (${buildId}).`);
