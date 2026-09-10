@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "contentVersion": 14,
-  "publishedAt": "2026-09-10T07:22:00Z",
+  "contentVersion": 15,
+  "publishedAt": "2026-09-10T09:55:00Z",
   "packages": [
     { "id": "pathology-core", "subjectId": "pathology", "title": "Патологическая анатомия", "version": 2, "path": "/content/packages/pathology-core.v2.json", "questionCount": 2 },
     { "id": "physiology-core", "subjectId": "physiology", "title": "Физиология", "version": 2, "path": "/content/packages/physiology-core.v2.json", "questionCount": 1 },
@@ -56,6 +56,9 @@
     { "id": "pharmacology-thyroid-parathyroid-a", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-thyroid-parathyroid-a.v1.json", "questionCount": 7 },
     { "id": "pharmacology-thyroid-parathyroid-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-thyroid-parathyroid-b.v1.json", "questionCount": 8 },
     { "id": "pharmacology-insulin-metabolism-a", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-insulin-metabolism-a.v1.json", "questionCount": 8 },
-    { "id": "pharmacology-insulin-metabolism-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-insulin-metabolism-b.v1.json", "questionCount": 7 }
+    { "id": "pharmacology-insulin-metabolism-b", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-insulin-metabolism-b.v1.json", "questionCount": 7 },
+    { "id": "pharmacology-antidiabetic-agents-a", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-antidiabetic-agents-a.v1.json", "questionCount": 15 },
+    { "id": "pharmacology-steroid-hormones-mineralocorticoids", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-steroid-hormones-mineralocorticoids.v1.json", "questionCount": 18 },
+    { "id": "pharmacology-glucocorticoids-a", "subjectId": "pharmacology", "title": "Фармакология", "version": 1, "path": "/content/packages/pharmacology-glucocorticoids-a.v1.json", "questionCount": 12 }
   ]
 }
