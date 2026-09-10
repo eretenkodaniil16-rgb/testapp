@@ -5,6 +5,7 @@ on:
     branches: [content-live]
     paths:
       - "public/content/**"
+      - "scripts/unify-hygiene-work-topic.mjs"
       - "scripts/sync-content-manifest.mjs"
       - "scripts/validate-content.mjs"
       - ".github/workflows/content.yml"
@@ -30,19 +31,21 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Unify current hygiene topics
+        run: node scripts/unify-hygiene-work-topic.mjs
       - name: Synchronize manifest
         run: node scripts/sync-content-manifest.mjs
       - run: npm install --no-audit --no-fund
       - run: npm run validate:content
-      - name: Publish synchronized manifest
+      - name: Publish synchronized content
         shell: bash
         run: |
-          if git diff --quiet -- public/content/manifest.json; then
-            echo "Manifest already synchronized."
+          if [ -z "$(git status --porcelain -- public/content)" ]; then
+            echo "Content already synchronized."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/content/manifest.json
-          git commit -m "content: sync manifest"
+          git add public/content
+          git commit -m "content: unify hygiene under occupational hygiene"
           git push origin HEAD:content-live
