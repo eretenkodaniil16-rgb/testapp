@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { QuestionImageView } from "@/components/question-image";
 import { getAllQuestions } from "@/lib/content-repository";
 import {
   EMPTY_QUESTION_DRAFT,
@@ -232,6 +233,7 @@ export default function PracticePage() {
       const allQuestions = await getAllQuestions();
       let nextQuestions = subject ? allQuestions.filter((question) => question.subjectId === subject) : allQuestions;
       if (topics.size > 0) nextQuestions = nextQuestions.filter((question) => topics.has(question.topicId));
+      nextQuestions = nextQuestions.filter((question) => question.scientificStatus !== "needs_revision");
       if (scienceOnly) nextQuestions = nextQuestions.filter((question) => !question.scientificStatus || question.scientificStatus === "verified");
 
       if (nextMode !== "learning" && nextMode !== "exam") {
@@ -317,7 +319,7 @@ export default function PracticePage() {
         ? ["Слабых тем пока нет", "Для определения слабой темы нужно минимум две попытки и точность ниже 75%."]
         : mode === "review"
           ? ["Повторение пока не требуется", "Все запланированные вопросы ещё не достигли даты следующего повторения."]
-          : ["Вопросов пока нет", "Для выбранных тем пока нет опубликованных вопросов."];
+          : ["Вопросов пока нет", "Для выбранных тем пока нет опубликованных пригодных для тренировки вопросов."];
     return <div className="page"><div className="empty-state"><h1>{emptyCopy[0]}</h1><p>{emptyCopy[1]}</p><Link className="button" href="/practice/setup">Настроить тренировку</Link></div></div>;
   }
 
@@ -343,6 +345,7 @@ export default function PracticePage() {
                   <div className="answer-card-meta"><span>#{questionIndex + 1}</span><span>{correct ? "Правильно" : "Ошибка"}</span></div>
                   <ScientificBadge question={item} />
                   <h3>{item.prompt}</h3>
+                  <QuestionImageView image={item.image} />
                   <UserAnswer question={item} draft={itemDraft} />
                   <AnswerKey question={item} />
                   {item.explanation && <p className="answer-explanation">{item.explanation}</p>}
@@ -373,6 +376,7 @@ export default function PracticePage() {
         <div className="question-card-kickers"><p className="question-type">{questionTypeLabel(question)}</p><ScientificBadge question={question} /></div>
         {question.sourceQuestionNumber && <p className="source-question-number">Исходный вопрос №{question.sourceQuestionNumber}</p>}
         <h2>{question.prompt}</h2>
+        <QuestionImageView image={question.image} />
         <DraftInput question={question} draft={draft} disabled={checked} onChange={setDraft} />
       </section>
 
