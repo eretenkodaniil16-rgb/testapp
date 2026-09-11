@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "contentVersion": 2,
+  "publishedAt": "2026-09-09T15:05:00Z",
+  "packages": [
+    {
+      "id": "pathology-core",
+      "subjectId": "pathology",
+      "title": "Патологическая анатомия",
+      "version": 2,
+      "path": "/content/packages/pathology-core.v2.json",
+      "questionCount": 2
+    },
+    {
+      "id": "physiology-core",
+      "subjectId": "physiology",
+      "title": "Физиология",
+      "version": 2,
+      "path": "/content/packages/physiology-core.v2.json",
+      "questionCount": 1
+    },
+    {
+      "id": "histology-core",
+      "subjectId": "histology",
+      "title": "Гистология",
+      "version": 2,
+      "path": "/content/packages/histology-core.v2.json",
+      "questionCount": 1
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "histology-core",
+  "version": 1,
+  "subject": {
+    "id": "histology",
+    "title": "Гистология"
+  },
+  "sections": [
+    {
+      "id": "urinary-system",
+      "title": "Мочевая система",
+      "topics": [
+        { "id": "kidney", "title": "Почка" }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "histology.kidney.nephron.000001",
+      "revisionId": "histology.kidney.nephron.000001-r1",
+      "subjectId": "histology",
+      "topicId": "kidney",
+      "subject": "Гистология",
+      "topic": "Почка",
+      "type": "single_choice",
+      "prompt": "Что является структурно-функциональной единицей почки?",
+      "explanation": "Нефрон включает почечное тельце и систему канальцев и является структурно-функциональной единицей почки.",
+      "options": [
+        { "id": "a", "label": "A", "text": "Ацинус", "correct": false },
+        { "id": "b", "label": "B", "text": "Нефрон", "correct": true },
+        { "id": "c", "label": "C", "text": "Остеон", "correct": false },
+        { "id": "d", "label": "D", "text": "Долька печени", "correct": false }
+      ]
+    }
+  ]
+}

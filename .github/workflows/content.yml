@@ -1,0 +1,22 @@
+name: Validate live test content
+
+on:
+  push:
+    branches: [content-live]
+    paths:
+      - "public/content/**"
+      - "scripts/validate-content.mjs"
+      - "package.json"
+      - "package-lock.json"
+  workflow_dispatch:
+
+jobs:
+  validate-content:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - run: npm run validate:content
