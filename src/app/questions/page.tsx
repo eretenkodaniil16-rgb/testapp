@@ -2,11 +2,25 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { QuestionImageView } from "@/components/question-image";
 import { getAllQuestions, getContentCatalogTree } from "@/lib/content-repository";
 import { questionTypeLabel, scientificStatusLabel } from "@/lib/question-evaluator";
 import type { ContentCatalogSubject, PracticeQuestion } from "@/types/domain";
 
 function AnswerBlock({ question }: { question: PracticeQuestion }) {
+  if (question.scientificStatus === "needs_revision") {
+    return (
+      <div className="source-defect-block">
+        <strong>Ключ исходного банка требует проверки</strong>
+        {question.sourceKey && question.sourceKey.length > 0 && <p><b>Ключ в исходнике:</b> {question.sourceKey.join(", ")}</p>}
+        <div className="source-option-list">
+          {question.options.map((option) => <p key={option.id}><b>{option.label}.</b> {option.text}</p>)}
+        </div>
+        <p>Этот вопрос сохранён для полноты исходной базы, но исключён из тренировок и экзаменов до исправления источника.</p>
+      </div>
+    );
+  }
+
   if (question.type === "single_choice" || question.type === "multiple_choice" || question.type === "true_false") {
     const correct = question.options.filter((option) => option.correct);
     return (
@@ -120,6 +134,7 @@ export default function QuestionsPage() {
           ...(question.acceptedAnswers ?? []),
           ...(question.matchingPairs ?? []).flatMap((pair) => [pair.left, pair.right]),
           ...(question.caseQuestions ?? []).flatMap((item) => [item.prompt, item.answerLabel]),
+          question.image?.alt ?? "",
         ].join(" ");
         return `${question.prompt} ${question.topic} ${answerText} ${question.scientificNote ?? ""}`.toLowerCase().includes(normalizedQuery);
       });
@@ -164,6 +179,7 @@ export default function QuestionsPage() {
               <div className="answer-card-meta"><span>#{question.sourceQuestionNumber ?? index + 1}</span><span>{question.subject} · {question.topic}</span></div>
               <div className="question-card-kickers"><span className="question-type">{questionTypeLabel(question)}</span>{question.scientificStatus && <span className={`science-badge science-${question.scientificStatus}`}>{scientificStatusLabel(question)}</span>}</div>
               <h3>{question.prompt}</h3>
+              <QuestionImageView image={question.image} />
               <AnswerBlock question={question} />
               {question.explanation && <p className="answer-explanation">{question.explanation}</p>}
               <ScientificBlock question={question} />
