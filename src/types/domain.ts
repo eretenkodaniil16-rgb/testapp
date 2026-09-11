@@ -18,6 +18,21 @@ export interface ContentSource {
   note?: string;
 }
 
+export interface QuestionImageCrop {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  sheetWidth: number;
+  sheetHeight: number;
+}
+
+export interface QuestionImage {
+  src: string;
+  alt: string;
+  crop?: QuestionImageCrop;
+}
+
 export interface AnswerOption {
   id: string;
   label: string;
@@ -57,6 +72,7 @@ export interface PracticeQuestion {
   matchingPairs?: MatchingPair[];
   caseStem?: string;
   caseQuestions?: CaseSubquestion[];
+  image?: QuestionImage;
   sourceQuestionNumber?: number;
   sourceKey?: string[];
   scientificStatus?: ScientificStatus;
