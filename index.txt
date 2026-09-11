@@ -1,0 +1,55 @@
+1:"$Sreact.fragment"
+3:I[84364,["/eretenkodaniil16-rgb/testapp/preview-static/_next/static/chunks/2xs-i0js_zru4.js"],"PwaRegister"]
+4:I[39756,["/eretenkodaniil16-rgb/testapp/preview-static/_next/static/chunks/2xs-i0js_zru4.js"],"default"]
+5:I[37457,["/eretenkodaniil16-rgb/testapp/preview-static/_next/static/chunks/2xs-i0js_zru4.js"],"default"]
+6:I[1195,["/eretenkodaniil16-rgb/testapp/preview-static/_next/static/chunks/2xs-i0js_zru4.js"],"BottomNav"]
+7:I[22016,["/eretenkodaniil16-rgb/testapp/preview-static/_next/static/chunks/2xs-i0js_zru4.js","/eretenkodaniil16-rgb/testapp/preview-static/_next/static/chunks/0g0aremvi8fa6.js"],""]
+13:I[68027,["/eretenkodaniil16-rgb/testapp/preview-static/_next/static/chunks/2xs-i0js_zru4.js"],"default",1]
+:HL["/eretenkodaniil16-rgb/testapp/preview-static/_next/static/chunks/0nuxljwt2h7wt.css","style"]
+2:T41f,(() => {
+  const BASE = "/eretenkodaniil16-rgb/testapp/preview-static";
+  document.addEventListener("click", (event) => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const anchor = target.closest("a[href]");
+    if (!anchor || anchor.target === "_blank" || anchor.hasAttribute("download")) return;
+
+    const url = new URL(anchor.href, window.location.href);
+    if (url.origin !== window.location.origin) return;
+    if (!(url.pathname === BASE || url.pathname.startsWith(BASE + "/"))) return;
+
+    if (url.pathname === BASE || url.pathname === BASE + "/") {
+      url.pathname = BASE + "/index.html";
+    } else if (url.pathname.endsWith("/") && !url.pathname.endsWith("/index.html")) {
+      url.pathname += "index.html";
+    } else {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    window.location.assign(url.toString());
+  }, true);
+})();0:{"P":null,"c":["",""],"q":"","i":false,"f":[[["",{"children":["__PAGE__",{},"$undefined","$undefined",4608]},"$undefined","$undefined",4624],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/eretenkodaniil16-rgb/testapp/preview-static/_next/static/chunks/0nuxljwt2h7wt.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/eretenkodaniil16-rgb/testapp/preview-static/_next/static/chunks/2xs-i0js_zru4.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"ru","suppressHydrationWarning":true,"children":[["$","head",null,{"children":[["$","script",null,{"dangerouslySetInnerHTML":{"__html":"(() => {\n  try {\n    const saved = localStorage.getItem(\"testapp-theme\");\n    document.documentElement.dataset.theme = saved === \"dark\" ? \"dark\" : \"light\";\n  } catch {}\n})();"}}],["$","script",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],["$","body",null,{"children":[["$","$L3",null,{}],["$","main",null,{"className":"app-shell","children":["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}],["$","$L6",null,{}]]}]]}]]}],{"children":[["$","$1","c",{"children":[["$","div",null,{"className":"page home-page","children":[["$","header",null,{"className":"hero home-hero","children":[["$","div",null,{"className":"hero-copy","children":[["$","div",null,{"className":"hero-badge","children":[["$","span",null,{"children":"●"}]," TESTAPP · ЛОКАЛЬНЫЙ ПРОГРЕСС"]}],["$","h1",null,{"children":["Учись точнее.",["$","br",null,{}],["$","span",null,{"children":"Ошибки работают на тебя."}]]}],["$","p",null,{"children":"Тренировки по темам, экзамены, разбор каждого варианта и интервальное повторение — без обязательной учётной записи."}],["$","div",null,{"className":"hero-actions","children":[["$","$L7",null,{"className":"button hero-button","href":"/practice/setup","children":["Начать тренировку ","$L8"]}],"$L9"]}]]}],"$La"]}],"$Lb","$Lc","$Ld","$Le","$Lf"]}],["$L10"],"$L11"]}],{},null,false,null]},null,false,null],"$L12",false]],"m":"$undefined","G":["$13",["$L14"]],"S":true,"h":null,"r":"$undefined","s":"$undefined","a":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"DRyQE3Stp5RFAT_0oObxk"}
+15:I[1059,["/eretenkodaniil16-rgb/testapp/preview-static/_next/static/chunks/2xs-i0js_zru4.js","/eretenkodaniil16-rgb/testapp/preview-static/_next/static/chunks/0g0aremvi8fa6.js"],"DashboardSummary"]
+16:I[54883,["/eretenkodaniil16-rgb/testapp/preview-static/_next/static/chunks/2xs-i0js_zru4.js","/eretenkodaniil16-rgb/testapp/preview-static/_next/static/chunks/0g0aremvi8fa6.js"],"ContentCatalog"]
+17:I[97367,["/eretenkodaniil16-rgb/testapp/preview-static/_next/static/chunks/2xs-i0js_zru4.js"],"OutletBoundary"]
+18:"$Sreact.suspense"
+1a:I[97367,["/eretenkodaniil16-rgb/testapp/preview-static/_next/static/chunks/2xs-i0js_zru4.js"],"ViewportBoundary"]
+1c:I[97367,["/eretenkodaniil16-rgb/testapp/preview-static/_next/static/chunks/2xs-i0js_zru4.js"],"MetadataBoundary"]
+8:["$","span",null,{"children":"→"}]
+9:["$","$L7",null,{"className":"hero-link","href":"/questions","children":"Открыть банк ответов"}]
+a:["$","div",null,{"className":"hero-visual","aria-hidden":"true","children":[["$","div",null,{"className":"hero-orbit hero-orbit-one"}],["$","div",null,{"className":"hero-orbit hero-orbit-two"}],["$","div",null,{"className":"hero-symbol","children":["$","svg",null,{"viewBox":"0 0 48 48","aria-hidden":"true","children":[["$","path",null,{"d":"M24 5v38M5 24h38"}],["$","circle",null,{"cx":"24","cy":"24","r":"13"}],["$","path",null,{"d":"m16 24 5 5 11-12"}]]}]}],["$","span",null,{"className":"hero-chip hero-chip-a","children":"97%"}],["$","span",null,{"className":"hero-chip hero-chip-b","children":"+12 тем"}]]}]
+b:["$","$L15",null,{}]
+c:["$","section",null,{"className":"action-grid","aria-label":"Быстрые действия","children":[["$","$L7",null,{"className":"primary-card action-card","href":"/practice/setup","children":[["$","div",null,{"className":"action-card-icon","children":"✦"}],["$","div",null,{"className":"action-card-copy","children":[["$","span",null,{"children":"Настроить тренировку"}],["$","small",null,{"children":"Дисциплина, темы, количество и режим"}]]}],["$","b",null,{"aria-hidden":"true","children":"→"}]]}],["$","$L7",null,{"className":"secondary-card action-card","href":"/practice?mode=mistakes","children":[["$","div",null,{"className":"action-card-icon","children":"↺"}],["$","div",null,{"className":"action-card-copy","children":[["$","span",null,{"children":"Повторить ошибки"}],["$","small",null,{"children":"Закрепить вопросы, на которых были промахи"}]]}],["$","b",null,{"aria-hidden":"true","children":"→"}]]}]]}]
+d:["$","section",null,{"className":"mode-grid","aria-label":"Режимы обучения","children":[["$","$L7",null,{"href":"/practice/setup?mode=exam","children":[["$","i",null,{"children":"01"}],["$","strong",null,{"children":"Экзамен"}],["$","span",null,{"children":"Без подсказок до окончания"}]]}],["$","$L7",null,{"href":"/review","children":[["$","i",null,{"children":"02"}],["$","strong",null,{"children":"По расписанию"}],["$","span",null,{"children":"Интервальное повторение"}]]}],["$","$L7",null,{"href":"/weak-topics","children":[["$","i",null,{"children":"03"}],["$","strong",null,{"children":"Слабые темы"}],["$","span",null,{"children":"Автоматически по статистике"}]]}],["$","$L7",null,{"href":"/questions","children":[["$","i",null,{"children":"04"}],["$","strong",null,{"children":"Банк ответов"}],["$","span",null,{"children":"Вопросы и разбор вариантов"}]]}]]}]
+e:["$","section",null,{"className":"catalog-section","children":[["$","div",null,{"className":"section-title","children":[["$","div",null,{"children":[["$","span",null,{"className":"section-kicker","children":"КАТАЛОГ"}],["$","h2",null,{"children":"Дисциплины"}]]}],["$","span",null,{"children":"обновляются из GitHub"}]]}],["$","$L16",null,{}]]}]
+f:["$","section",null,{"className":"info-card privacy-card","children":[["$","div",null,{"className":"privacy-icon","aria-hidden":"true","children":"⌁"}],["$","div",null,{"children":[["$","h2",null,{"children":"Прогресс остаётся твоим"}],["$","p",null,{"children":"Ответы, ошибки, интервалы повторения и статистика хранятся только на текущем устройстве. Из GitHub загружается только общая база тестов."}]]}]]}]
+10:["$","script","script-0",{"src":"/eretenkodaniil16-rgb/testapp/preview-static/_next/static/chunks/0g0aremvi8fa6.js","async":true,"nonce":"$undefined"}]
+11:["$","$L17",null,{"children":["$","$18",null,{"name":"Next.MetadataOutlet","children":"$@19"}]}]
+12:["$","$1","h",{"children":[null,["$","$L1a",null,{"children":"$L1b"}],["$","div",null,{"hidden":true,"children":["$","$L1c",null,{"children":["$","$18",null,{"name":"Next.Metadata","children":"$L1d"}]}]}],null]}]
+14:["$","link","0",{"rel":"stylesheet","href":"/eretenkodaniil16-rgb/testapp/preview-static/_next/static/chunks/0nuxljwt2h7wt.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
+1b:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","2",{"name":"theme-color","content":"#0f172a"}]]
+19:null
+1d:[["$","title","0",{"children":"TestApp"}],["$","meta","1",{"name":"description","content":"Тренажёр тестовых заданий с экзаменами, научным разбором, анализом слабых тем и интервальным повторением"}],["$","meta","2",{"name":"application-name","content":"TestApp"}],["$","link","3",{"rel":"manifest","href":"/eretenkodaniil16-rgb/testapp/preview-static/manifest.webmanifest","crossOrigin":"$undefined"}]]

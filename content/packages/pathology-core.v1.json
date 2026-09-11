@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "id": "pathology-core",
+  "version": 1,
+  "subject": {
+    "id": "pathology",
+    "title": "Патологическая анатомия"
+  },
+  "sections": [
+    {
+      "id": "cell-damage",
+      "title": "Повреждение",
+      "topics": [
+        { "id": "cell-injury", "title": "Повреждение клетки" }
+      ]
+    },
+    {
+      "id": "circulation-disorders",
+      "title": "Нарушения кровообращения",
+      "topics": [
+        { "id": "circulation", "title": "Нарушения кровообращения" }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "pathology.cell-injury.apoptosis.000001",
+      "revisionId": "pathology.cell-injury.apoptosis.000001-r1",
+      "subjectId": "pathology",
+      "topicId": "cell-injury",
+      "subject": "Патологическая анатомия",
+      "topic": "Повреждение клетки",
+      "type": "single_choice",
+      "prompt": "Как называется регулируемая форма клеточной гибели, обычно протекающая без выраженной воспалительной реакции?",
+      "explanation": "Апоптоз — программируемая клеточная гибель с контролируемой фрагментацией клетки и последующим удалением её компонентов.",
+      "options": [
+        { "id": "a", "label": "A", "text": "Некроз", "correct": false },
+        { "id": "b", "label": "B", "text": "Апоптоз", "correct": true },
+        { "id": "c", "label": "C", "text": "Метаплазия", "correct": false },
+        { "id": "d", "label": "D", "text": "Гиперплазия", "correct": false }
+      ]
+    },
+    {
+      "id": "pathology.circulation.thrombosis.000001",
+      "revisionId": "pathology.circulation.thrombosis.000001-r1",
+      "subjectId": "pathology",
+      "topicId": "circulation",
+      "subject": "Патологическая анатомия",
+      "topic": "Нарушения кровообращения",
+      "type": "single_choice",
+      "prompt": "Как называется прижизненное свёртывание крови в просвете сосуда или полости сердца?",
+      "explanation": "Тромбоз — прижизненное образование свёртка крови в сосудистой системе или полостях сердца.",
+      "options": [
+        { "id": "a", "label": "A", "text": "Эмболия", "correct": false },
+        { "id": "b", "label": "B", "text": "Тромбоз", "correct": true },
+        { "id": "c", "label": "C", "text": "Гемолиз", "correct": false },
+        { "id": "d", "label": "D", "text": "Диапедез", "correct": false }
+      ]
+    }
+  ]
+}
