@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { getContentCatalogTree } from "@/lib/content-repository";
-import type { ContentCatalogSubject } from "@/types/domain";
+import { getAllQuestions, getContentCatalogTree } from "@/lib/content-repository";
+import type { ContentCatalogSubject, PracticeQuestion } from "@/types/domain";
 
 export default function PracticeSetupPage() {
   const [catalog, setCatalog] = useState<ContentCatalogSubject[]>([]);
+  const [questions, setQuestions] = useState<PracticeQuestion[]>([]);
   const [subjectId, setSubjectId] = useState("");
   const [sectionId, setSectionId] = useState("");
   const [selectedTopics, setSelectedTopics] = useState<Set<string>>(new Set());
@@ -20,7 +21,7 @@ export default function PracticeSetupPage() {
     let cancelled = false;
     async function load() {
       const params = new URLSearchParams(window.location.search);
-      const nextCatalog = await getContentCatalogTree();
+      const [nextCatalog, nextQuestions] = await Promise.all([getContentCatalogTree(), getAllQuestions()]);
       if (cancelled) return;
 
       const requestedSubject = params.get("subject") ?? nextCatalog[0]?.id ?? "";
@@ -36,6 +37,7 @@ export default function PracticeSetupPage() {
           : selectedSubject?.sections.flatMap((section) => section.topics.map((topic) => topic.id)) ?? [];
 
       setCatalog(nextCatalog);
+      setQuestions(nextQuestions);
       setSubjectId(selectedSubject?.id ?? "");
       setSectionId(selectedSection?.id ?? "");
       setSelectedTopics(new Set(initialTopics));
@@ -51,10 +53,21 @@ export default function PracticeSetupPage() {
   const sections = subject?.sections ?? [];
   const visibleTopics = sectionId ? sections.find((item) => item.id === sectionId)?.topics ?? [] : sections.flatMap((section) => section.topics);
 
-  const selectedQuestionCount = useMemo(() => {
-    const counts = new Map(visibleTopics.map((topic) => [topic.id, topic.questionCount]));
-    return [...selectedTopics].reduce((sum, id) => sum + (counts.get(id) ?? 0), 0);
-  }, [selectedTopics, visibleTopics]);
+  const availableCountByTopic = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const question of questions) {
+      if (question.subjectId !== subjectId || question.scientificStatus === "needs_revision") continue;
+      if (scienceOnly && question.scientificStatus && question.scientificStatus !== "verified") continue;
+      counts.set(question.topicId, (counts.get(question.topicId) ?? 0) + 1);
+    }
+    return counts;
+  }, [questions, scienceOnly, subjectId]);
+
+  const selectedQuestionCount = useMemo(() => [...selectedTopics].reduce((sum, id) => sum + (availableCountByTopic.get(id) ?? 0), 0), [availableCountByTopic, selectedTopics]);
+
+  function sectionAvailableCount(sectionTopicIds: string[]): number {
+    return sectionTopicIds.reduce((sum, topicId) => sum + (availableCountByTopic.get(topicId) ?? 0), 0);
+  }
 
   function selectSubject(nextSubjectId: string) {
     const nextSubject = catalog.find((item) => item.id === nextSubjectId);
@@ -97,7 +110,7 @@ export default function PracticeSetupPage() {
       <header className="hero compact">
         <p className="eyebrow">КОНСТРУКТОР</p>
         <h1>Настройка тренировки</h1>
-        <p>Выбери дисциплину, темы и формат. Научный режим исключает вопросы, которые сохранены только ради исходного кафедрального ключа или требуют переработки.</p>
+        <p>Выбери дисциплину, темы и формат. Вопросы с повреждённым исходным ключом доступны для просмотра в банке, но автоматически исключаются из тренировок и экзаменов.</p>
       </header>
 
       <section className="setup-card mode-selector">
@@ -107,12 +120,12 @@ export default function PracticeSetupPage() {
 
       <section className="setup-card">
         <label className="field-label"><span>Дисциплина</span><select value={subjectId} onChange={(event) => selectSubject(event.target.value)}>{catalog.map((item) => <option value={item.id} key={item.id}>{item.title}</option>)}</select></label>
-        <label className="field-label"><span>Раздел</span><select value={sectionId} onChange={(event) => selectSection(event.target.value)}><option value="">Все разделы</option>{sections.map((item) => <option value={item.id} key={item.id}>{item.title} · {item.questionCount}</option>)}</select></label>
+        <label className="field-label"><span>Раздел</span><select value={sectionId} onChange={(event) => selectSection(event.target.value)}><option value="">Все разделы</option>{sections.map((item) => <option value={item.id} key={item.id}>{item.title} · {sectionAvailableCount(item.topics.map((topic) => topic.id))}</option>)}</select></label>
       </section>
 
       <section className="setup-card">
         <div className="setup-card-head"><div><h2>Темы</h2><p>{selectedTopics.size} выбрано · {selectedQuestionCount} вопросов доступно</p></div><div className="inline-links"><button type="button" onClick={() => setSelectedTopics(new Set(visibleTopics.map((topic) => topic.id)))}>Все</button><button type="button" onClick={() => setSelectedTopics(new Set())}>Снять</button></div></div>
-        <div className="topic-check-list">{visibleTopics.map((topic) => <label className="topic-check" key={topic.id}><input type="checkbox" checked={selectedTopics.has(topic.id)} onChange={() => toggleTopic(topic.id)} /><span><strong>{topic.title}</strong><small>{topic.questionCount} вопросов</small></span></label>)}</div>
+        <div className="topic-check-list">{visibleTopics.map((topic) => <label className="topic-check" key={topic.id}><input type="checkbox" checked={selectedTopics.has(topic.id)} onChange={() => toggleTopic(topic.id)} /><span><strong>{topic.title}</strong><small>{availableCountByTopic.get(topic.id) ?? 0} вопросов</small></span></label>)}</div>
       </section>
 
       <section className="setup-card setup-options-grid">
@@ -121,7 +134,7 @@ export default function PracticeSetupPage() {
         <label className="toggle-row science-toggle"><input type="checkbox" checked={scienceOnly} onChange={(event) => setScienceOnly(event.target.checked)} /><span><strong>Научная тренировка</strong><small>Оставить только проверенные и не отмеченные как устаревшие/неоднозначные задания</small></span></label>
       </section>
 
-      {selectedTopics.size === 0 ? <div className="info-card"><p>Выбери хотя бы одну тему, чтобы начать.</p></div> : <Link className="button full-width" href={startHref}>{studyMode === "exam" ? "Начать экзамен" : "Начать тренировку"}</Link>}
+      {selectedTopics.size === 0 || selectedQuestionCount === 0 ? <div className="info-card"><p>Выбери хотя бы одну тему с доступными вопросами, чтобы начать.</p></div> : <Link className="button full-width" href={startHref}>{studyMode === "exam" ? "Начать экзамен" : "Начать тренировку"}</Link>}
 
       <div className="study-shortcuts"><Link className="text-link" href={`/questions?subject=${encodeURIComponent(subjectId)}${scienceOnly ? "&science=1" : ""}`}>Посмотреть вопросы с правильными ответами</Link><Link className="text-link" href="/weak-topics">Тренировать слабые темы</Link><Link className="text-link" href="/review">Интервальное повторение</Link></div>
     </div>
