@@ -22,5 +22,7 @@ for (const [relativePath, payload] of Object.entries(files)) {
   else throw new Error(`[surgery-import] invalid payload for ${relativePath}`);
 }
 
-await rm(payloadDir, { recursive: true, force: true });
+for (const name of await readdir(payloadDir)) {
+  if (name !== "READY") await rm(path.join(payloadDir, name), { recursive: true, force: true });
+}
 console.log(`[surgery-import] wrote ${Object.keys(files).length} files from ${parts.length} payload parts`);
