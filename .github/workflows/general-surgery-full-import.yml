@@ -33,6 +33,28 @@ jobs:
       - run: npm install --no-audit --no-fund
       - name: Validate all content
         run: npm run validate:content
+      - name: Diagnose surgery source audit
+        shell: bash
+        run: |
+          echo "--- audit sourceKey logic ---"
+          sed -n '70,115p' scripts/audit-general-surgery-source.mjs
+          echo "--- sourceKey mismatches ---"
+          node --input-type=module <<'NODE'
+          import { readdir, readFile } from 'node:fs/promises';
+          const dir = 'public/content/packages';
+          const names = (await readdir(dir)).filter((n) => n.startsWith('general-surgery-') && n.endsWith('.json'));
+          for (const name of names) {
+            const pkg = JSON.parse(await readFile(`${dir}/${name}`, 'utf8'));
+            for (const q of pkg.questions ?? []) {
+              if (!Object.hasOwn(q, 'sourceKey')) continue;
+              const correct = (q.options ?? []).filter((o) => o.correct).map((o) => o.label ?? o.id);
+              const src = Array.isArray(q.sourceKey) ? q.sourceKey.map(String) : [String(q.sourceKey)];
+              const a = [...src].sort().join('|');
+              const b = [...correct].map(String).sort().join('|');
+              if (a !== b) console.log(JSON.stringify({id:q.id, sourceKey:q.sourceKey, correct, keys:Object.keys(q), status:q.status, needsRevision:q.needsRevision, tags:q.tags, audit:q.audit}));
+            }
+          }
+          NODE
       - name: Audit generated surgery bank
         run: node scripts/audit-general-surgery-source.mjs
       - name: Commit generated bank
