@@ -4,8 +4,7 @@ on:
   push:
     branches: [content/general-surgery-full-bank-v1]
     paths:
-      - "scripts/import-general-surgery-full.mjs"
-      - "scripts/.surgery-payload/**"
+      - "scripts/surgery-payload/READY"
       - ".github/workflows/general-surgery-full-import.yml"
   workflow_dispatch:
 
@@ -35,26 +34,7 @@ jobs:
       - name: Validate all content
         run: npm run validate:content
       - name: Audit generated surgery bank
-        shell: bash
-        run: |
-          node - <<'NODE'
-          const fs = require('fs');
-          const path = require('path');
-          const manifest = JSON.parse(fs.readFileSync('public/content/manifest.json','utf8'));
-          const entries = manifest.packages.filter(x => x.subjectId === 'general-surgery');
-          let count = 0;
-          const ids = new Set();
-          for (const entry of entries) {
-            const pkg = JSON.parse(fs.readFileSync(path.join('public', entry.path.replace(/^\/content\//,'content/')),'utf8'));
-            for (const q of pkg.questions) {
-              if (ids.has(q.id)) throw new Error(`duplicate surgery question id: ${q.id}`);
-              ids.add(q.id);
-              count++;
-            }
-          }
-          console.log(`[general-surgery-audit] ${entries.length} packages, ${count} questions`);
-          if (count !== 1330) throw new Error(`expected 1330 surgery questions, got ${count}`);
-          NODE
+        run: node scripts/audit-general-surgery-source.mjs
       - name: Commit generated bank
         shell: bash
         run: |
