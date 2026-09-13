@@ -53,6 +53,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git restore --source=HEAD -- .github/workflows
           git add -A
           git commit -m "content: import full general surgery bank" || exit 0
           git push origin HEAD:content/general-surgery-full-bank-v1
