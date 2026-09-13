@@ -1,0 +1,65 @@
+name: Import full general surgery bank
+
+on:
+  push:
+    branches: [content/general-surgery-full-bank-v1]
+    paths:
+      - "scripts/import-general-surgery-full.mjs"
+      - "scripts/.surgery-payload/**"
+      - ".github/workflows/general-surgery-full-import.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: general-surgery-full-import
+  cancel-in-progress: false
+
+jobs:
+  import-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: content/general-surgery-full-bank-v1
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Generate surgery packages
+        run: node scripts/import-general-surgery-full.mjs
+      - name: Synchronize manifest
+        run: node scripts/sync-content-manifest.mjs
+      - run: npm install --no-audit --no-fund
+      - name: Validate all content
+        run: npm run validate:content
+      - name: Audit generated surgery bank
+        shell: bash
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+          const manifest = JSON.parse(fs.readFileSync('public/content/manifest.json','utf8'));
+          const entries = manifest.packages.filter(x => x.subjectId === 'general-surgery');
+          let count = 0;
+          const ids = new Set();
+          for (const entry of entries) {
+            const pkg = JSON.parse(fs.readFileSync(path.join('public', entry.path.replace(/^\/content\//,'content/')),'utf8'));
+            for (const q of pkg.questions) {
+              if (ids.has(q.id)) throw new Error(`duplicate surgery question id: ${q.id}`);
+              ids.add(q.id);
+              count++;
+            }
+          }
+          console.log(`[general-surgery-audit] ${entries.length} packages, ${count} questions`);
+          if (count !== 1330) throw new Error(`expected 1330 surgery questions, got ${count}`);
+          NODE
+      - name: Commit generated bank
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "content: import full general surgery bank" || exit 0
+          git push origin HEAD:content/general-surgery-full-bank-v1
