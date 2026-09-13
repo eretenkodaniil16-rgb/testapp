@@ -7,6 +7,7 @@ on:
       - "public/content/**"
       - "scripts/validate-content.mjs"
       - "scripts/audit-pharmacology-source.mjs"
+      - "scripts/audit-general-surgery-source.mjs"
       - ".github/workflows/content-ci.yml"
   workflow_dispatch:
 
@@ -21,3 +22,5 @@ jobs:
       - run: node scripts/validate-content.mjs
       - name: Audit pharmacology source bank
         run: node scripts/audit-pharmacology-source.mjs 1062
+      - name: Audit general surgery source bank
+        run: node scripts/audit-general-surgery-source.mjs
