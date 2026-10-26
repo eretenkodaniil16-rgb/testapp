@@ -1,0 +1,2843 @@
+{
+  "schemaVersion": 1,
+  "id": "fodt-rubezhny-kontrol-1",
+  "version": 1,
+  "subject": {
+    "id": "fodt",
+    "title": "ФОДТ"
+  },
+  "sections": [
+    {
+      "id": "fodt-rubezhny-1",
+      "title": "Рубежный контроль № 1",
+      "topics": [
+        {
+          "id": "sensors-electronics",
+          "title": "Датчики, усилители и медицинская электроника"
+        },
+        {
+          "id": "bioelectric-ecg",
+          "title": "Биоэлектрические сигналы и ЭКГ"
+        },
+        {
+          "id": "rheography",
+          "title": "Реография"
+        },
+        {
+          "id": "metrology-safety",
+          "title": "Метрология и электробезопасность"
+        }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "fodt.rubezh1.sensors-electronics.001",
+      "revisionId": "fodt.rubezh1.sensors-electronics.001-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "Что характеризует чувствительность датчика?",
+      "explanation": "Чувствительность определяется отношением изменения выходного сигнала к изменению измеряемой входной величины.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Изменение выходной величины при изменении входной",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Максимальную частоту дискретизации",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Электрическую прочность изоляции",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Объём памяти регистратора",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 1; fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 2, 7",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.002",
+      "revisionId": "fodt.rubezh1.sensors-electronics.002-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "Для чего используют датчики в медицинской измерительной аппаратуре?",
+      "explanation": "Датчик преобразует измеряемую физическую величину в сигнал, удобный для регистрации и обработки.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Только для механической фиксации пациента",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Для преобразования медико-биологической информации в электрический сигнал",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Только для накопления данных",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Для стерилизации оборудования",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 12, 22; fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 4–5",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.003",
+      "revisionId": "fodt.rubezh1.sensors-electronics.003-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "Медицинский прибор — это техническое устройство, предназначенное для…",
+      "explanation": "В используемой в курсе классификации медицинский прибор выполняет измерительную функцию.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Обеззараживания помещений",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Введения лекарств без измерений",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Диагностических или лечебных измерений",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Дозированного терапевтического энергетического воздействия",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 12; fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 4, 7",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.004",
+      "revisionId": "fodt.rubezh1.sensors-electronics.004-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "Медицинский аппарат — это техническое устройство для…",
+      "explanation": "В учебной классификации аппаратом называют устройство, оказывающее лечебное физическое воздействие.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Измерения температуры",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Регистрации потенциалов без лечебного воздействия",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Хранения цифровых данных",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Дозированного терапевтического энергетического воздействия или разрушительного действия",
+          "correct": true
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 6, 25–26; fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 1, 4, 7",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.005",
+      "revisionId": "fodt.rubezh1.sensors-electronics.005-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "Какие датчики называют генераторными?",
+      "explanation": "Генераторный датчик преобразует энергию входного воздействия в электрический выходной сигнал.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Непосредственно генерирующие электрический сигнал под действием измеряемой величины",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Только изменяющие сопротивление при внешнем питании",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Лишь усиливающие входной сигнал",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Преобразующие цифровой код в аналоговый",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 22; fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 4, 7",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.006",
+      "revisionId": "fodt.rubezh1.sensors-electronics.006-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "Как называются устройства, увеличивающие электрический сигнал за счёт энергии стороннего источника?",
+      "explanation": "Усилитель повышает амплитуду или мощность сигнала, используя дополнительный источник энергии.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Пассивные калибраторы",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Усилители",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Электроды",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Аналого-цифровые преобразователи",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 5, 8",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.007",
+      "revisionId": "fodt.rubezh1.sensors-electronics.007-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "Что описывает амплитудная характеристика усилителя?",
+      "explanation": "Амплитудная характеристика показывает преобразование амплитуды входного сигнала в выходную при заданной частоте.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Изменение выходной частоты только от сопротивления электродов",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Зависимость времени записи от объёма памяти",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Зависимость амплитуды выходного напряжения от амплитуды входного при фиксированной частоте",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Зависимость температуры пациента от влажности воздуха",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 2, 6",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.008",
+      "revisionId": "fodt.rubezh1.sensors-electronics.008-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "Полоса пропускания усилителя — это…",
+      "explanation": "В полосе пропускания частотные искажения не превышают допустимого уровня.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Диапазон измеряемого артериального давления",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Интервал температур стерилизации",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Диапазон допустимых напряжений электросети",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Диапазон частот, в котором сигнал передаётся без недопустимых искажений",
+          "correct": true
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 2, 4–5",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.009",
+      "revisionId": "fodt.rubezh1.sensors-electronics.009-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "Как называются устройства, преобразующие аналоговый сигнал в цифровой?",
+      "explanation": "АЦП выполняет дискретизацию и квантование аналогового сигнала.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Аналого-цифровые преобразователи",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Электроды",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Датчики температуры",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Изоляторы",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 15; fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 1, 6",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.010",
+      "revisionId": "fodt.rubezh1.sensors-electronics.010-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "Для чего нужен аналого-цифровой преобразователь в диагностической системе?",
+      "explanation": "Назначение АЦП — получить цифровое представление аналогового сигнала.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Для восстановления механической кривой без измерений",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Для преобразования аналогового сигнала в цифровые данные для компьютерной обработки",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Для непосредственного создания лечебного ультразвукового воздействия",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Для заземления корпуса прибора",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 6; на с. 1 приведена некорректная альтернативная формулировка",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.011",
+      "revisionId": "fodt.rubezh1.sensors-electronics.011-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "Для чего служат электроды при регистрации биопотенциалов?",
+      "explanation": "Электроды обеспечивают электрический контакт с тканями и передачу регистрируемого сигнала.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Для увеличения частоты сердечных сокращений",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Для обязательного нагрева ткани",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Для съёма электрических потенциалов с биологического объекта",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Для преобразования аналоговых сигналов в цифровые",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 2, 4, 6–7",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.012",
+      "revisionId": "fodt.rubezh1.sensors-electronics.012-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "Какой датчик из перечисленных может использоваться для регистрации изменений давления?",
+      "explanation": "Пьезоэлектрический датчик генерирует электрический сигнал под воздействием механического напряжения; особенно пригоден для регистрации динамических изменений давления.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Фоторезистор без механической связи",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Термопара",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Ртутный термометр",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Пьезоэлектрический",
+          "correct": true
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 6",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.013",
+      "revisionId": "fodt.rubezh1.sensors-electronics.013-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "multiple_choice",
+      "prompt": "Какие особенности характерны для усиления биоэлектрических сигналов?",
+      "explanation": "Требуется высокое входное сопротивление, подавление синфазных помех и защита от артефактов. В первом PDF в правильном наборе также отмечены помехи.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Биопотенциалы обычно имеют малую амплитуду",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Система «ткани — электроды» может иметь высокое сопротивление",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Возникают помехи и артефакты",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Биопотенциалы всегда являются мощными сигналами",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 3; fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 5",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.014",
+      "revisionId": "fodt.rubezh1.sensors-electronics.014-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "multiple_choice",
+      "prompt": "Какие из перечисленных факторов могут создавать помехи при регистрации биопотенциалов?",
+      "explanation": "Внешние электрические и электромагнитные поля способны наводить помехи на высокоомный измерительный тракт.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Только собственное биение сердца",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Силовые и осветительные электрические сети",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Переменные магнитные поля оборудования",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Радиочастотные электромагнитные воздействия",
+          "correct": true
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 7",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.015",
+      "revisionId": "fodt.rubezh1.sensors-electronics.015-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "Как называется регистрирующее устройство, преобразующее электрический сигнал в механическое перемещение пишущего механизма?",
+      "explanation": "Самописец использует механическое перемещение пишущего устройства для регистрации электрического сигнала. В другом месте источника встречается ошибочный вариант «пирограф».",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Фотоумножитель",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Электрод",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Самописец",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Пирометр",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 1–2",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.016",
+      "revisionId": "fodt.rubezh1.sensors-electronics.016-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "Термопара: изменение температуры на 2 °C приводит к появлению ЭДС 10 мкВ. Чему равна чувствительность?",
+      "explanation": "S = ΔU/ΔT = 10/2 = 5 мкВ/°C.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "20 мкВ/°C",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "0,2 мкВ/°C",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "12 мкВ/°C",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "5 мкВ/°C",
+          "correct": true
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 7, 16",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.017",
+      "revisionId": "fodt.rubezh1.sensors-electronics.017-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "Термопара: при изменении температуры на 0,1 °C ЭДС изменяется на 3 мкВ. Чувствительность равна…",
+      "explanation": "S = 3/0,1 = 30 мкВ/°C. На с. 1 источника ошибочно указано 0,3, а на с. 3 — верное 30.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "30 мкВ/°C",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "0,3 мкВ/°C",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "3 мкВ/°C",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "300 мкВ/°C",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 1, 3",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.018",
+      "revisionId": "fodt.rubezh1.sensors-electronics.018-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "Термопара: изменение температуры на 0,5 °C даёт изменение ЭДС 20 мкВ. Чему равна чувствительность?",
+      "explanation": "S = 20/0,5 = 40 мкВ/°C.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "20,5 мкВ/°C",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "40 мкВ/°C",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "10 мкВ/°C",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "0,025 мкВ/°C",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 2",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.019",
+      "revisionId": "fodt.rubezh1.sensors-electronics.019-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "Термопара: при изменении температуры на 0,4 °C ЭДС изменяется на 20 мкВ. Чувствительность равна…",
+      "explanation": "S = 20/0,4 = 50 мкВ/°C.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "0,02 мкВ/°C",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "20,4 мкВ/°C",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "50 мкВ/°C",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "8 мкВ/°C",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 20; fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 8",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.020",
+      "revisionId": "fodt.rubezh1.sensors-electronics.020-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "Термопара: изменение температуры на 0,8 °C вызывает изменение ЭДС 4 мкВ. Чувствительность равна…",
+      "explanation": "S = 4/0,8 = 5 мкВ/°C.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "3,2 мкВ/°C",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "0,2 мкВ/°C",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "20 мкВ/°C",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "5 мкВ/°C",
+          "correct": true
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 5",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.021",
+      "revisionId": "fodt.rubezh1.sensors-electronics.021-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "Термопара: изменение температуры на 0,1 °C вызывает изменение ЭДС 3,5 мкВ. Чувствительность равна…",
+      "explanation": "S = 3,5/0,1 = 35 мкВ/°C.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "35 мкВ/°C",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "0,35 мкВ/°C",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "3,5 мкВ/°C",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "350 мкВ/°C",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 5",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.022",
+      "revisionId": "fodt.rubezh1.sensors-electronics.022-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "Термопара: изменение температуры на 0,1 °C даёт изменение ЭДС 2 мкВ. Чему равна чувствительность?",
+      "explanation": "S = 2/0,1 = 20 мкВ/°C.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "200 мкВ/°C",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "20 мкВ/°C",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "0,2 мкВ/°C",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "2 мкВ/°C",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 6",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.023",
+      "revisionId": "fodt.rubezh1.sensors-electronics.023-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "Термопара: изменение температуры на 0,1 °C приводит к изменению ЭДС 1,5 мкВ. Чувствительность равна…",
+      "explanation": "S = 1,5/0,1 = 15 мкВ/°C.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "1,5 мкВ/°C",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "150 мкВ/°C",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "15 мкВ/°C",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "0,15 мкВ/°C",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 7",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.bioelectric-ecg.001",
+      "revisionId": "fodt.rubezh1.bioelectric-ecg.001-r1",
+      "subjectId": "fodt",
+      "topicId": "bioelectric-ecg",
+      "subject": "ФОДТ",
+      "topic": "Биоэлектрические сигналы и ЭКГ",
+      "type": "single_choice",
+      "prompt": "Что называют отведением в электрокардиографии?",
+      "explanation": "Отведение определяет способ регистрации электрической разности потенциалов на поверхности тела.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Провод, идущий от пациента к ЭКГ-аппарату",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Биоток как физическое вещество",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Артефакт записи",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Разность потенциалов, регистрируемую между соответствующими точками (электродами)",
+          "correct": true
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 4",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.bioelectric-ecg.002",
+      "revisionId": "fodt.rubezh1.bioelectric-ecg.002-r1",
+      "subjectId": "fodt",
+      "topicId": "bioelectric-ecg",
+      "subject": "ФОДТ",
+      "topic": "Биоэлектрические сигналы и ЭКГ",
+      "type": "single_choice",
+      "prompt": "Какие точки образуют I стандартное отведение ЭКГ?",
+      "explanation": "I стандартное отведение по Эйнтховену: LA − RA.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Правая рука и левая рука",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Правая рука и левая нога",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Левая рука и левая нога",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Правая нога и левая рука",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 5, 12",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.bioelectric-ecg.003",
+      "revisionId": "fodt.rubezh1.bioelectric-ecg.003-r1",
+      "subjectId": "fodt",
+      "topicId": "bioelectric-ecg",
+      "subject": "ФОДТ",
+      "topic": "Биоэлектрические сигналы и ЭКГ",
+      "type": "single_choice",
+      "prompt": "Какие точки образуют II стандартное отведение ЭКГ?",
+      "explanation": "II стандартное отведение по Эйнтховену: LL − RA.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Правая рука и правая нога",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Правая рука и левая нога",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Правая рука и левая рука",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Левая рука и левая нога",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 13–14, 20",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.bioelectric-ecg.004",
+      "revisionId": "fodt.rubezh1.bioelectric-ecg.004-r1",
+      "subjectId": "fodt",
+      "topicId": "bioelectric-ecg",
+      "subject": "ФОДТ",
+      "topic": "Биоэлектрические сигналы и ЭКГ",
+      "type": "single_choice",
+      "prompt": "Какому процессу соответствует зубец T на ЭКГ?",
+      "explanation": "Зубец T преимущественно отражает реполяризацию миокарда желудочков.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Деполяризации желудочков",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Реполяризации предсердий как основному источнику сигнала",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Реполяризации желудочков",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Деполяризации предсердий",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 2",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.bioelectric-ecg.005",
+      "revisionId": "fodt.rubezh1.bioelectric-ecg.005-r1",
+      "subjectId": "fodt",
+      "topicId": "bioelectric-ecg",
+      "subject": "ФОДТ",
+      "topic": "Биоэлектрические сигналы и ЭКГ",
+      "type": "single_choice",
+      "prompt": "Где в норме начинается возбуждение проводящей системы сердца?",
+      "explanation": "Синоатриальный узел — основной водитель ритма сердца.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "В пучке Гиса",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "В волокнах Пуркинье",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "В миокарде желудочков",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "В синоатриальном узле",
+          "correct": true
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 24",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.bioelectric-ecg.006",
+      "revisionId": "fodt.rubezh1.bioelectric-ecg.006-r1",
+      "subjectId": "fodt",
+      "topicId": "bioelectric-ecg",
+      "subject": "ФОДТ",
+      "topic": "Биоэлектрические сигналы и ЭКГ",
+      "type": "single_choice",
+      "prompt": "Как называется метод регистрации биоэлектрической активности головного мозга?",
+      "explanation": "ЭЭГ отражает электрическую активность мозга, регистрируемую с поверхности головы.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Электроэнцефалография",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Электромиография",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Электроретинография",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Электрокардиография",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 14, 25; fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 3",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.bioelectric-ecg.007",
+      "revisionId": "fodt.rubezh1.bioelectric-ecg.007-r1",
+      "subjectId": "fodt",
+      "topicId": "bioelectric-ecg",
+      "subject": "ФОДТ",
+      "topic": "Биоэлектрические сигналы и ЭКГ",
+      "type": "single_choice",
+      "prompt": "Как называется метод регистрации биоэлектрической активности мышц?",
+      "explanation": "ЭМГ предназначена для исследования электрической активности скелетных мышц.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Электроэнцефалография",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Электромиография",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Электрокардиография",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Электрогастрография",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 7; fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 2, 6",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.bioelectric-ecg.008",
+      "revisionId": "fodt.rubezh1.bioelectric-ecg.008-r1",
+      "subjectId": "fodt",
+      "topicId": "bioelectric-ecg",
+      "subject": "ФОДТ",
+      "topic": "Биоэлектрические сигналы и ЭКГ",
+      "type": "single_choice",
+      "prompt": "Как называется регистрация электрической активности сетчатки глаза при световой стимуляции?",
+      "explanation": "Электроретинография регистрирует суммарный электрический ответ сетчатки на световые стимулы.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Электрогастрография",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Электрокардиография",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Электроретинография",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Электроэнцефалография",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 6",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.bioelectric-ecg.009",
+      "revisionId": "fodt.rubezh1.bioelectric-ecg.009-r1",
+      "subjectId": "fodt",
+      "topicId": "bioelectric-ecg",
+      "subject": "ФОДТ",
+      "topic": "Биоэлектрические сигналы и ЭКГ",
+      "type": "single_choice",
+      "prompt": "Как называется метод регистрации электрической активности, связанной с моторной деятельностью желудка?",
+      "explanation": "Электрогастрография изучает электрические сигналы, связанные с моторным ритмом желудка.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Электромиография скелетных мышц",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Электрокардиография",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Электроретинография",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Электрогастрография",
+          "correct": true
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 4–5",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.bioelectric-ecg.010",
+      "revisionId": "fodt.rubezh1.bioelectric-ecg.010-r1",
+      "subjectId": "fodt",
+      "topicId": "bioelectric-ecg",
+      "subject": "ФОДТ",
+      "topic": "Биоэлектрические сигналы и ЭКГ",
+      "type": "single_choice",
+      "prompt": "Какой физической моделью представляют сердце в теории Эйнтховена?",
+      "explanation": "При анализе отведений биоэлектрический источник приближённо моделируется токовым диполем.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Эквивалентным токовым диполем",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Идеальным конденсатором постоянной ёмкости",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Точечным резистором",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Изолирующей сферой без источников тока",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 7–8",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.bioelectric-ecg.011",
+      "revisionId": "fodt.rubezh1.bioelectric-ecg.011-r1",
+      "subjectId": "fodt",
+      "topicId": "bioelectric-ecg",
+      "subject": "ФОДТ",
+      "topic": "Биоэлектрические сигналы и ЭКГ",
+      "type": "single_choice",
+      "prompt": "Что соответствует электрическому вектору сердца в дипольной модели ЭКГ?",
+      "explanation": "В рамках простой эквивалентной дипольной модели электрический вектор сердца связывают с дипольным моментом источника.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Частота сетевого напряжения",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Дипольный момент эквивалентного токового диполя",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Сопротивление электродного геля",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Сила тока, измеренная только в одной конечности",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 26",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.bioelectric-ecg.012",
+      "revisionId": "fodt.rubezh1.bioelectric-ecg.012-r1",
+      "subjectId": "fodt",
+      "topicId": "bioelectric-ecg",
+      "subject": "ФОДТ",
+      "topic": "Биоэлектрические сигналы и ЭКГ",
+      "type": "single_choice",
+      "prompt": "Электрический диполь представляет собой систему…",
+      "explanation": "Электростатический диполь состоит из двух равных по модулю противоположных зарядов, разделённых малым расстоянием.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Трёх положительных зарядов",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Любых близко расположенных зарядов",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Двух равных по модулю зарядов противоположного знака",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Двух равных отрицательных зарядов",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 11",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.bioelectric-ecg.013",
+      "revisionId": "fodt.rubezh1.bioelectric-ecg.013-r1",
+      "subjectId": "fodt",
+      "topicId": "bioelectric-ecg",
+      "subject": "ФОДТ",
+      "topic": "Биоэлектрические сигналы и ЭКГ",
+      "type": "single_choice",
+      "prompt": "Каков знак потенциала внутри мембраны при фазе овершута потенциала действия?",
+      "explanation": "При овершуте мембранный потенциал проходит через 0 и становится положительным. Формулировка в оригинале «клетка деполяризована» без указания фазы менее точна: деполяризация не всегда означает положительный потенциал.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Всегда отрицательный",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Обязательно нулевой",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Определить невозможно даже при известной фазе",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Положительный по отношению к наружной среде",
+          "correct": true
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 17, 19",
+      "scientificStatus": "legacy"
+    },
+    {
+      "id": "fodt.rubezh1.bioelectric-ecg.014",
+      "revisionId": "fodt.rubezh1.bioelectric-ecg.014-r1",
+      "subjectId": "fodt",
+      "topicId": "bioelectric-ecg",
+      "subject": "ФОДТ",
+      "topic": "Биоэлектрические сигналы и ЭКГ",
+      "type": "single_choice",
+      "prompt": "Какую величину может иметь амплитуда электрических сигналов, снимаемых с кожи, согласно учебному источнику?",
+      "explanation": "Поверхностные биоэлектрические сигналы могут иметь амплитуды порядка милливольт; конкретное значение зависит от метода регистрации.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Порядка 3 мВ",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Порядка 300 В",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Только 3 кВ",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Не менее 3 А",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 7",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.bioelectric-ecg.015",
+      "revisionId": "fodt.rubezh1.bioelectric-ecg.015-r1",
+      "subjectId": "fodt",
+      "topicId": "bioelectric-ecg",
+      "subject": "ФОДТ",
+      "topic": "Биоэлектрические сигналы и ЭКГ",
+      "type": "single_choice",
+      "prompt": "При записи ЭКГ калибровочный сигнал 1 мВ соответствует 10 мм. Зубец Q имеет глубину 3 мм. Какова его амплитуда по модулю?",
+      "explanation": "1 мВ/10 мм × 3 мм = 0,3 мВ. Текстовая адаптация графического задания из PDF.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "1,3 мВ",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "0,3 мВ",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "3 мВ",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "0,03 мВ",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 4, 22",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.bioelectric-ecg.016",
+      "revisionId": "fodt.rubezh1.bioelectric-ecg.016-r1",
+      "subjectId": "fodt",
+      "topicId": "bioelectric-ecg",
+      "subject": "ФОДТ",
+      "topic": "Биоэлектрические сигналы и ЭКГ",
+      "type": "single_choice",
+      "prompt": "При записи ЭКГ калибровочный сигнал 1 мВ соответствует 10 мм. Зубец R имеет высоту 11 мм. Какова его амплитуда?",
+      "explanation": "1 мВ/10 мм × 11 мм = 1,1 мВ. Текстовая адаптация графического задания из PDF.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "11 мВ",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "0,9 мВ",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "1,1 мВ",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "0,11 мВ",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 4, 22",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.rheography.001",
+      "revisionId": "fodt.rubezh1.rheography.001-r1",
+      "subjectId": "fodt",
+      "topicId": "rheography",
+      "subject": "ФОДТ",
+      "topic": "Реография",
+      "type": "single_choice",
+      "prompt": "Как называется метод определения кровенаполнения органов и тканей, основанный на регистрации изменений электрического импеданса?",
+      "explanation": "Реография исследует изменение электрического импеданса тканей, обусловленное в том числе пульсовым кровенаполнением.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Электроэнцефалография",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Электромиография",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Реография",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Рентгенография",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 1",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.rheography.002",
+      "revisionId": "fodt.rubezh1.rheography.002-r1",
+      "subjectId": "fodt",
+      "topicId": "rheography",
+      "subject": "ФОДТ",
+      "topic": "Реография",
+      "type": "single_choice",
+      "prompt": "Калибровочный сигнал реографа 0,05 Ом соответствует 5 мм, а пиковая амплитуда реограммы 7 мм. Чему равна амплитуда реограммы (до сотых)?",
+      "explanation": "0,05 × 7/5 = 0,07 Ом. Текстовая реконструкция задания по реограмме; в исходном PDF ответ 0,07 Ом.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "0,05 Ом",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "0,09 Ом",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "0,7 Ом",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "0,07 Ом",
+          "correct": true
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 3, 21",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.rheography.003",
+      "revisionId": "fodt.rubezh1.rheography.003-r1",
+      "subjectId": "fodt",
+      "topicId": "rheography",
+      "subject": "ФОДТ",
+      "topic": "Реография",
+      "type": "single_choice",
+      "prompt": "Калибровочный сигнал 0,05 Ом соответствует 5 мм, а амплитуда волны — 10 мм. Какова амплитуда реограммы?",
+      "explanation": "0,05 × 10/5 = 0,10 Ом. Числовая адаптация графического варианта.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "0,10 Ом",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "0,05 Ом",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "0,20 Ом",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "0,01 Ом",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 3",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.rheography.004",
+      "revisionId": "fodt.rubezh1.rheography.004-r1",
+      "subjectId": "fodt",
+      "topicId": "rheography",
+      "subject": "ФОДТ",
+      "topic": "Реография",
+      "type": "single_choice",
+      "prompt": "Калибровочный сигнал 0,05 Ом соответствует 5 мм, а амплитуда реограммы — 8 мм. Какова амплитуда?",
+      "explanation": "0,05 × 8/5 = 0,08 Ом. Числовая адаптация графического варианта.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "0,13 Ом",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "0,08 Ом",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "0,04 Ом",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "0,8 Ом",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 3",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.rheography.005",
+      "revisionId": "fodt.rubezh1.rheography.005-r1",
+      "subjectId": "fodt",
+      "topicId": "rheography",
+      "subject": "ФОДТ",
+      "topic": "Реография",
+      "type": "single_choice",
+      "prompt": "Калибровочный сигнал 0,05 Ом соответствует 5 мм, а амплитуда волны — 15 мм. Какова амплитуда реограммы?",
+      "explanation": "0,05 × 15/5 = 0,15 Ом. Числовая адаптация графического варианта.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "0,75 Ом",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "0,03 Ом",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "0,15 Ом",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "0,05 Ом",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 1",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.rheography.006",
+      "revisionId": "fodt.rubezh1.rheography.006-r1",
+      "subjectId": "fodt",
+      "topicId": "rheography",
+      "subject": "ФОДТ",
+      "topic": "Реография",
+      "type": "single_choice",
+      "prompt": "Скорость протяжки ленты 25 мм/с, расстояние между соседними циклами 30 мм. Найдите длительность цикла и ЧСС.",
+      "explanation": "T = 30/25 = 1,2 с; ЧСС = 60/1,2 = 50 уд/мин. Адаптация графического задания.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "1 с и 60 уд/мин",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "0,6 с и 100 уд/мин",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "1,5 с и 40 уд/мин",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "1,2 с и 50 уд/мин",
+          "correct": true
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 5",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.rheography.007",
+      "revisionId": "fodt.rubezh1.rheography.007-r1",
+      "subjectId": "fodt",
+      "topicId": "rheography",
+      "subject": "ФОДТ",
+      "topic": "Реография",
+      "type": "single_choice",
+      "prompt": "Скорость протяжки ленты 25 мм/с, расстояние между соседними циклами 25 мм. Найдите длительность цикла и ЧСС.",
+      "explanation": "T = 25/25 = 1 с, ЧСС = 60 уд/мин.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "1 с и 60 уд/мин",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "0,5 с и 120 уд/мин",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "1,2 с и 50 уд/мин",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "2 с и 30 уд/мин",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 3",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.rheography.008",
+      "revisionId": "fodt.rubezh1.rheography.008-r1",
+      "subjectId": "fodt",
+      "topicId": "rheography",
+      "subject": "ФОДТ",
+      "topic": "Реография",
+      "type": "single_choice",
+      "prompt": "Скорость протяжки ленты 50 мм/с, расстояние между одинаковыми фазами соседних циклов 35 мм. Найдите T и ЧСС (приблизительно).",
+      "explanation": "T = 35/50 = 0,7 с; ЧСС = 60/0,7 ≈ 85,7 уд/мин.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "1 с и 60 уд/мин",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "0,7 с и 86 уд/мин",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "1,4 с и 43 уд/мин",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "0,35 с и 171 уд/мин",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 1",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.rheography.009",
+      "revisionId": "fodt.rubezh1.rheography.009-r1",
+      "subjectId": "fodt",
+      "topicId": "rheography",
+      "subject": "ФОДТ",
+      "topic": "Реография",
+      "type": "single_choice",
+      "prompt": "Скорость протяжки ленты 25 мм/с, расстояние между циклами 17,5 мм. Каковы длительность цикла и ЧСС (приблизительно)?",
+      "explanation": "T = 17,5/25 = 0,7 с, ЧСС ≈ 86 уд/мин.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "0,5 с и 120 уд/мин",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "0,35 с и 171 уд/мин",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "0,7 с и 86 уд/мин",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "1,4 с и 43 уд/мин",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 4",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.rheography.010",
+      "revisionId": "fodt.rubezh1.rheography.010-r1",
+      "subjectId": "fodt",
+      "topicId": "rheography",
+      "subject": "ФОДТ",
+      "topic": "Реография",
+      "type": "single_choice",
+      "prompt": "Для определения длительности сердечного цикла по ленте с известной скоростью протяжки используют…",
+      "explanation": "Время T = L/v; затем ЧСС = 60/T при T в секундах.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Произведение амплитуды реограммы и частоты сети",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Только амплитуду калибровочного сигнала",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Разность частот двух усилителей",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Отношение расстояния между соседними циклами к скорости движения ленты",
+          "correct": true
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 5, 15, 23; fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 3–4",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.metrology-safety.001",
+      "revisionId": "fodt.rubezh1.metrology-safety.001-r1",
+      "subjectId": "fodt",
+      "topicId": "metrology-safety",
+      "subject": "ФОДТ",
+      "topic": "Метрология и электробезопасность",
+      "type": "single_choice",
+      "prompt": "Метрология — это наука…",
+      "explanation": "Метрология изучает измерения, методы обеспечения их единства и точности.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Об исключительно механических измерениях",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Об измерениях, обеспечении их единства и требуемой точности",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Только о строении миокарда",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Только о терапии электрическим током",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 4–5",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.metrology-safety.002",
+      "revisionId": "fodt.rubezh1.metrology-safety.002-r1",
+      "subjectId": "fodt",
+      "topicId": "metrology-safety",
+      "subject": "ФОДТ",
+      "topic": "Метрология и электробезопасность",
+      "type": "single_choice",
+      "prompt": "Как называют отклонение результата измерения от истинного (опорного) значения измеряемой величины?",
+      "explanation": "Погрешность характеризует отклонение результата от истинного или принятого опорного значения.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Чувствительностью датчика",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Полосой пропускания",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Погрешностью измерения",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Калибровочным импульсом",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 4",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.metrology-safety.003",
+      "revisionId": "fodt.rubezh1.metrology-safety.003-r1",
+      "subjectId": "fodt",
+      "topicId": "metrology-safety",
+      "subject": "ФОДТ",
+      "topic": "Метрология и электробезопасность",
+      "type": "single_choice",
+      "prompt": "Как называется отношение абсолютной погрешности к модулю истинного (опорного) значения измеряемой величины?",
+      "explanation": "Относительная погрешность — отношение абсолютной погрешности к значению измеряемой величины; нередко выражается в процентах.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Среднеквадратическое отклонение",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Коэффициент усиления",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Разрешение датчика",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Относительная погрешность",
+          "correct": true
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 8; fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 1, 6",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.metrology-safety.004",
+      "revisionId": "fodt.rubezh1.metrology-safety.004-r1",
+      "subjectId": "fodt",
+      "topicId": "metrology-safety",
+      "subject": "ФОДТ",
+      "topic": "Метрология и электробезопасность",
+      "type": "single_choice",
+      "prompt": "В каких единицах выражают абсолютную погрешность?",
+      "explanation": "Абсолютная погрешность имеет размерность измеряемой величины.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "В тех же единицах, что и измеряемую величину",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Всегда в процентах",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Всегда в секундах",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Только в безразмерных единицах",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 7",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.metrology-safety.005",
+      "revisionId": "fodt.rubezh1.metrology-safety.005-r1",
+      "subjectId": "fodt",
+      "topicId": "metrology-safety",
+      "subject": "ФОДТ",
+      "topic": "Метрология и электробезопасность",
+      "type": "single_choice",
+      "prompt": "В каких единицах часто представляют относительную погрешность?",
+      "explanation": "Относительная погрешность безразмерна; при умножении на 100 % выражается в процентах.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "В герцах",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "В процентах",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "В омах",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "В милливольтах",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 5",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.metrology-safety.006",
+      "revisionId": "fodt.rubezh1.metrology-safety.006-r1",
+      "subjectId": "fodt",
+      "topicId": "metrology-safety",
+      "subject": "ФОДТ",
+      "topic": "Метрология и электробезопасность",
+      "type": "single_choice",
+      "prompt": "В каких единицах выражают среднеквадратическое отклонение измерений?",
+      "explanation": "Стандартное отклонение, в отличие от дисперсии, имеет размерность исходной величины.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Только в квадратах единиц параметра",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Всегда в секундах",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "В тех же единицах, что и измеряемый параметр",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Только в процентах",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 5",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.metrology-safety.007",
+      "revisionId": "fodt.rubezh1.metrology-safety.007-r1",
+      "subjectId": "fodt",
+      "topicId": "metrology-safety",
+      "subject": "ФОДТ",
+      "topic": "Метрология и электробезопасность",
+      "type": "single_choice",
+      "prompt": "Как по отношению к телу человека включён путь защитного заземления при касании повреждённого корпуса?",
+      "explanation": "Защитный проводник формирует низкоимпедансный альтернативный путь тока и способствует срабатыванию защиты; фактическая безопасность определяется всей схемой.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Строго последовательно с телом",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "В разрыв электродов ЭКГ",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Только через АЦП",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Параллельно возможному пути тока через тело",
+          "correct": true
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 6–7",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.metrology-safety.008",
+      "revisionId": "fodt.rubezh1.metrology-safety.008-r1",
+      "subjectId": "fodt",
+      "topicId": "metrology-safety",
+      "subject": "ФОДТ",
+      "topic": "Метрология и электробезопасность",
+      "type": "multiple_choice",
+      "prompt": "Какие меры относятся к защите от поражения электрическим током в терминологии учебного источника?",
+      "explanation": "В исходном ключе отмечены первые три меры. Сертификация сама по себе не заменяет технические меры защиты; применимость зануления зависит от системы электроснабжения.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Защитное заземление оборудования",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Защитное зануление при соответствующей системе электроснабжения",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Применение сертифицированного соответствующим требованиям оборудования",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Отказ от контроля изоляции",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 17; fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 2, 5",
+      "scientificStatus": "legacy"
+    },
+    {
+      "id": "fodt.rubezh1.metrology-safety.009",
+      "revisionId": "fodt.rubezh1.metrology-safety.009-r1",
+      "subjectId": "fodt",
+      "topicId": "metrology-safety",
+      "subject": "ФОДТ",
+      "topic": "Метрология и электробезопасность",
+      "type": "single_choice",
+      "prompt": "Примерно какое значение имеет порог «неотпускающего» переменного тока промышленной частоты у взрослого человека в учебном тесте?",
+      "explanation": "В учебном источнике приведено 15 мА; реальный порог зависит от человека, условий контакта, пути и частоты тока.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "1000 мА",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "15 мА",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "15 А",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "50 А",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 6; fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 2",
+      "scientificStatus": "legacy"
+    },
+    {
+      "id": "fodt.rubezh1.metrology-safety.010",
+      "revisionId": "fodt.rubezh1.metrology-safety.010-r1",
+      "subjectId": "fodt",
+      "topicId": "metrology-safety",
+      "subject": "ФОДТ",
+      "topic": "Метрология и электробезопасность",
+      "type": "single_choice",
+      "prompt": "Какова зависимость числа сердечных сокращений за минуту от длительности одного цикла T в секундах?",
+      "explanation": "В одной минуте 60 секунд, поэтому количество циклов в минуту равно 60/T.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "ЧСС = T/60",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "ЧСС = 1/(60×T)",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "ЧСС = 60/T",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "ЧСС = 60×T",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf: с. 5; fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf: с. 1, 3",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.metrology-safety.011",
+      "revisionId": "fodt.rubezh1.metrology-safety.011-r1",
+      "subjectId": "fodt",
+      "topicId": "metrology-safety",
+      "subject": "ФОДТ",
+      "topic": "Метрология и электробезопасность",
+      "type": "single_choice",
+      "prompt": "СОПРОТИВЛЕНИЕ ЗАЗЕМЛЕНИЯ МОЖЕТ БЫТЬ РАВНЫМ (вариант ответа из теста РостГМУ)",
+      "explanation": "В проверенной попытке теста отмечено 1 Ом. Это не универсальный норматив: требуемое сопротивление зависит от схемы электроустановки и характеристик автоматической защиты.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "1 кОм",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "1 МОм",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "100 Ом",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "1 Ом",
+          "correct": true
+        }
+      ],
+      "sourceRef": "фодит тест.pdf, с. 2, 13, 21",
+      "scientificStatus": "ambiguous"
+    },
+    {
+      "id": "fodt.rubezh1.metrology-safety.012",
+      "revisionId": "fodt.rubezh1.metrology-safety.012-r1",
+      "subjectId": "fodt",
+      "topicId": "metrology-safety",
+      "subject": "ФОДТ",
+      "topic": "Метрология и электробезопасность",
+      "type": "single_choice",
+      "prompt": "СОПРОТИВЛЕНИЕ ЗАЗЕМЛЕНИЯ (вариант из файла с ответами, с. 1)",
+      "explanation": "В источнике на с. 1 указан ответ 4 Ом, но на с. 6 того же файла стоит 4 кОм. Приводится ключ источника, а не норматив для реальной установки.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "4 кОм",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "4 Ом",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "100 Ом",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "1 МОм",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf, с. 1 и 6",
+      "scientificStatus": "ambiguous"
+    },
+    {
+      "id": "fodt.rubezh1.metrology-safety.013",
+      "revisionId": "fodt.rubezh1.metrology-safety.013-r1",
+      "subjectId": "fodt",
+      "topicId": "metrology-safety",
+      "subject": "ФОДТ",
+      "topic": "Метрология и электробезопасность",
+      "type": "single_choice",
+      "prompt": "СОПРОТИВЛЕНИЕ ЗАЗЕМЛЕНИЯ (вариант из файла с ответами, с. 6)",
+      "explanation": "На с. 6 в источнике указан 4 кОм — значение противоречит с. 1 (4 Ом) и ключу первого PDF (1 Ом). Ответ сохранён исключительно как ключ исходного задания; не применять в расчётах электробезопасности.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "4 Ом",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "1 Ом",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "100 Ом",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "4 кОм",
+          "correct": true
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf, с. 1, 6; фодит тест.pdf, с. 2",
+      "scientificStatus": "ambiguous"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.024",
+      "revisionId": "fodt.rubezh1.sensors-electronics.024-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "ФОТОЭЛЕКТРИЧЕСКИЕ ДАТЧИКИ ЯВЛЯЮТСЯ (учебная классификация)",
+      "explanation": "В источнике выбран вариант «энергетическими». Формулировка неоднозначна: фотоэлементы на фотоэлектрическом эффекте могут иметь генераторную или параметрическую схему в зависимости от конструкции.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Биоуправляемыми",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Параметрическими",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Энергетическими",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Генераторными",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf, с. 23; fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf, с. 2, 7",
+      "scientificStatus": "ambiguous"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.025",
+      "revisionId": "fodt.rubezh1.sensors-electronics.025-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "МАГНИТОЭЛЕКТРИЧЕСКИЕ ДАТЧИКИ ЯВЛЯЮТСЯ (по ключу учебного источника)",
+      "explanation": "Учебный ключ — «энергетическими». Термин недостаточно определён: конструкция и физический принцип магниточувствительного датчика влияют на классификацию.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Энергетическими",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Лишь цифровыми",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Лишь механическими",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Параметрическими",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf, с. 2 и 6",
+      "scientificStatus": "ambiguous"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.026",
+      "revisionId": "fodt.rubezh1.sensors-electronics.026-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "УЛЬТРАЗВУКОВЫЕ ДАТЧИКИ ЯВЛЯЮТСЯ (по ключу учебного источника)",
+      "explanation": "В исходнике дан ответ «энергетическими». Ультразвуковые преобразователи бывают излучающими и приёмными; без уточнения рабочего режима категория не является однозначной.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Энергетическими",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Химическими",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Генераторными",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Параметрическими",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf, с. 7",
+      "scientificStatus": "ambiguous"
+    },
+    {
+      "id": "fodt.rubezh1.metrology-safety.014",
+      "revisionId": "fodt.rubezh1.metrology-safety.014-r1",
+      "subjectId": "fodt",
+      "topicId": "metrology-safety",
+      "subject": "ФОДТ",
+      "topic": "Метрология и электробезопасность",
+      "type": "single_choice",
+      "prompt": "НАИМЕНЬШИЙ ОПАСНЫЙ ПОСТОЯННЫЙ ТОК (значение из исходного ключа)",
+      "explanation": "Ключ источника — 50 мА. Универсального порога безопасности нет: риск определяется током через тело, длительностью, путём прохождения и индивидуальными особенностями.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "0,5 А",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "5 А",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "5 мкА",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "50 мА",
+          "correct": true
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf, с. 2",
+      "scientificStatus": "ambiguous"
+    },
+    {
+      "id": "fodt.rubezh1.bioelectric-ecg.017",
+      "revisionId": "fodt.rubezh1.bioelectric-ecg.017-r1",
+      "subjectId": "fodt",
+      "topicId": "bioelectric-ecg",
+      "subject": "ФОДТ",
+      "topic": "Биоэлектрические сигналы и ЭКГ",
+      "type": "single_choice",
+      "prompt": "КЛЕТКА ДЕПОЛЯРИЗОВАНА. ЭТО ОЗНАЧАЕТ, ЧТО ИЗНУТРИ ОНА ЗАРЯЖЕНА (исходная формулировка)",
+      "explanation": "В исходном учебном тесте отмечен ответ «положительно». Однако деполяризация означает уменьшение модуля отрицательного потенциала и не обязательно его смену на положительный; положительный внутриклеточный потенциал характерен для фазы овершута.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Положительно",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Отрицательно",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Часть клетки положительно, часть отрицательно",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Не заряжена",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf, с. 17, 19",
+      "scientificStatus": "ambiguous"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.027",
+      "revisionId": "fodt.rubezh1.sensors-electronics.027-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "АНАЛОГО-ЦИФРОВОЙ ПРЕОБРАЗОВАТЕЛЬ ПРЕДНАЗНАЧЕН ДЛЯ ПРЕОБРАЗОВАНИЯ (вариант ошибочного исходного ключа)",
+      "explanation": "Это дословная идея ключа с. 1, но его формулировка ошибочна: истинная функция АЦП — преобразование аналогового сигнала в цифровое представление. См. корректную формулировку в том же источнике, с. 6.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Механического давления в температуру",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Зарегистрированных сигналов с использованием калибровочного импульса",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Аналоговых сигналов в цифровые данные",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Электрического тока в магнитное поле",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf, с. 1 и 6",
+      "scientificStatus": "ambiguous"
+    },
+    {
+      "id": "fodt.rubezh1.sensors-electronics.028",
+      "revisionId": "fodt.rubezh1.sensors-electronics.028-r1",
+      "subjectId": "fodt",
+      "topicId": "sensors-electronics",
+      "subject": "ФОДТ",
+      "topic": "Датчики, усилители и медицинская электроника",
+      "type": "single_choice",
+      "prompt": "РЕГИСТРИРУЮЩИЙ ПРИБОР, ПРЕОБРАЗУЮЩИЙ ЭЛЕКТРИЧЕСКИЙ СИГНАЛ В МЕХАНИЧЕСКОЕ ПЕРЕМЕЩЕНИЕ (ошибочный ключ исходника)",
+      "explanation": "На с. 1 исходного PDF указан «пирограф», а на с. 2 — корректный «самописец». Вопрос с ошибочным ключом сохранён только для запоминания особенностей исходного материала.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Пирограф",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Самописец",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "АЦП",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Термометр",
+          "correct": false
+        }
+      ],
+      "sourceRef": "fd8e3e0f6b4b6fca1dd089ff58eb7264.pdf, с. 1–2",
+      "scientificStatus": "ambiguous"
+    },
+    {
+      "id": "fodt.rubezh1.rheography.011",
+      "revisionId": "fodt.rubezh1.rheography.011-r1",
+      "subjectId": "fodt",
+      "topicId": "rheography",
+      "subject": "ФОДТ",
+      "topic": "Реография",
+      "type": "single_choice",
+      "prompt": "По фрагменту реограммы: скорость 50 мм/с, между одинаковыми точками двух циклов 20 мм. Определите длительность цикла и ЧСС.",
+      "explanation": "T=20/50=0,4 с; ЧСС=60/0,4=150 уд/мин. Текстовая адаптация графического задания второго варианта рубежного контроля.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "0,8 с и 75 уд/мин",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "0,6 с и 100 уд/мин",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "0,4 с и 150 уд/мин",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "0,25 с и 240 уд/мин",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf, с. 14–15",
+      "scientificStatus": "verified"
+    },
+    {
+      "id": "fodt.rubezh1.bioelectric-ecg.018",
+      "revisionId": "fodt.rubezh1.bioelectric-ecg.018-r1",
+      "subjectId": "fodt",
+      "topicId": "bioelectric-ecg",
+      "subject": "ФОДТ",
+      "topic": "Биоэлектрические сигналы и ЭКГ",
+      "type": "single_choice",
+      "prompt": "В задании с тремя отведениями ЭКГ (I, II, III) оцените амплитуды зубца R при калибровке 1 мВ = 10 мм; условные высоты: 5, 20 и 18 мм соответственно.",
+      "explanation": "Амплитуда = высота (мм)/10 (мм/мВ). В PDF с тремя отведениями выбор ответов и шкала представлены неполно: высоты здесь явно введены как приближённая текстовая реконструкция, не утверждаются как точные измерения исходной ЭКГ.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "I — 0,5 мВ; II — 0,2 мВ; III — 0,18 мВ",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "I — 1,8 мВ; II — 0,5 мВ; III — 2,0 мВ",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "I — 0,5 мВ; II — 2,0 мВ; III — 1,8 мВ",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "I — 5 мВ; II — 20 мВ; III — 18 мВ",
+          "correct": false
+        }
+      ],
+      "sourceRef": "фодит тест.pdf, с. 16",
+      "scientificStatus": "ambiguous"
+    },
+    {
+      "id": "fodt.rubezh1.bioelectric-ecg.019",
+      "revisionId": "fodt.rubezh1.bioelectric-ecg.019-r1",
+      "subjectId": "fodt",
+      "topicId": "bioelectric-ecg",
+      "subject": "ФОДТ",
+      "topic": "Биоэлектрические сигналы и ЭКГ",
+      "type": "single_choice",
+      "prompt": "ОПРЕДЕЛИТЕ АМПЛИТУДЫ ЗУБЦОВ Q И R (совместный вариант задания). Калибровка 1 мВ = 10 мм; глубина Q 3 мм, высота R 11 мм.",
+      "explanation": "Для обоих зубцов используется единый масштаб: Q=3/10=0,3 мВ по модулю, R=11/10=1,1 мВ. В исходном PDF это одно графическое задание с двумя ответами.",
+      "options": [
+        {
+          "id": "a",
+          "label": "А",
+          "text": "Q — 1,1 мВ; R — 0,3 мВ",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "label": "Б",
+          "text": "Q — 3 мВ; R — 11 мВ",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "label": "В",
+          "text": "Q — 0,03 мВ; R — 0,11 мВ",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "label": "Г",
+          "text": "Q — 0,3 мВ; R — 1,1 мВ",
+          "correct": true
+        }
+      ],
+      "sourceRef": "фодит тест.pdf, с. 4 и 22",
+      "scientificStatus": "verified"
+    }
+  ]
+}
