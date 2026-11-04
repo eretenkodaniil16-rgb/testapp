@@ -2,12 +2,14 @@ name: Content CI
 
 on:
   push:
-    branches: [content-live]
+    branches: [content-live, "content/surgery-rating2-*"]
     paths:
       - "public/content/**"
+      - "src/**"
       - "scripts/validate-content.mjs"
       - "scripts/audit-pharmacology-source.mjs"
       - "scripts/audit-general-surgery-source.mjs"
+      - "scripts/verify-surgery-rating2-figures.mjs"
       - ".github/workflows/content-ci.yml"
   workflow_dispatch:
 
@@ -19,6 +21,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - run: npm install --no-audit --no-fund
       - run: node scripts/validate-content.mjs
       - name: Audit pharmacology source bank
         run: node scripts/audit-pharmacology-source.mjs 1062
@@ -26,3 +29,7 @@ jobs:
         run: node scripts/audit-general-surgery-source.mjs
       - name: Verify source images for rating 2
         run: node scripts/verify-surgery-rating2-figures.mjs
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Production build
+        run: npm run build
