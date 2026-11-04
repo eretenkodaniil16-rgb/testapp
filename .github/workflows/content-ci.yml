@@ -2,7 +2,7 @@ name: Content CI
 
 on:
   push:
-    branches: [content-live, "content/surgery-rating2-*"]
+    branches: [content-live, "content/surgery-ranking2-*"]
     paths:
       - "public/content/**"
       - "src/**"
