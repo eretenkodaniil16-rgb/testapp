@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { QuestionFigure } from "@/components/question-figure";
 import { useEffect, useMemo, useState } from "react";
 import { getAllQuestions } from "@/lib/content-repository";
 import {
@@ -232,6 +233,7 @@ export default function PracticePage() {
                 <article className={`answer-card ${isCorrect ? "exam-card-correct" : "exam-card-wrong"}`} key={item.id}>
                   <div className="answer-card-meta"><span>#{questionIndex + 1}</span><span>{isCorrect ? "Правильно" : "Ошибка"}</span></div>
                   <h3>{item.prompt}</h3>
+                  <QuestionFigure key={`${item.id}:${item.revisionId}`} image={item.image} />
                   <p className="exam-selected"><strong>Ваш ответ:</strong> {item.options.filter((option) => selectedIds.has(option.id)).map((option) => `${option.label}. ${option.text}`).join("; ")}</p>
                   <div className="correct-answer-block"><strong>{correct.length > 1 ? "Правильные ответы" : "Правильный ответ"}</strong>{correct.map((option) => <p key={option.id}><b>{option.label}.</b> {option.text}</p>)}</div>
                   {item.explanation && <p className="answer-explanation">{item.explanation}</p>}
@@ -258,6 +260,7 @@ export default function PracticePage() {
       <section className="question-card">
         <p className="question-type">{question.type === "multiple_choice" ? "Несколько правильных ответов" : "Один правильный ответ"}</p>
         <h2>{question.prompt}</h2>
+        <QuestionFigure key={`${question.id}:${question.revisionId}`} image={question.image} />
         <div className="options">
           {question.options.map((option) => {
             const chosen = selected.includes(option.id);

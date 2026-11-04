@@ -24,3 +24,5 @@ jobs:
         run: node scripts/audit-pharmacology-source.mjs 1062
       - name: Audit general surgery source bank
         run: node scripts/audit-general-surgery-source.mjs
+      - name: Verify source images for rating 2
+        run: node scripts/verify-surgery-rating2-figures.mjs
