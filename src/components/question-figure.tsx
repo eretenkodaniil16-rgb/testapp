@@ -25,7 +25,7 @@ export function QuestionFigure({ image }: { image?: QuestionImage }) {
     crop.x + crop.width <= crop.sheetWidth &&
     crop.y + crop.height <= crop.sheetHeight;
 
-  const imageStyle: CSSProperties | undefined = validCrop ? {
+  const imageStyle: CSSProperties | undefined = validCrop && crop ? {
     position: "absolute",
     width: `${(crop.sheetWidth / crop.width) * 100}%`,
     height: "auto",
@@ -36,7 +36,7 @@ export function QuestionFigure({ image }: { image?: QuestionImage }) {
 
   return (
     <figure className="question-figure">
-      <div className="question-figure-frame" style={validCrop ? { aspectRatio: `${crop.width} / ${crop.height}` } : undefined}>
+      <div className="question-figure-frame" style={validCrop && crop ? { aspectRatio: `${crop.width} / ${crop.height}` } : undefined}>
         {/* Native img supports the existing static GitHub image URLs without Next.js image optimisation. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
