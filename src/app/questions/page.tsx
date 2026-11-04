@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { QuestionFigure } from "@/components/question-figure";
 import { useEffect, useMemo, useState } from "react";
 import { getAllQuestions, getContentCatalogTree } from "@/lib/content-repository";
 import type { ContentCatalogSubject, PracticeQuestion } from "@/types/domain";
@@ -123,6 +124,7 @@ export default function QuestionsPage() {
               <article className="answer-card" key={`${question.id}:${question.revisionId}`}>
                 <div className="answer-card-meta"><span>#{index + 1}</span><span>{question.subject} · {question.topic}</span></div>
                 <h3>{question.prompt}</h3>
+                <QuestionFigure key={`${question.id}:${question.revisionId}`} image={question.image} />
                 <div className="correct-answer-block">
                   <strong>{correct.length > 1 ? "Правильные ответы" : "Правильный ответ"}</strong>
                   {correct.map((option) => <p key={option.id}><b>{option.label}.</b> {option.text}</p>)}

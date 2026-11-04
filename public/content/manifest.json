@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "contentVersion": 48,
-  "publishedAt": "2026-10-26T12:53:00Z",
+  "contentVersion": 50,
+  "publishedAt": "2026-11-04T21:06:31.976Z",
   "packages": [
     {
       "id": "pathology-core",
@@ -967,8 +967,8 @@
       "id": "general-surgery-blood-components-transfusion",
       "subjectId": "general-surgery",
       "title": "Общая хирургия",
-      "version": 1,
-      "path": "/content/packages/general-surgery-blood-components-transfusion.v1.json",
+      "version": 3,
+      "path": "/content/packages/general-surgery-blood-components-transfusion.v3.json",
       "questionCount": 69
     },
     {
@@ -1031,8 +1031,8 @@
       "id": "general-surgery-hemorrhage-blood-loss",
       "subjectId": "general-surgery",
       "title": "Общая хирургия",
-      "version": 1,
-      "path": "/content/packages/general-surgery-hemorrhage-blood-loss.v1.json",
+      "version": 2,
+      "path": "/content/packages/general-surgery-hemorrhage-blood-loss.v2.json",
       "questionCount": 72
     },
     {

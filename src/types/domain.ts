@@ -29,6 +29,22 @@ export interface PracticeQuestion {
   prompt: string;
   explanation: string;
   options: AnswerOption[];
+  image?: QuestionImage;
+}
+
+export interface QuestionImageCrop {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  sheetWidth: number;
+  sheetHeight: number;
+}
+
+export interface QuestionImage {
+  src: string;
+  alt: string;
+  crop?: QuestionImageCrop;
 }
 
 export interface StoredAnswer {

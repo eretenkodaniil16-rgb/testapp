@@ -107,7 +107,7 @@ for (const q of questions) {
   }
 }
 
-if (damagedKeys !== 2) fail(`expected exactly 2 damaged source keys, found ${damagedKeys}`);
+if (damagedKeys !== 1) fail(`expected exactly 1 remaining damaged source key, found ${damagedKeys}`);
 if (imageCount !== 125) fail(`expected 125 illustrated questions, found ${imageCount}`);
 if (missingFigureQuestions !== 4) fail(`expected 4 questions with missing source figures, found ${missingFigureQuestions}`);
 
